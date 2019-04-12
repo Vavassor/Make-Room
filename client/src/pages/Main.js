@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import Api from "../utilities/Api";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -24,21 +25,15 @@ class PageNotFound extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-
     const form = event.currentTarget;
     const passedValidation = form.checkValidity();
-
-    if (!passedValidation) {
-      event.preventDefault();
-    }
 
     this.setState({
       validated: true,
     });
 
-    if (passedValidation) {
-      console.log(this.state.username + " " + this.state.password);
+    if (!passedValidation) {
+      event.preventDefault();
     }
   }
 
@@ -53,6 +48,8 @@ class PageNotFound extends Component {
           <Card.Body>
             <Form
               noValidate
+              action="/api/login"
+              method="POST"
               validated={this.state.validated}
               onSubmit={this.handleSubmit}
             >

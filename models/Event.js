@@ -6,11 +6,13 @@ var EventSchema = new Schema({
     type: String,
     required: true
   },
+  startTime: {
+    type: Date,
+    required: true
+  },
   attendees: [
     {
-    type: Schema.Types.ObjectId,
-    required: false,
-    // ref: "User"
+    type: string
   }
 ],
 });
