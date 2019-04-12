@@ -5,11 +5,11 @@ function verifyPassword(a, b) {
 }
 
 module.exports = {
-  authenticateBasic: function(username, password, done) {
+  authenticateLocal: function(username, password, done) {
     models.User
       .findOne({username: username})
       .then(user => {
-        if (!user || verifyPassword(user.password, password)) {
+        if (!user || !verifyPassword(user.password, password)) {
           return done(null, false);
         }
         done(null, user);

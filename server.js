@@ -1,5 +1,5 @@
 const authentication = require("./middleware/authentication");
-const BasicStrategy = require("passport-http").BasicStrategy;
+const LocalStrategy = require("passport-local").Strategy;
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -24,7 +24,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new BasicStrategy(authentication.authenticateBasic));
+passport.use(new LocalStrategy(authentication.authenticateLocal));
 passport.serializeUser(authentication.serializeUser);
 passport.deserializeUser(authentication.deserializeUser);
 

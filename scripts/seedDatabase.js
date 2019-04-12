@@ -9,7 +9,7 @@ mongoose.connect(
 const userSeeds = [
   {
     username: "vavassor",
-    password: "bochoro8",
+    password: "password",
   },
 ];
 
