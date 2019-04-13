@@ -3,6 +3,7 @@ import Api from "../utilities/Api";
 import Auth from "../utilities/Auth";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Jumbotron from "react-bootstrap/Jumbotron";
 
@@ -80,9 +81,17 @@ class PageNotFound extends Component {
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
+              <Form.Row>
+                <Col md="auto">
+                  <Button variant="primary" type="submit">
+                    Log In
+                  </Button>
+                </Col>
+
+                <Col md="auto">
+                  <a className="btn btn-secondary" href="/create-account" role="button">Create Account</a>
+                </Col>
+              </Form.Row>
             </Form>
           </Card.Body>
         </Card>
