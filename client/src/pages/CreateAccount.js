@@ -13,6 +13,8 @@ class CreateAccount extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.confirmPassword = React.createRef();
   }
 
   handleInputChange(event) {
@@ -26,11 +28,18 @@ class CreateAccount extends Component {
     event.preventDefault();
 
     const form = event.currentTarget;
-    const passedValidation = form.checkValidity();
+    let passedValidation = form.checkValidity();
 
     this.setState({
       validated: true,
     });
+
+    if (this.state.password !== this.state.confirmPassword) {
+      this.confirmPassword.current.setCustomValidity("Passwords don't match.");
+      passedValidation = false;
+    } else {
+      this.confirmPassword.current.setCustomValidity("");
+    }
 
     if (passedValidation) {
       console.error("Submit not implemented yet!");
@@ -55,26 +64,36 @@ class CreateAccount extends Component {
                   onChange={this.handleInputChange}
                   required
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please enter a username.
+                </Form.Control.Feedback>
               </Form.Group>
 
-              <Form.Group controlId="password1">
+              <Form.Group controlId="password">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
-                  name="password1"
+                  name="password"
                   onChange={this.handleInputChange}
                   required
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please enter a password.
+                </Form.Control.Feedback>
               </Form.Group>
 
-              <Form.Group controlId="password2">
-                <Form.Label>Enter Password Again</Form.Label>
+              <Form.Group controlId="confirm-password">
+                <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
                   type="password"
-                  name="password2"
+                  name="confirmPassword"
                   onChange={this.handleInputChange}
+                  ref={this.confirmPassword}
                   required
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please enter the same password again.
+                </Form.Control.Feedback>
               </Form.Group>
 
               <Button variant="primary" type="submit">
