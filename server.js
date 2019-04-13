@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use(session({
-  secret: "Keyboard Cat",
+  secret: process.env.SESSION_SECRET,
   saveUninitialized: true,
   resave: true,
 }));
@@ -36,8 +36,8 @@ const jwtOptions = {
 
 passport.use(new JwtStrategy(jwtOptions, authentication.authenticateJwt));
 passport.use(new LocalStrategy(authentication.authenticateLocal));
-passport.serializeUser(authentication.serializeUser);
 passport.deserializeUser(authentication.deserializeUser);
+passport.serializeUser(authentication.serializeUser);
 
 app.use(routes);
 
