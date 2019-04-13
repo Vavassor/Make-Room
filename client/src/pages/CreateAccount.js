@@ -1,13 +1,9 @@
 import React, {Component} from "react";
-import Api from "../utilities/Api";
-import Auth from "../utilities/Auth";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import Jumbotron from "react-bootstrap/Jumbotron";
 
-class PageNotFound extends Component {
+class CreateAccount extends Component {
   constructor(props) {
     super(props);
 
@@ -37,23 +33,13 @@ class PageNotFound extends Component {
     });
 
     if (passedValidation) {
-      Api
-        .logIn(this.state.username, this.state.password)
-        .then((response) => {
-          Auth.authenticate(response.data.token);
-          this.props.history.push("/profile");
-        })
-        .catch(error => console.error(error));
+      console.error("Submit not implemented yet!");
     }
   }
-
+  
   render() {
     return (
       <main>
-        <Jumbotron>
-          <h1>Howdy!</h1>
-        </Jumbotron>
-
         <Card>
           <Card.Body>
             <Form
@@ -71,27 +57,29 @@ class PageNotFound extends Component {
                 />
               </Form.Group>
 
-              <Form.Group controlId="password">
+              <Form.Group controlId="password1">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
-                  name="password"
+                  name="password1"
                   onChange={this.handleInputChange}
                   required
                 />
               </Form.Group>
 
-              <Form.Row>
-                <Col md="auto">
-                  <Button variant="primary" type="submit">
-                    Log In
-                  </Button>
-                </Col>
+              <Form.Group controlId="password2">
+                <Form.Label>Enter Password Again</Form.Label>
+                <Form.Control
+                  type="password"
+                  name="password2"
+                  onChange={this.handleInputChange}
+                  required
+                />
+              </Form.Group>
 
-                <Col md="auto">
-                  <a className="btn btn-secondary" href="/create-account" role="button">Create Account</a>
-                </Col>
-              </Form.Row>
+              <Button variant="primary" type="submit">
+                Create Account
+              </Button>
             </Form>
           </Card.Body>
         </Card>
@@ -100,4 +88,4 @@ class PageNotFound extends Component {
   }
 }
 
-export default PageNotFound;
+export default CreateAccount;
