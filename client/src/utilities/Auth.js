@@ -6,6 +6,10 @@ class Auth {
   static isAuthenticated() {
     return localStorage.getItem("jwt") !== null;
   }
+
+  static logOut() {
+    localStorage.removeItem("jwt");
+  }
 }
 
 export default Auth;
