@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import Api from "../utilities/Api";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -8,12 +9,21 @@ class CreateAccount extends Component {
     super(props);
 
     this.state = {
+      confirmPassword: "",
+      password: "",
+      username: "",
       validated: false,
+      errors: {
+        username: "Please enter a username.",
+        password: "Please enter a username.",
+      },
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
+    this.passwordInput = React.createRef();
+    this.usernameInput = React.createRef();
     this.confirmPassword = React.createRef();
   }
 
@@ -28,21 +38,41 @@ class CreateAccount extends Component {
     event.preventDefault();
 
     const form = event.currentTarget;
+
+    this.confirmPassword.current.setCustomValidity("");
+    this.passwordInput.current.setCustomValidity("");
+    this.usernameInput.current.setCustomValidity("");
+
     let passedValidation = form.checkValidity();
 
     this.setState({
       validated: true,
+      errors: {
+        username: "Please enter a username.",
+        password: "Please enter a password.",
+      },
     });
 
     if (this.state.password !== this.state.confirmPassword) {
       this.confirmPassword.current.setCustomValidity("Passwords don't match.");
       passedValidation = false;
-    } else {
-      this.confirmPassword.current.setCustomValidity("");
     }
 
     if (passedValidation) {
-      console.error("Submit not implemented yet!");
+      Api
+        .createAccount(this.state.username, this.state.password)
+        .then((user) => console.log(user))
+        .catch((error) => {
+          const errorObject = error.response.data;
+          if (errorObject.target === "username") {
+            this.setState({errors: {username: errorObject.error}});
+            this.usernameInput.current.setCustomValidity(errorObject.error);
+          }
+          if (errorObject.target === "password") {
+            this.setState({errors: {password: errorObject.error}});
+            this.passwordInput.current.setCustomValidity(errorObject.error);
+          }
+        });
     }
   }
   
@@ -62,10 +92,11 @@ class CreateAccount extends Component {
                   type="text"
                   name="username"
                   onChange={this.handleInputChange}
+                  ref={this.usernameInput}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please enter a username.
+                  {this.state.errors.username}
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -75,10 +106,11 @@ class CreateAccount extends Component {
                   type="password"
                   name="password"
                   onChange={this.handleInputChange}
+                  ref={this.passwordInput}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please enter a password.
+                  {this.state.errors.password}
                 </Form.Control.Feedback>
               </Form.Group>
 
