@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import CreateAccount from "./pages/CreateAccount";
 import Main from "./pages/Main";
 import Profile from "./pages/Profile";
 import ProfileCreate from "./pages/ProfileCreate";
@@ -20,6 +21,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Main} />
             <Route exact path="/chatIndex" component={ChatIndex} />
+            <Route exact path="/create-account" component={CreateAccount} />
             <PrivateRoute exact path="/profile" component={Profile} />
             <Route exact path="/profile/create" component={ProfileCreate} />
             <Route component={PageNotFound} />
