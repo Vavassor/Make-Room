@@ -9,6 +9,8 @@ const routes = require("./routes");
 const session = require("express-session");
 const app = express();
 
+require("dotenv").config();
+
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 if (process.env.NODE_ENV === "production") {

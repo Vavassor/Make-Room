@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import Api from "../utilities/Api";
+import Auth from "../utilities/Auth";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -25,6 +26,8 @@ class PageNotFound extends Component {
   }
 
   handleSubmit(event) {
+    event.preventDefault();
+
     const form = event.currentTarget;
     const passedValidation = form.checkValidity();
 
@@ -32,8 +35,14 @@ class PageNotFound extends Component {
       validated: true,
     });
 
-    if (!passedValidation) {
-      event.preventDefault();
+    if (passedValidation) {
+      Api
+        .logIn(this.state.username, this.state.password)
+        .then((response) => {
+          Auth.authenticate(response.data.token);
+          this.props.history.push("/profile");
+        })
+        .catch(error => console.error(error));
     }
   }
 
@@ -48,8 +57,6 @@ class PageNotFound extends Component {
           <Card.Body>
             <Form
               noValidate
-              action="/api/login"
-              method="POST"
               validated={this.state.validated}
               onSubmit={this.handleSubmit}
             >

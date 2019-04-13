@@ -1,17 +1,11 @@
 import axios from "axios";
 
 export default {
-  login: function(username, password) {
-    let userpass = btoa(username + ":" + password);
-    userpass = userpass.replace("=", "");
-    return axios.post(
-      "/api/login",
-      null,
-      {
-        headers: {
-          "Authorization": `Basic ${userpass}`,
-        },
-      }
-    );
-  },
+  logIn: function(username, password) {
+    const data = {
+      username: username,
+      password: password,
+    };
+    return axios.post("/api/auth/token", data);
+  }
 };
