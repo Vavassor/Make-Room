@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import CreateAccount from "./pages/CreateAccount";
 import Main from "./pages/Main";
 import Profile from "./pages/Profile";
 import PageNotFound from "./pages/PageNotFound";
@@ -15,6 +16,7 @@ class App extends Component {
         <Container>
           <Switch>
             <Route exact path="/" component={Main} />
+            <Route exact path="/create-account" component={CreateAccount} />
             <PrivateRoute exact path="/profile" component={Profile} />
             <Route component={PageNotFound} />
           </Switch>
