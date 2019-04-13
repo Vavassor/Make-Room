@@ -61,7 +61,9 @@ class CreateAccount extends Component {
     if (passedValidation) {
       Api
         .createAccount(this.state.username, this.state.password)
-        .then((user) => console.log(user))
+        .then((user) => {
+          this.props.history.push("/");
+        })
         .catch((error) => {
           const errorObject = error.response.data;
           if (errorObject.target === "username") {
