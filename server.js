@@ -1,5 +1,7 @@
 const authentication = require("./middleware/authentication");
+const ExtractJwt = require("passport-jwt").ExtractJwt;
 const LocalStrategy = require("passport-local").Strategy;
+const JwtStrategy = require("passport-jwt").Strategy;
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -26,6 +28,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET,
+  ignoreExpiration: true,
+};
+
+passport.use(new JwtStrategy(jwtOptions, authentication.authenticateJwt));
 passport.use(new LocalStrategy(authentication.authenticateLocal));
 passport.serializeUser(authentication.serializeUser);
 passport.deserializeUser(authentication.deserializeUser);

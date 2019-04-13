@@ -2,6 +2,18 @@ const models = require("../models");
 const PasswordHelper = require("../helpers/PasswordHelper");
 
 module.exports = {
+  authenticateJwt: function(jwtPayload, done) {
+    models.User
+      .findById(jwtPayload.sub)
+      .then((user) => {
+        if (!user) {
+          return done(null, false);
+        }
+        done(null, user);
+      })
+      .catch(error => done(error));
+  },
+
   authenticateLocal: function(username, password, done) {
     models.User
       .findOne({username: username})
