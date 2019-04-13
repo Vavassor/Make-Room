@@ -1,15 +1,14 @@
 const mongoose = require("mongoose");
 const models = require("../models");
 
-mongoose.connect(
-  process.env.MONGODB_URI ||
-  "mongodb://localhost/project3"
-);
+const bcrypt = require("bcrypt-nodejs");
+
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/project3");
 
 const userSeeds = [
   {
     username: "vavassor",
-    password: "password",
+    password: bcrypt.hashSync("password", bcrypt.genSaltSync(10)),
   },
 ];
 
