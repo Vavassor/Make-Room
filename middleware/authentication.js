@@ -1,18 +1,23 @@
 const models = require("../models");
-
-function verifyPassword(a, b) {
-  return a === b;
-}
+const PasswordHelper = require("../helpers/PasswordHelper");
 
 module.exports = {
   authenticateLocal: function(username, password, done) {
     models.User
       .findOne({username: username})
       .then(user => {
-        if (!user || !verifyPassword(user.password, password)) {
+        if (!user) {
           return done(null, false);
         }
-        done(null, user);
+        PasswordHelper
+          .compareHash(password, user.password)
+          .then((same) => {
+            if (!same) {
+              return done(null, false);
+            }
+            done(null, user);
+          })
+          .catch(error => done(error));
       })
       .catch(error => done(error));
   },
