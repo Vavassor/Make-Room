@@ -12,7 +12,7 @@ var EventSchema = new Schema({
   },
   attendees: [
     {
-    type: string
+    type: String
   }
 ],
 });
