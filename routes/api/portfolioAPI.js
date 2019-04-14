@@ -12,11 +12,11 @@ function getPortfolioById(req, res){
   .catch(err => res.status(422).json(err))
 };
 
-function updateProfile(req, res){
+function updatePortfolio(req, res){
 
 }
 
-function deleteProfile(req, res){
+function deletePortfolio(req, res){
 
 }
 
@@ -31,7 +31,7 @@ router.route("/")
 
 router.route("/:id")
   .get(getPortfolioById)
-  .patch(updateProfile)
-  .delete(deleteProfile);
+  .patch(updatePortfolio)
+  .delete(deletePortfolio);
 
 module.exports = router;

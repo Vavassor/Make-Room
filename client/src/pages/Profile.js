@@ -35,24 +35,31 @@ class Profile extends Component {
 
   componentDidMount() {
     Api
-      .getSelf()
-      .then((response) => {
-        const {id, username} = response.data;
-        this.getProfilePortfolio(id);
-        this.setState({
-          id: id,
-          username: username
-        });
-      })
-      .catch(error => console.error(error));
+    .getSelf()
+    .then((response) => {
+      const {id, username} = response.data;
+      this.getProfilePortfolio(id)
+      this.getUserInfo(id);
+      this.setState({
+        id: id,
+        username: username
+      });
+    })
+    .catch(error => console.error(error));
   }
 
+  getUserInfo(id){
+    Api
+      .getUserInfoById(id)
+      .then(response => console.log(response))
+      .catch(err => console.error("get user error: ", err))
+  };
+
   getProfilePortfolio = (id) => {
-    console.log("Client ID: ", id);
     Api
     .getProfilePortfolioById(id)
     .then(data => {
-      console.log(data.data[0].images)
+      // console.log(data.data[0].images)
       this.setState({
         portfolio: data.data[0].images
       })
