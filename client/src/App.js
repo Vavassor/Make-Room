@@ -3,6 +3,7 @@ import "./App.css";
 import CreateAccount from "./pages/CreateAccount";
 import Main from "./pages/Main";
 import Profile from "./pages/Profile";
+import ProfileUpdate from "./pages/ProfileUpdate";
 import ChatIndex from "./pages/ChatIndex";
 import PageNotFound from "./pages/PageNotFound";
 import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
@@ -22,6 +23,7 @@ class App extends Component {
             <Route exact path="/chatIndex" component={ChatIndex} />
             <Route exact path="/create-account" component={CreateAccount} />
             <PrivateRoute exact path="/profile" component={Profile} />
+            <Route exact path="/profile/update" component={ProfileUpdate} />
             <Route component={PageNotFound} />
           </Switch>
         </Container>
