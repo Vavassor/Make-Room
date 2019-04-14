@@ -26,6 +26,10 @@ const userSchema = new Schema({
     type: Map,
     of: String
   },
+  blurb: {
+    type: String,
+    required: false
+  },
   // events: [],
   portfolio: { 
     type: Schema.Types.ObjectId, 

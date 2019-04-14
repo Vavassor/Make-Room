@@ -5,11 +5,10 @@ function getProfileById(req, res){
   db.User
   .find({_id: req.params.id})
   .then(response => {
-    console.log(response[0].password)
     response[0].password = "";
     res.json(response);
   })
-  .catch(err => console.log(err))
+  .catch(err => console.error(err))
 };
 
 function updateProfile(req, res){
