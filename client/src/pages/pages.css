@@ -1,0 +1,18 @@
+body {
+  min-height: 100vh;
+  background-color: lightgrey;
+  background-image: linear-gradient(to bottom, transparent, darkgrey)
+}
+
+.profile-jumbo{
+  padding: 2rem 0 !important;
+  text-justify: center;
+  color: white;
+  background-color: rgb(254, 37, 37) !important;
+  background-image: radial-gradient(transparent, rgb(174, 2, 2));
+  border-radius: 0 !important;
+}
+
+.profile-container {
+
+}

@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  _id: Schema.Types.ObjectId,
   password: {
     type: String,
     required: true,
@@ -31,6 +30,9 @@ const userSchema = new Schema({
   portfolio: { 
     type: Schema.Types.ObjectId, 
     ref: 'Porftolio' 
+  },
+  joined: {
+    date: { type: Date, default: Date.now },
   }
 });
 

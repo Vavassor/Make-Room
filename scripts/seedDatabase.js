@@ -13,6 +13,14 @@ const userSeeds = [
   {
     username: "Scooter",
     password: bcrypt.hashSync("password", bcrypt.genSaltSync(10)),
+    firstname: "Scott",
+    lastename: "Zinski",
+    email: "Scott@zinski.net",
+    socialMediaHandles: {
+      twitter: "twitterme.com",
+      github: "github.com",
+      facebook: "facebook.com"
+    },
   }
 ];
 
