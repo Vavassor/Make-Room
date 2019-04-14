@@ -2,6 +2,7 @@ const models = require("../models");
 const PasswordHelper = require("../helpers/PasswordHelper");
 
 function handleError(error, response) {
+  console.error(error);
   response.status(500).json(error);
 }
 
