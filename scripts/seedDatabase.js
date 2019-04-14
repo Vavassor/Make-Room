@@ -10,6 +10,10 @@ const userSeeds = [
     username: "vavassor",
     password: bcrypt.hashSync("password", bcrypt.genSaltSync(10)),
   },
+  {
+    username: "Scooter",
+    password: bcrypt.hashSync("password", bcrypt.genSaltSync(10)),
+  }
 ];
 
 models.User
