@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { database } from '../../utils/firebase';
+import { database } from '../../utilities/firebase';
 
 class EventChat extends Component {
   constructor() {

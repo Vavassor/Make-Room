@@ -13,12 +13,13 @@ const portfolioSchema = new Schema({
   images: [
     {
     url: String,
+    title: String,
     about: String
   }
 ],
   porfolioaDisplayType: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 

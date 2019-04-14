@@ -32,6 +32,10 @@ module.exports = {
           });
       })
       .then((user) => {
+        models.Portfolio
+        .create({
+          userId: user._id
+        })
         response.json({
           id: user._id,
           username: user.username,
