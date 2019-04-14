@@ -1,22 +1,26 @@
 import React from "react";
 
 import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+
 
 import "./profileCard.css"
 
 
 
 
-function ProfileCard(props){
+function ProfileCard({image}){
   return (
-    <Card {...props}>
-      <Card.Img variant="top" src="https://via.placeholder.com/400"/>
-      <Card.Body>
-        <Card.Title>This is one of my portfolio Items</Card.Title>
-        <Card.Text>Here is some info about my portfolio Item</Card.Text>
-      </Card.Body>
-    </Card>
-  )
+    <Col sm="4">
+      <Card>
+        <Card.Img variant="top" src={image.url} />
+        <Card.Body>
+          <Card.Title>{image.title}</Card.Title>
+          <Card.Text>{image.about}</Card.Text>
+        </Card.Body>
+      </Card>
+    </Col>
+  );
 
 }
 

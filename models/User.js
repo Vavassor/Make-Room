@@ -30,6 +30,9 @@ const userSchema = new Schema({
   portfolio: { 
     type: Schema.Types.ObjectId, 
     ref: 'Porftolio' 
+  },
+  joined: {
+    date: { type: Date, default: Date.now },
   }
 });
 

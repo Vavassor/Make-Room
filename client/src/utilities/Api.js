@@ -29,4 +29,12 @@ export default {
     };
     return axios.post("/api/auth/token", data);
   },
+
+
+  // profile routes
+  getProfilePortfolioById: function(userId){
+    
+    return axios.get("/api/portfolio/" + userId)
+  },
+
 };

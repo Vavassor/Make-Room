@@ -7,8 +7,6 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import CardDeck from "react-bootstrap/CardDeck";
-import CardGroup from "react-bootstrap/CardGroup";
 
 //custom components
 import ProfileCard from "../components/ProfileCard";
@@ -20,6 +18,7 @@ import Auth from "../utilities/Auth";
 // css library
 import "./pages.css"
 
+
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +28,8 @@ class Profile extends Component {
     this.state = {
       username: "",
       id: "",
+      portfolio: "",
+      userInfo: "",
     };
   }
 
@@ -37,12 +38,27 @@ class Profile extends Component {
       .getSelf()
       .then((response) => {
         const {id, username} = response.data;
+        this.getProfilePortfolio(id);
         this.setState({
           id: id,
           username: username
         });
       })
       .catch(error => console.error(error));
+  }
+
+  getProfilePortfolio = (id) => {
+    console.log("Client ID: ", id);
+    Api
+    .getProfilePortfolioById(id)
+    .then(data => {
+      console.log(data.data[0].images)
+      this.setState({
+        portfolio: data.data[0].images
+      })
+    })
+    .catch(error => console.error(error));
+
   }
 
   handleLogOut(event) {
@@ -95,13 +111,13 @@ class Profile extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">
-            <Col xs={6}>
-                <ProfileCard className="mb-3"/>
-                <ProfileCard className="mb-3"/>
-                <ProfileCard className="mb-3"/>
-                <ProfileCard className="mb-3"/>
-                <ProfileCard className="mb-3"/>
-                <ProfileCard className="mb-3"/>
+            <Col xs={11}>
+              <Row className="justify-content-center">
+              {this.state.portfolio.length? this.state.portfolio.map(imageInfo => <ProfileCard key={imageInfo.url} image={imageInfo}/>)
+              
+              : <h1>You don't have any items</h1>}
+          
+              </Row>
             </Col>
           </Row>
         </Container>
