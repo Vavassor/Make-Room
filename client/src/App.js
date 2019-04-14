@@ -7,7 +7,7 @@ import ProfileUpdate from "./pages/ProfileUpdate";
 import ChatIndex from "./pages/ChatIndex";
 import PageNotFound from "./pages/PageNotFound";
 import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
-import NavTabs from "./components/NavTabs";
+import NavTabs from "./components/NavTabs/NavTabs";
 import PrivateRoute from "./components/PrivateRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
@@ -17,7 +17,7 @@ class App extends Component {
     return (
       <Router>
         <NavTabs/>
-        <Container>
+        {/* <Container> */}
           <Switch>
             <Route exact path="/" component={Main} />
             <Route exact path="/chatIndex" component={ChatIndex} />
@@ -26,7 +26,7 @@ class App extends Component {
             <Route exact path="/profile/update" component={ProfileUpdate} />
             <Route component={PageNotFound} />
           </Switch>
-        </Container>
+        {/* </Container> */}
       </Router>
     );
   }
