@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import Api from "../utilities/Api";
+import Auth from "../utilities/Auth";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -61,7 +62,9 @@ class CreateAccount extends Component {
     if (passedValidation) {
       Api
         .createAccount(this.state.username, this.state.password)
-        .then((user) => {
+        .then(user => Api.logIn(this.state.username, this.state.password))
+        .then((response) => {
+          Auth.authenticate(response.data.token);
           this.props.history.push("/");
         })
         .catch((error) => {

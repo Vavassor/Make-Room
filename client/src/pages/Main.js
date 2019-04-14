@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Jumbotron from "react-bootstrap/Jumbotron";
 
-class PageNotFound extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
 
@@ -17,6 +17,12 @@ class PageNotFound extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    if (Auth.isAuthenticated()) {
+      this.props.history.push("/profile");
+    }
   }
 
   handleInputChange(event) {
@@ -100,4 +106,4 @@ class PageNotFound extends Component {
   }
 }
 
-export default PageNotFound;
+export default Main;
