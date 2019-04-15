@@ -54,7 +54,6 @@ class Profile extends Component {
     Api
       .getUserInfoById(id)
       .then(response => {
-        console.log(response.data[0])
         this.setState({userInfo: response.data[0]})
       })
       .catch(err => console.error("get user error: ", err))
@@ -64,7 +63,6 @@ class Profile extends Component {
     Api
     .getProfilePortfolioById(id)
     .then(data => {
-      console.log(data.data[0])
       this.setState({
         portfolio: data.data[0].images,
         portfolioInfo:data.data[0].portfolioDetails
@@ -76,9 +74,13 @@ class Profile extends Component {
   }
 
   handleLogOut(event) {
-    console.log("logout");
     Auth.logOut();
     this.props.history.push("/");
+  }
+
+  mediaLinks(link){
+    let x = Object.entries(link);
+    return x.map(item => <Col key={item[1]} sm={3}>{item[0]}: {item[1]}</Col>)
   }
 
   render() {
@@ -87,17 +89,30 @@ class Profile extends Component {
         <Jumbotron className="profile-jumbo fluid mx-0">
           <Row className="justify-content-center text-center">
             <Col sm={6}>
-              <h1>My Name!</h1>
-              <Button variant="primary" type="button" onClick ={this.handleLogOut}>Log Out</Button>
+              <h1>
+                {this.state.userInfo.firstname
+                  ? this.state.userInfo.firstname +
+                    ", " +
+                    this.state.userInfo.lastname
+                  : "Anon"}
+              </h1>
+              <Button
+                variant="primary"
+                type="button"
+                onClick={this.handleLogOut}
+              >
+                Log Out
+              </Button>
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-1">
             <Col sm={6}>
-              <h5>A little Blurb about me!</h5>
+              <h5>{this.state.userInfo.blurb}</h5>
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-4">
-            <Col sm={2}>
+            {this.state.userInfo.socialMediaHandles ? this.mediaLinks(this.state.userInfo.socialMediaHandles) : ""}
+            {/* <Col sm={2}>
               <p>Social Medial Links</p>
             </Col>
             <Col sm={2}>
@@ -105,7 +120,7 @@ class Profile extends Component {
             </Col>
             <Col sm={2}>
               <p>Social Medial Links</p>
-            </Col>
+            </Col> */}
           </Row>
         </Jumbotron>
         <Container className="profile-container">
@@ -114,7 +129,11 @@ class Profile extends Component {
               <Card>
                 <Card.Body>
                   <Card.Title>About My Work</Card.Title>
-                  <Card.Text>{this.state.portfolioInfo}</Card.Text>
+                  <Card.Text>
+                    {this.state.portfolioInfo
+                      ? this.state.portfolioInfo
+                      : "Oops, I haven't added any info about my porfolio"}
+                  </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
@@ -122,10 +141,13 @@ class Profile extends Component {
           <Row className="justify-content-center portfolio-images">
             <Col xs={11}>
               <Row className="justify-content-center">
-              {this.state.portfolio.length? this.state.portfolio.map(imageInfo => <ProfileCard key={imageInfo.url} image={imageInfo}/>)
-              
-              : <h1>You don't have any items</h1>}
-          
+                {this.state.portfolio.length ? (
+                  this.state.portfolio.map(imageInfo => (
+                    <ProfileCard key={imageInfo.url} image={imageInfo} />
+                  ))
+                ) : (
+                  <h3>I don't have any items in my porfolio</h3>
+                )}
               </Row>
             </Col>
           </Row>
