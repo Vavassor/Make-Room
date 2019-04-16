@@ -22,6 +22,10 @@ const userSchema = new Schema({
     type: String,
     requried: false
   },
+  website: {
+    type: String,
+    required: false
+  },
   socialMediaHandles: {
     type: Map,
     of: String
@@ -30,13 +34,17 @@ const userSchema = new Schema({
     type: String,
     required: false
   },
-  // events: [],
   portfolio: { 
     type: Schema.Types.ObjectId, 
     ref: 'Porftolio' 
   },
   joined: {
-    date: { type: Date, default: Date.now },
+    type: Date, 
+    default: Date.now
+  },
+  lastactive: {
+    type: Date,
+    default: Date.now
   }
 });
 

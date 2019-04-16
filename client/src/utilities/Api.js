@@ -33,12 +33,18 @@ export default {
 
   // profile routes
   getProfilePortfolioById: function(userId){
-    
     return axios.get("/api/portfolio/" + userId)
   },
 
   getUserInfoById: function(userId){
-    return axios.get("api/profile/" + userId)
+    // let url = "api/profile/" + userId
+    let url = "api/profile/5cb36af71767bf1ef77a128a"
+    console.log(url);
+    return axios.get(url)
+  },
+
+  updateUserProfile: function(userId, userInfo){
+    return axios.patch("/api/profile/" + userId, userInfo)
   }
 
 };

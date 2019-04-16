@@ -12,7 +12,14 @@ function getProfileById(req, res){
 };
 
 function updateProfile(req, res){
-
+  console.log(req.params, req.body)
+  db.User
+  .updateOne({_id: req.params.id}, req.body)
+  .then(response => {
+    console.log(response)
+    res.json(response);
+  })
+  .catch(err => console.log(err))
 };
 
 function deleteProfile(req, res){

@@ -45,7 +45,9 @@ app.get("*", function(req, res) {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/project3");
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/project3";
+// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/project3");
+mongoose.connect(MONGODB_URI, {useNewUrlParser: true});
 
 app.listen(PORT, function() {
   console.log(`🌎 ==> API server now on port ${PORT}!`);

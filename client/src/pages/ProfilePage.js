@@ -51,6 +51,8 @@ class Profile extends Component {
   }
 
   getUserInfo(id){
+    console.log(typeof id)
+    console.log(id.length);
     Api
       .getUserInfoById(id)
       .then(response => {
@@ -80,7 +82,7 @@ class Profile extends Component {
 
   mediaLinks(link){
     let x = Object.entries(link);
-    return x.map(item => <Col key={item[1]} sm={3}>{item[0]}: {item[1]}</Col>)
+    return x.map(item => <Col key={item[1]} sm={2}><a href={item[1]} target="_blank" rel="noopener noreferrer">{item[0]}</a></Col>)
   }
 
   render() {
@@ -112,15 +114,6 @@ class Profile extends Component {
           </Row>
           <Row className="justify-content-center text-center mt-4">
             {this.state.userInfo.socialMediaHandles ? this.mediaLinks(this.state.userInfo.socialMediaHandles) : ""}
-            {/* <Col sm={2}>
-              <p>Social Medial Links</p>
-            </Col>
-            <Col sm={2}>
-              <p>Social Medial Links</p>
-            </Col>
-            <Col sm={2}>
-              <p>Social Medial Links</p>
-            </Col> */}
           </Row>
         </Jumbotron>
         <Container className="profile-container">
