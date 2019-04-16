@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function NavTabs() {
+import Button from "react-bootstrap/Button";
+
+
+function NavTabs(props) {
   return (
     <ul className="nav nav-tabs">
       <li className="nav-item">
@@ -27,6 +30,7 @@ function NavTabs() {
       </li>
       <li className="nav-item">
       </li>
+      {/* <Button variant="primary" type="button" onClick ={props.handleLogOut}>Log Out</Button> */}
     </ul>
   );
 }

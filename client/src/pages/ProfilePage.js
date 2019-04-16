@@ -11,6 +11,7 @@ import Container from "react-bootstrap/Container";
 //custom components
 import ProfileCard from "../components/ProfileCard";
 
+
 // utils
 import Api from "../utilities/Api";
 import Auth from "../utilities/Auth";
@@ -29,32 +30,43 @@ class Profile extends Component {
       username: "",
       id: "",
       portfolio: "",
+      portfolioInfo: "",
       userInfo: "",
     };
   }
 
   componentDidMount() {
     Api
-      .getSelf()
-      .then((response) => {
-        const {id, username} = response.data;
-        this.getProfilePortfolio(id);
-        this.setState({
-          id: id,
-          username: username
-        });
-      })
-      .catch(error => console.error(error));
+    .getSelf()
+    .then((response) => {
+      const {id, username} = response.data;
+      this.getProfilePortfolio(id)
+      this.getUserInfo(id);
+      this.setState({
+        id: id,
+        username: username
+      });
+    })
+    .catch(error => console.error(error));
   }
 
+  getUserInfo(id){
+    Api
+      .getUserInfoById(id)
+      .then(response => {
+        this.setState({userInfo: response.data[0]})
+      })
+      .catch(err => console.error("get user error: ", err))
+  };
+
   getProfilePortfolio = (id) => {
-    console.log("Client ID: ", id);
     Api
     .getProfilePortfolioById(id)
     .then(data => {
-      console.log(data.data[0].images)
       this.setState({
-        portfolio: data.data[0].images
+        portfolio: data.data[0].images,
+        portfolioInfo:data.data[0].portfolioDetails
+
       })
     })
     .catch(error => console.error(error));
@@ -66,22 +78,41 @@ class Profile extends Component {
     this.props.history.push("/");
   }
 
+  mediaLinks(link){
+    let x = Object.entries(link);
+    return x.map(item => <Col key={item[1]} sm={3}>{item[0]}: {item[1]}</Col>)
+  }
+
   render() {
     return (
       <>
         <Jumbotron className="profile-jumbo fluid mx-0">
           <Row className="justify-content-center text-center">
             <Col sm={6}>
-              <h1>My Name!</h1>
+              <h1>
+                {this.state.userInfo.firstname
+                  ? this.state.userInfo.firstname +
+                    ", " +
+                    this.state.userInfo.lastname
+                  : "Anon"}
+              </h1>
+              <Button
+                variant="primary"
+                type="button"
+                onClick={this.handleLogOut}
+              >
+                Log Out
+              </Button>
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-1">
             <Col sm={6}>
-              <h5>A little Blurb about me!</h5>
+              <h5>{this.state.userInfo.blurb}</h5>
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-4">
-            <Col sm={2}>
+            {this.state.userInfo.socialMediaHandles ? this.mediaLinks(this.state.userInfo.socialMediaHandles) : ""}
+            {/* <Col sm={2}>
               <p>Social Medial Links</p>
             </Col>
             <Col sm={2}>
@@ -89,7 +120,7 @@ class Profile extends Component {
             </Col>
             <Col sm={2}>
               <p>Social Medial Links</p>
-            </Col>
+            </Col> */}
           </Row>
         </Jumbotron>
         <Container className="profile-container">
@@ -97,15 +128,12 @@ class Profile extends Component {
             <Col xs={10}>
               <Card>
                 <Card.Body>
-                  <Card.Title>About Me!   Username: {this.state.username} ID: {this.state.id}</Card.Title>
-                  <Card.Text> This is some info about me  I am an artist and I this card might even contain an image of me perhaps... </Card.Text>
-                  <Button
-                    variant="primary"
-                    type="button"
-                    onClick={this.handleLogOut}
-                  >
-                    Log Out
-                  </Button>
+                  <Card.Title>About My Work</Card.Title>
+                  <Card.Text>
+                    {this.state.portfolioInfo
+                      ? this.state.portfolioInfo
+                      : "Oops, I haven't added any info about my porfolio"}
+                  </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
@@ -113,10 +141,13 @@ class Profile extends Component {
           <Row className="justify-content-center portfolio-images">
             <Col xs={11}>
               <Row className="justify-content-center">
-              {this.state.portfolio.length? this.state.portfolio.map(imageInfo => <ProfileCard key={imageInfo.url} image={imageInfo}/>)
-              
-              : <h1>You don't have any items</h1>}
-          
+                {this.state.portfolio.length ? (
+                  this.state.portfolio.map(imageInfo => (
+                    <ProfileCard key={imageInfo.url} image={imageInfo} />
+                  ))
+                ) : (
+                  <h3>I don't have any items in my porfolio</h3>
+                )}
               </Row>
             </Col>
           </Row>

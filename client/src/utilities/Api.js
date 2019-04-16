@@ -37,4 +37,8 @@ export default {
     return axios.get("/api/portfolio/" + userId)
   },
 
+  getUserInfoById: function(userId){
+    return axios.get("api/profile/" + userId)
+  }
+
 };
