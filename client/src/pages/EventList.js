@@ -43,9 +43,11 @@ class EventList extends Component {
         return (
           <EventItem
             key={event.id}
+            id={event.id}
             address={event.address}
             name={event.name}
             startTime={event.startTime}
+            placeName={event.placeName}
           />
         );
       })
