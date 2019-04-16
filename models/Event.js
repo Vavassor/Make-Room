@@ -2,19 +2,24 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var EventSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   address: {
     type: String,
-    required: true
+    required: true,
   },
   startTime: {
     type: Date,
-    required: true
+    required: true,
   },
-  attendees: [
-    {
-    type: String
-  }
-],
+  placeName: {
+    type: String,
+  },
+  attendees: {
+    type: [String],
+  },
 });
 
 // This creates our model from the above schema, using mongoose's model method

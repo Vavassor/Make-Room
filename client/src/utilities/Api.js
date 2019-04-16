@@ -10,6 +10,25 @@ export default {
     return axios.post("/api/user", data);
   },
 
+  getEvents: function(options) {
+    let queryUrl = "/api/event";
+
+    if (options) {
+      const searchParams = new URLSearchParams();
+
+      if (options.orderBy) {
+        searchParams.append("order_by", options.orderBy);
+      }
+      if (options.afterTime) {
+        searchParams.append("after_time", options.afterTime);
+      }
+
+      queryUrl += "?" + searchParams;
+    }
+    
+    return axios.get(queryUrl);
+  },
+
   getSelf: function() {
     const token = Auth.getToken();
     return axios.get(
@@ -30,11 +49,9 @@ export default {
     return axios.post("/api/auth/token", data);
   },
 
-
   // profile routes
   getProfilePortfolioById: function(userId){
     
     return axios.get("/api/portfolio/" + userId)
   },
-
 };

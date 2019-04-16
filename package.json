@@ -10,6 +10,7 @@
     "client": "cd client && npm run start",
     "seed": "node scripts/seedDatabase.js",
     "seedprofile": "node scripts/seedProfile.js",
+    "seed-events": "node scripts/seedEvents.js",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
