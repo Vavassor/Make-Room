@@ -42,8 +42,8 @@ class EventList extends Component {
       return this.state.events.map(event => {
         return (
           <EventItem
-            key={event.id}
-            id={event.id}
+            key={event._id}
+            id={event._id}
             address={event.address}
             name={event.name}
             startTime={event.startTime}

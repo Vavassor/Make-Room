@@ -1,4 +1,4 @@
-const models = requestuire("../../models");
+const models = require("../models");
 
 module.exports = {
   createEvent: function(request, response){
@@ -39,19 +39,7 @@ module.exports = {
     }
   
     query
-      .then((events) => {
-        const responseEvents = events.map((event) => {
-          const data = {
-            address: event.address,
-            id: event._id,
-            name: event.name,
-            placeName: event.placeName,
-            startTime: event.startTime,
-          };
-          return data;
-        });
-        response.json(responseEvents);
-      })
+      .then(events => response.json(events))
       .catch(error => response.status(422).json(error));
   },
 
