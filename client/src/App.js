@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import CreateAccount from "./pages/CreateAccount";
+import Event from "./pages/Event";
 import EventList from "./pages/EventList";
 import Main from "./pages/Main";
 import Profile from "./pages/Profile";
@@ -22,6 +23,7 @@ class App extends Component {
             <Route exact path="/chatIndex" component={ChatIndex} />
             <Route exact path="/create-account" component={CreateAccount} />
             <Route exact path="/event-list" component={EventList} />
+            <Route exact path="/event/:id" component={Event} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/profile/update" component={ProfileUpdate} />
             <Route component={PageNotFound} />

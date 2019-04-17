@@ -4,14 +4,14 @@ module.exports = {
   createEvent: function(request, response){
     models.Event
       .create(request.body)
-      .then(response => response.json(response))
+      .then(event => response.json(event))
       .catch(error => response.status(422).json(error));
   },
   
   deleteEvent: function(request, response) {
     models.Event
       .deleteOne({_id: request.params.id})
-      .then(response => response.json(response))
+      .then(event => response.json(event))
       .catch(error => response.status(422).json(error));
   },
 
@@ -45,15 +45,15 @@ module.exports = {
 
   getEventById: function(request, response){
     models.Event
-      .find({_id: request.params.id})
-      .then(response => response.json(response))
+      .findById(request.params.id)
+      .then(event => response.json(event))
       .catch(error => response.status(422).json(error));
   },
 
   updateEvent: function(request, response) {
     models.Event
       .findOneAndUpdate({_id: request.body.id})
-      .then(response => response.json(response))
+      .then(event => response.json(event))
       .catch(error => response.status(422).json(error));
   },
 };

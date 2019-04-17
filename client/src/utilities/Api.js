@@ -6,8 +6,12 @@ export default {
     const data = {
       username: username.trim(),
       password: password.trim(),
-    }
+    };
     return axios.post("/api/user", data);
+  },
+
+  getEventById: function(id) {
+    return axios.get(`/api/event/${id}`);
   },
 
   getEvents: function(options) {
