@@ -54,20 +54,44 @@ class Event extends Component {
       return (
         <div>
           <h3 className="card-title">{event.name}</h3>
-          <time className="card-text" dateTime={this.props.startTime}>
-            {moment(this.props.startTime).format("MMM D, Y @ h:mma")}
-          </time>
+          {this.renderDateAndTime(event)}
           <p>{event.placeName}</p>
           <p>{event.address}</p>
+          <p>{event.description}</p>
         </div>
       );
     } else if (this.state.failedToLoad) {
       return (
-        <p>Failed to load! <Button onClick={() => this.loadEvent()}>Retry</Button></p>
+        <p>Failed to retrive event information. <Button onClick={() => this.loadEvent()}>Retry</Button></p>
       );
     } else {
       return (
         <progress />
+      );
+    }
+  }
+
+  renderDateAndTime(event) {
+    const startTime = moment(event.startTime);
+    const endTime = moment(event.endTime);
+
+    const start = (
+      <time datetime={event.startTime}>
+        {startTime.format("MMM D, Y @ h:mma")}
+      </time>
+    );
+
+    if (startTime.isSame(endTime, "date")) {
+      return (
+        <div>
+          {start} - <time datetime={event.startTime}>{endTime.format("h:mma")}</time>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          {start} - <time datetime={event.startTime}>{endTime.format("MMM D, Y @ h:mma")}</time>
+        </div>
       );
     }
   }

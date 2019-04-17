@@ -2,6 +2,10 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var EventSchema = new Schema({
+  creator: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -11,6 +15,14 @@ var EventSchema = new Schema({
     required: true,
   },
   startTime: {
+    type: Date,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  endTime: {
     type: Date,
     required: true,
   },

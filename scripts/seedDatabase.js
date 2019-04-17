@@ -7,6 +7,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/project3");
 
 const userSeeds = [
   {
+    _id: "awefoij2308238253",
     username: "vavassor",
     password: bcrypt.hashSync("password", bcrypt.genSaltSync(10)),
   },
