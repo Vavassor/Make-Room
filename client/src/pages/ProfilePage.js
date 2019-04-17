@@ -96,6 +96,15 @@ class Profile extends Component {
     let userInfo = {...this.state}
     delete userInfo.id
     delete userInfo.username
+    console.log("Submitting: ", userInfo);
+    userInfo = {
+      firstname: userInfo.firstname,
+      lastname: userInfo.lastname,
+      blurb: userInfo.blurb,
+      website: userInfo.website,
+      email: userInfo.email
+    }
+    console.log("Mutated Info: ", userInfo)
     const {id} = this.state
 
     Api
@@ -122,9 +131,7 @@ class Profile extends Component {
             <Col sm={6}>
               <h1>
                 {this.state.firstname
-                  ? this.state.firstname +
-                    ", " +
-                    this.state.lastname
+                  ? this.state.firstname + " " + this.state.lastname
                   : "Anon"}
               </h1>
               <UpdateModal handleInputChange={this.handleInputChange} handleFormSubmit = {this.handleFormSubmit} userInfo={this.state}/>
@@ -163,7 +170,7 @@ class Profile extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">
-            <Col xs={11}>
+            <Col xs={10}>
               <Row className="justify-content-center">
                 {this.state.portfolio.length ? (
                   this.state.portfolio.map(imageInfo => (

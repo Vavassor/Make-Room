@@ -44,10 +44,11 @@ class EventList extends Component {
           <EventItem
             key={event._id}
             id={event._id}
-            address={event.address}
+            address={event.place.address}
             name={event.name}
             startTime={event.startTime}
-            placeName={event.placeName}
+            endTime={event.endTime}
+            placeName={event.place.name}
           />
         );
       })
