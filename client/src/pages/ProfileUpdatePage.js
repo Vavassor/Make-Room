@@ -26,7 +26,9 @@ class ProfileUpdate extends Component {
     .getSelf()
     .then((response) => {
       const {id, username} = response.data;
-      this.getUserInfo(id);
+      // this.getUserInfo(id);
+      // this.props.getInfo(id)
+      // console.log("Props: ", this.props);
       this.setState({
         id: id,
         username: username
@@ -55,7 +57,7 @@ class ProfileUpdate extends Component {
         </Jumbotron>
         <Row className="justify-content-center">
           <Col sm={6}>
-            <ProfileForm />
+            <ProfileForm props = {this.props}/>
           </Col>
         </Row>
         {/* <Basic/> */}

@@ -22,7 +22,7 @@ class App extends Component {
             <Route exact path="/" component={Main} />
             <Route exact path="/chatIndex" component={ChatIndex} />
             <Route exact path="/create-account" component={CreateAccount} />
-            <PrivateRoute exact path="/profile" component={ProfilePage} />
+            <Route exact path="/profile" component={ProfilePage} />
             <Route exact path="/profile/update" component={ProfileUpdate} />
             <Route component={PageNotFound} />
           </Switch>

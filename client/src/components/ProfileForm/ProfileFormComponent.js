@@ -19,29 +19,39 @@ class ProfileForm extends Component {
 
   state = {
     id: "",
-    username: "",
-    firstname: "",
+    username:"",
+    firstname:  "",
     lastname: "",
     email: "",
     blurb: "",
-    // twitter: "",
-    // github:"",
     website:"",
-    // facebook:""
     
   };
 
   componentDidMount() {
+    console.log(this.props);
     Api
     .getSelf()
     .then((response) => {
       const {id, username} = response.data;
+      this.getUserInfo(id);
       this.setState({
         id: id,
         username: username
       });
     })
     .catch(error => console.error(error));
+  };
+
+  getUserInfo(id){
+    console.log(typeof id)
+    console.log(id.length);
+    Api
+      .getUserInfoById(id)
+      .then(response => {
+        this.setState({userInfo: response.data[0]})
+      })
+      .catch(err => console.error("get user error: ", err))
   };
 
   handleInputChange = event => {
@@ -62,6 +72,7 @@ class ProfileForm extends Component {
     .then(result => console.log(result))
     .catch(err => console.error(err))
   };
+  
 
   resetForm =() => {
     this.setState({ profileInfo: {} })

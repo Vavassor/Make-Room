@@ -40,7 +40,6 @@ passport.deserializeUser(authentication.deserializeUser);
 passport.serializeUser(authentication.serializeUser);
 
 app.use(routes);
-
 app.get("*", function(req, res) {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
