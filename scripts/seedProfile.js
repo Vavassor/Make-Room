@@ -8,6 +8,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/project3");
 const portfolioSeeds = [
   {
     userId: "5cb36af71767bf1ef77a128a",
+    portfolioDetails: "This is my portfolio.  There are many like it, but this one is mine! ",
     images: [
       {
         url: "https://s.abcnews.com/images/Lifestyle/BR_snail_frog_jef_160825_3x2_1600.jpg",
