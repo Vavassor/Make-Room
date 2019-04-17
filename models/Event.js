@@ -10,10 +10,6 @@ var EventSchema = new Schema({
     type: String,
     required: true,
   },
-  address: {
-    type: String,
-    required: true,
-  },
   startTime: {
     type: Date,
     required: true,
@@ -26,8 +22,25 @@ var EventSchema = new Schema({
     type: Date,
     required: true,
   },
-  placeName: {
-    type: String,
+  place: {
+    address: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    position: {
+      latitude: {
+        type: Number,
+        required: true,
+      },
+      longitude: {
+        type: Number,
+        required: true,
+      },
+    },
   },
   attendees: {
     type: [String],
