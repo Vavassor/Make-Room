@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Api from "../utilities/Api";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import MapContainer from "../components/MapContainer";
 import moment from "moment";
 
 class Event extends Component {
@@ -58,6 +59,7 @@ class Event extends Component {
           <p>{event.placeName}</p>
           <p>{event.address}</p>
           <p>{event.description}</p>
+          <MapContainer />
         </div>
       );
     } else if (this.state.failedToLoad) {
@@ -76,7 +78,7 @@ class Event extends Component {
     const endTime = moment(event.endTime);
 
     const start = (
-      <time datetime={event.startTime}>
+      <time dateTime={event.startTime}>
         {startTime.format("MMM D, Y @ h:mma")}
       </time>
     );
@@ -84,13 +86,13 @@ class Event extends Component {
     if (startTime.isSame(endTime, "date")) {
       return (
         <div>
-          {start} - <time datetime={event.startTime}>{endTime.format("h:mma")}</time>
+          {start} - <time dateTime={event.startTime}>{endTime.format("h:mma")}</time>
         </div>
       );
     } else {
       return (
         <div>
-          {start} - <time datetime={event.startTime}>{endTime.format("MMM D, Y @ h:mma")}</time>
+          {start} - <time dateTime={event.startTime}>{endTime.format("MMM D, Y @ h:mma")}</time>
         </div>
       );
     }
