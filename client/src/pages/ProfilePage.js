@@ -94,9 +94,17 @@ class Profile extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     let userInfo = {...this.state}
-    console.log(userInfo);
     delete userInfo.id
     delete userInfo.username
+    console.log("Submitting: ", userInfo);
+    userInfo = {
+      firstname: userInfo.firstname,
+      lastname: userInfo.lastname,
+      blurb: userInfo.blurb,
+      website: userInfo.website,
+      email: userInfo.email
+    }
+    console.log("Mutated Info: ", userInfo)
     const {id} = this.state
 
     Api
@@ -164,7 +172,7 @@ class Profile extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">
-            <Col xs={11}>
+            <Col xs={10}>
               <Row className="justify-content-center">
                 {this.state.portfolio.length ? (
                   this.state.portfolio.map(imageInfo => (

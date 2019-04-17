@@ -1,7 +1,15 @@
 body {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
   min-height: 100vh;
   background-color: lightgrey;
   background-image: linear-gradient(to bottom, transparent, darkgrey)
+
+}
+body::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
 }
 
 .profile-jumbo{
@@ -15,4 +23,8 @@ body {
 
 .profile-container {
 
+}
+
+.row {
+  width: 100% !important;
 }
