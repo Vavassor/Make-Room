@@ -3,6 +3,7 @@ import Api from "../utilities/Api";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import MapContainer from "../components/MapContainer";
+import Spinner from "../components/Spinner";
 import moment from "moment";
 
 class Event extends Component {
@@ -55,11 +56,18 @@ class Event extends Component {
       return (
         <div>
           <h3 className="card-title">{event.name}</h3>
+
           {this.renderDateAndTime(event)}
-          <p>{event.placeName}</p>
-          <p>{event.address}</p>
+          <p>{event.place.name}</p>
+          <p>{event.place.address}</p>
           <p>{event.description}</p>
-          <MapContainer />
+
+          <MapContainer
+            marker={{
+              name: event.place.name,
+              position: event.place.position,
+            }}
+          />
         </div>
       );
     } else if (this.state.failedToLoad) {
@@ -68,7 +76,7 @@ class Event extends Component {
       );
     } else {
       return (
-        <progress />
+        <Spinner />
       );
     }
   }

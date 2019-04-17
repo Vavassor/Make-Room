@@ -1,6 +1,5 @@
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
 import React, {Component} from "react";
-import "./style.css";
 
 class MapContainer extends Component {
   constructor(props) {
@@ -34,11 +33,18 @@ class MapContainer extends Component {
   }
 
   render() {
+    const markerPosition = {
+      lat: this.props.marker.position.latitude,
+      lng: this.props.marker.position.longitude,
+    };
+
+    const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${markerPosition.lat},${markerPosition.lng}`;
+
     return (
       <Map
-        className="map"
         google={this.props.google}
         zoom={14}
+        initialCenter={markerPosition}
         containerStyle={{
           height: "250px",
           position: "relative",
@@ -48,7 +54,8 @@ class MapContainer extends Component {
       >
         <Marker
           onClick={this.handleMarkerClick}
-          name="Current location"
+          position={markerPosition}
+          name={this.props.marker.name}
         />
 
         <InfoWindow
@@ -56,7 +63,8 @@ class MapContainer extends Component {
           visible={this.state.showInfoWindow}
         >
           <div>
-            <h1>{this.state.selectedPlace.name}</h1>
+            <h3>{this.state.selectedPlace.name}</h3>
+            <a href={directionsLink}>Get Directions</a>
           </div>
         </InfoWindow>
       </Map>
