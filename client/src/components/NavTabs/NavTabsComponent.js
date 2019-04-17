@@ -37,6 +37,12 @@ function NavTabs(props) {
         </Link>
       </li>
       <li className="nav-item">
+        <Link
+          to="/event-list"
+          className={window.location.pathname === "/event-list" ? "nav-link active" : "nav-link"}
+        >
+          Events
+        </Link>
       </li>
       {/* <Button variant="primary" type="button" onClick ={props.handleLogOut}>Log Out</Button> */}
     </ul>

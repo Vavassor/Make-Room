@@ -6,8 +6,31 @@ export default {
     const data = {
       username: username.trim(),
       password: password.trim(),
-    }
+    };
     return axios.post("/api/user", data);
+  },
+
+  getEventById: function(id) {
+    return axios.get(`/api/event/${id}`);
+  },
+
+  getEvents: function(options) {
+    let queryUrl = "/api/event";
+
+    if (options) {
+      const searchParams = new URLSearchParams();
+
+      if (options.orderBy) {
+        searchParams.append("order_by", options.orderBy);
+      }
+      if (options.afterTime) {
+        searchParams.append("after_time", options.afterTime);
+      }
+
+      queryUrl += "?" + searchParams;
+    }
+    
+    return axios.get(queryUrl);
   },
 
   getSelf: function() {
@@ -30,14 +53,13 @@ export default {
     return axios.post("/api/auth/token", data);
   },
 
-
   // profile routes
   getProfilePortfolioById: function(userId){
     return axios.get("/api/portfolio/" + userId)
   },
 
   getUserInfoById: function(userId){
-    let url = "api/profile/" + userId
+    let url = "/api/profile/" + userId;
     console.log(url);
     return axios.get(url)
   },

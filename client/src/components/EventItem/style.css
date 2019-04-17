@@ -1,0 +1,7 @@
+.event-item {
+  margin-bottom: 1em;
+}
+
+.event-item:last-child {
+  margin-bottom: 0;
+}
