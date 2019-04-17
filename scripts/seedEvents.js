@@ -9,8 +9,8 @@ models.User
 const eventSeeds = [
   {
     name: "April Meetup",
-    startTime: new Date("2019-04-17T17:30:00-05:00"),
-    endTime: new Date("2019-04-17T18:30:00-05:00"),
+    startTime: new Date("2019-04-27T17:30:00-05:00"),
+    endTime: new Date("2019-04-27T18:30:00-05:00"),
     place: {
       name: "WPA Bakery",
       address: "2707 E Marshall St, Richmond, VA 23223",
