@@ -1,19 +1,17 @@
-class Auth {
-  static authenticate(token) {
+export default {
+  authenticate: function(token) {
     localStorage.setItem("jwt", token);
-  }
+  },
 
-  static getToken() {
+  getToken: function() {
     return localStorage.getItem("jwt");
-  }
+  },
 
-  static isAuthenticated() {
+  isAuthenticated: function() {
     return localStorage.getItem("jwt") !== null;
-  }
+  },
 
-  static logOut() {
+  logOut: function() {
     localStorage.removeItem("jwt");
-  }
-}
-
-export default Auth;
+  },
+};
