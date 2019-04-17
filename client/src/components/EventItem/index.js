@@ -9,7 +9,6 @@ class EventItem extends Component {
         <a href={"/event/" + this.props.id}><h3 className="card-title">{this.props.name}</h3></a>
         <p><TimeRange startTime={this.props.startTime} endTime={this.props.endTime} /></p>
         <p className="card-text">{this.props.placeName}</p>
-        <p className="card-text">{this.props.address}</p>
       </div>
     );
   }
