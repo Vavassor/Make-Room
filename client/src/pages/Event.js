@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import MapContainer from "../components/MapContainer";
 import Spinner from "../components/Spinner";
-import moment from "moment";
+import TimeRange from "../components/TimeRange";
 
 class Event extends Component {
   constructor(props) {
@@ -57,7 +57,7 @@ class Event extends Component {
         <div>
           <h3 className="card-title">{event.name}</h3>
 
-          {this.renderDateAndTime(event)}
+          <p><TimeRange startTime={event.startTime} endTime={event.endTime} /></p>
           <p>{event.place.name}</p>
           <p>{event.place.address}</p>
           <p>{event.description}</p>
@@ -77,31 +77,6 @@ class Event extends Component {
     } else {
       return (
         <Spinner />
-      );
-    }
-  }
-
-  renderDateAndTime(event) {
-    const startTime = moment(event.startTime);
-    const endTime = moment(event.endTime);
-
-    const start = (
-      <time dateTime={event.startTime}>
-        {startTime.format("MMM D, Y @ h:mma")}
-      </time>
-    );
-
-    if (startTime.isSame(endTime, "date")) {
-      return (
-        <div>
-          {start} - <time dateTime={event.startTime}>{endTime.format("h:mma")}</time>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          {start} - <time dateTime={event.startTime}>{endTime.format("MMM D, Y @ h:mma")}</time>
-        </div>
       );
     }
   }

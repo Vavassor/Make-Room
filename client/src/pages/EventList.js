@@ -47,6 +47,7 @@ class EventList extends Component {
             address={event.place.address}
             name={event.name}
             startTime={event.startTime}
+            endTime={event.endTime}
             placeName={event.place.name}
           />
         );
