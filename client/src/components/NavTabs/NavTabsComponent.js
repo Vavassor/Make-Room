@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 
 
 function NavTabs(props) {
@@ -18,6 +18,14 @@ function NavTabs(props) {
           className={window.location.pathname === "/profile" ? "nav-link active" : "nav-link"}
         >
           profile
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link
+          to="/profile/update"
+          className={window.location.pathname === "/profile/update" ? "nav-link active" : "nav-link"}
+        >
+          update
         </Link>
       </li>
       <li className="nav-item">

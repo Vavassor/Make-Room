@@ -1,1 +1,2 @@
-export { default } from "./NavTabs";
+export { default } from "./NavTabsComponent";
+

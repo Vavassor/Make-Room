@@ -7,9 +7,13 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import Modal from "react-bootstrap/Modal";
 
 //custom components
 import ProfileCard from "../components/ProfileCard";
+import ProfileForm from "../components/ProfileForm";
+import ProfileFormModal from "../components/ProfileFormModal";
+
 
 
 // utils
@@ -31,9 +35,14 @@ class Profile extends Component {
       id: "",
       portfolio: "",
       portfolioInfo: "",
-      userInfo: "",
+      firstname:  "",
+      lastname: "",
+      email: "",
+      blurb: "",
+      website:"",
     };
   }
+
 
   componentDidMount() {
     Api
@@ -51,10 +60,12 @@ class Profile extends Component {
   }
 
   getUserInfo(id){
+    console.log(typeof id)
+    console.log(id.length);
     Api
       .getUserInfoById(id)
       .then(response => {
-        this.setState({userInfo: response.data[0]})
+        this.setState({...response.data[0]})
       })
       .catch(err => console.error("get user error: ", err))
   };
@@ -73,6 +84,27 @@ class Profile extends Component {
 
   }
 
+  handleInputChange = event => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    console.log(name, value)
+    this.setState({[name]: value});
+  };
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+    let userInfo = {...this.state}
+    console.log(userInfo);
+    delete userInfo.id
+    delete userInfo.username
+    const {id} = this.state
+
+    Api
+    .updateUserProfile(id, userInfo)
+    .then(result => console.log(result))
+    .catch(err => console.error(err))
+  };
+
   handleLogOut(event) {
     Auth.logOut();
     this.props.history.push("/");
@@ -80,7 +112,7 @@ class Profile extends Component {
 
   mediaLinks(link){
     let x = Object.entries(link);
-    return x.map(item => <Col key={item[1]} sm={3}>{item[0]}: {item[1]}</Col>)
+    return x.map(item => <Col key={item[1]} sm={2}><a href={item[1]} target="_blank" rel="noopener noreferrer">{item[0]}</a></Col>)
   }
 
   render() {
@@ -90,37 +122,30 @@ class Profile extends Component {
           <Row className="justify-content-center text-center">
             <Col sm={6}>
               <h1>
-                {this.state.userInfo.firstname
-                  ? this.state.userInfo.firstname +
+                {this.state.firstname
+                  ? this.state.firstname +
                     ", " +
-                    this.state.userInfo.lastname
+                    this.state.lastname
                   : "Anon"}
               </h1>
+              <UpdateModal handleInputChange={this.handleInputChange} handleFormSubmit = {this.handleFormSubmit} userInfo={this.state}/>
               <Button
-                variant="primary"
+                variant="warning"
                 type="button"
                 onClick={this.handleLogOut}
               >
                 Log Out
               </Button>
+              
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-1">
             <Col sm={6}>
-              <h5>{this.state.userInfo.blurb}</h5>
+              <h5>{this.state.blurb}</h5>
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-4">
-            {this.state.userInfo.socialMediaHandles ? this.mediaLinks(this.state.userInfo.socialMediaHandles) : ""}
-            {/* <Col sm={2}>
-              <p>Social Medial Links</p>
-            </Col>
-            <Col sm={2}>
-              <p>Social Medial Links</p>
-            </Col>
-            <Col sm={2}>
-              <p>Social Medial Links</p>
-            </Col> */}
+            {this.state.socialMediaHandles ? this.mediaLinks(this.state.socialMediaHandles) : ""}
           </Row>
         </Jumbotron>
         <Container className="profile-container">
@@ -158,3 +183,49 @@ class Profile extends Component {
 }
 
 export default Profile;
+
+
+class UpdateModal extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
+    this.state = {
+      show: false,
+    };
+  }
+
+  handleClose() {
+    this.setState({ show: false });
+  }
+
+  handleShow() {
+    this.setState({ show: true });
+  }
+
+  render() {
+    return (
+      <>
+        <Button variant="primary" onClick={this.handleShow}>
+          Update Profile
+        </Button>
+
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Update Profile</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><ProfileFormModal {...this.props}/></Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
+  }
+}
+
+// render(<UpdateModal />);

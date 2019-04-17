@@ -1,2 +1,4 @@
-import ProfileForm from "./ProfileForm";
-export default ProfileForm;
+// import ProfileForm from "./ProfileFormComponent";
+// export default ProfileForm;
+
+export { default } from "./ProfileFormComponent";
