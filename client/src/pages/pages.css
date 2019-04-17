@@ -1,3 +1,7 @@
+html {
+  /* overflow-x: hidden; */
+}
+
 body {
   min-height: 100vh;
   background-color: lightgrey;
@@ -13,6 +17,11 @@ body {
   border-radius: 0 !important;
 }
 
+.web-link a {
+  color: orange;
+}
+
 .profile-container {
 
 }
+

@@ -37,7 +37,7 @@ export default {
   },
 
   getUserInfoById: function(userId){
-    let url = "api/profile/" + userId
+    let url = "/api/profile/" + userId
     console.log(url);
     return axios.get(url)
   },

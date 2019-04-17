@@ -94,7 +94,6 @@ class Profile extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     let userInfo = {...this.state}
-    console.log(userInfo);
     delete userInfo.id
     delete userInfo.username
     const {id} = this.state
@@ -136,7 +135,6 @@ class Profile extends Component {
               >
                 Log Out
               </Button>
-              
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-1">
@@ -145,7 +143,8 @@ class Profile extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-4">
-            {this.state.socialMediaHandles ? this.mediaLinks(this.state.socialMediaHandles) : ""}
+            {this.state.email ?  <Col className="web-link" sm={2}><a href={this.state.email} target="_blank" rel="noopener noreferrer">Email:</a></Col>: ""}
+            {this.state.website ? <Col className="web-link" sm={2}><a href={this.state.website} target="_blank" rel="noopener noreferrer">Website:</a></Col>: ""}
           </Row>
         </Jumbotron>
         <Container className="profile-container">
@@ -181,7 +180,6 @@ class Profile extends Component {
     );
   }
 }
-
 export default Profile;
 
 
@@ -211,7 +209,6 @@ class UpdateModal extends React.Component {
         <Button variant="primary" onClick={this.handleShow}>
           Update Profile
         </Button>
-
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Update Profile</Modal.Title>
@@ -227,5 +224,3 @@ class UpdateModal extends React.Component {
     );
   }
 }
-
-// render(<UpdateModal />);
