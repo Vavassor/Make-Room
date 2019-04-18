@@ -18,10 +18,6 @@ const defaultErrors = {
   startTime: "Please choose the start time.",
 };
 
-function convertTime(date, time) {
-  return moment(date + " " + time).toISOString();
-}
-
 class AddEvent extends Component {
   constructor(props) {
     super(props);
@@ -73,15 +69,18 @@ class AddEvent extends Component {
         endDate = this.state.startDate;
       }
 
+      const endTime = moment(endDate + " " + this.state.endTime);
+      const startTime = moment(this.state.startDate + " " + this.state.startTime);
+
       const event = {
-        description: this.state.description,
-        endTime: convertTime(endDate, this.state.endTime),
-        name: this.state.name,
+        description: this.state.description.trim(),
+        endTime: endTime.toISOString(),
+        name: this.state.name.trim(),
         place: {
-          address: this.state.address,
-          name: this.state.locationName,
+          address: this.state.address.trim(),
+          name: this.state.locationName.trim(),
         },
-        startTime: convertTime(this.state.startDate, this.state.startTime),
+        startTime: startTime.toISOString(),
       };
 
       Api
