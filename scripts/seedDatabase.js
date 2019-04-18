@@ -7,12 +7,12 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/project3");
 
 const userSeeds = [
   {
-    _id: "awefoij2308238253",
+    _id: mongoose.Types.ObjectId("5cb36af71767efad3f77a128"),
     username: "vavassor",
     password: bcrypt.hashSync("password", bcrypt.genSaltSync(10)),
   },
   {
-    _id: "5cb36af71767bf1ef77a128a",
+    _id: mongoose.Types.ObjectId("5cb36af71767bf1ef77a128a"),
     username: "Scooter",
     password: bcrypt.hashSync("password", bcrypt.genSaltSync(10)),
     firstname: "Scott",

@@ -2,8 +2,15 @@ const models = require("../models");
 
 module.exports = {
   createEvent: function(request, response){
+    const event = request.body;
+    event.creator = request.user._id;
+    event.place.position = {
+      latitude: 0,
+      longitude: 0,
+    };
+
     models.Event
-      .create(request.body)
+      .create(event)
       .then(event => response.json(event))
       .catch(error => response.status(422).json(error));
   },
