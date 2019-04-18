@@ -53,6 +53,12 @@ class EventList extends Component {
       <main>
         <Card>
           <Card.Body>
+            <div className="mb-4">
+              <a className="btn btn-primary" href="/add-event">Add Event</a>
+            </div>
+
+            <hr />
+
             {this.renderEvents()}
           </Card.Body>
         </Card>
