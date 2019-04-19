@@ -1,9 +1,13 @@
 const router = require("express").Router();
 const eventController = require("../../controllers/eventController");
+const passport = require("passport");
 
 router.route("/")
   .get(eventController.getAllEvents)
-  .post(eventController.createEvent)
+  .post(
+    passport.authenticate("jwt", {session: false}),
+    eventController.createEvent
+  );
 
 router.route("/:id")
   .get(eventController.getEventById)
