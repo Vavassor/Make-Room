@@ -68,12 +68,21 @@ export default {
 
   // profile routes
   getProfilePortfolioById: function(userId){
-    return axios.get("/api/portfolio/" + userId)
+    return axios.get("/api/portfolio/info/" + userId)
+  },
+
+  updatePorfolioInfo: function(userId, portfolioInfo){
+    let url = "/api/portfolio/info" + userId
+    return axios.patch(url, portfolioInfo);
+  },
+
+  updatePortfolioItem: function(userId, portfolioItem){
+    let url = "/api/portfolio/item" + userId
+    return axios.patch(url, portfolioItem);
   },
 
   getUserInfoById: function(userId){
     let url = "/api/profile/" + userId;
-    console.log(url);
     return axios.get(url)
   },
 

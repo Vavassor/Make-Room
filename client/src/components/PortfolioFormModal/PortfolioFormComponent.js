@@ -1,28 +1,29 @@
-// import React, { Component } from "react";
 import React from "react";
+
 // import Jumbotron from "react-bootstrap/Jumbotron";
-import Form from "react-bootstrap/Form";
 // import FormControl from "react-bootstrap/FormControl";
 
 // bootstrap components
+import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 // css
-import "./profileForm.css";
+import "./portflioForm.css";
 
 
 
-  function ProfileFormModal(props){
+  // function PortolfioImages(props){
     // console.log(props);
 
-    function saveButton(e){
-      props.handleFormSubmit(e);
-      props.handleClose();
-    };
+    // function saveButton(e){
+    //   props.handleFormSubmit(e);
+    //   props.handleClose();
+    // };
 
 
+  export function imageUpdateForm (props) {
     return (
       <>
         <Form>
@@ -96,8 +97,33 @@ import "./profileForm.css";
         </Form>
       </>
     );
-  }
-// }
-export default ProfileFormModal;
+  };
+
+  export function portofolioInfo (props) {
+    return (
+      <Form>
+        <Form.Group controlId="porfolioInfoForm">
+          <Form.Label>Blurb</Form.Label>
+          <Form.Control
+            type="text"
+            as="textarea"
+            rows="3"
+            placeholder="Info about your art"
+            value={props.userInfo.blurb}
+            onChange={props.handleInputChange}
+            name="portfolioInfo"
+          />
+        </Form.Group>
+        <Button
+          variant="primary"
+          type="submit"
+          // onClick={props.handleFormSubmit}
+          onClick={e => saveButton(e)}
+        >
+          Save!
+        </Button>
+      </Form>
+    );
+  };
 
 
