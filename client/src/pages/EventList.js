@@ -1,28 +1,51 @@
-import React, {Component} from "react";
 import Api from "../utilities/Api";
 import Card from "react-bootstrap/Card";
 import EventItem from "../components/EventItem";
+import LoadingPlaceholder from "../components/LoadingPlaceholder";
 import moment from "moment";
+import React, {Component} from "react";
 
 class EventList extends Component {
   constructor(props) {
     super(props);
 
+    this.handleRetryClick = this.handleRetryClick.bind(this);
+
     this.state = {
       events: [],
+      loadStatus: "loading",
     };
   }
 
   componentDidMount() {
+    this.loadEvents();
+  }
+
+  loadEvents() {
     Api
       .getEvents({
         orderBy: "startTime:asc",
         afterTime: moment().toISOString(),
       })
       .then(response => {
-        this.setState({events: response.data});
+        this.setState({
+          events: response.data,
+          loadStatus: "success",
+        });
       })
-      .catch(error => console.error(error));
+      .catch(error => {
+        console.error(error);
+        this.setState({
+          loadStatus: "failure",
+        });
+      });
+  }
+
+  handleRetryClick() {
+    this.setState(
+      {loadStatus: "loading"},
+      () => this.loadEvents()
+    );
   }
 
   render() {
@@ -30,6 +53,12 @@ class EventList extends Component {
       <main>
         <Card>
           <Card.Body>
+            <div className="mb-4">
+              <a className="btn btn-primary" href="/add-event">Add Event</a>
+            </div>
+
+            <hr />
+
             {this.renderEvents()}
           </Card.Body>
         </Card>
@@ -54,7 +83,12 @@ class EventList extends Component {
       })
     } else {
       return (
-        <h2>No events upcoming.</h2>
+        <LoadingPlaceholder
+          emptyMessage="No events upcoming."
+          failureMessage="Could not load events."
+          handleRetryClick={this.handleRetryClick}
+          status={this.state.loadStatus}
+        />
       );
     }
   }
