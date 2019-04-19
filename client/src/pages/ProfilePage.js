@@ -9,10 +9,12 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
 
+
 //custom components
 import ProfileCard from "../components/ProfileCard";
 // import ProfileForm from "../components/ProfileForm";
 import ProfileFormModal from "../components/ProfileFormModal";
+import {PortfolioInfoButton, ItemUpdateButton, CreateItemButton } from "../components/ButtonComponent"
 
 
 
@@ -116,10 +118,10 @@ class Profile extends Component {
     event.preventDefault();
 
 
-    Api
-    .updatePorfolioInfo(userId, portfolioInfo)
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
+    // Api
+    // .updatePorfolioInfo(userId, portfolioInfo)
+    // .then(data => console.log(data))
+    // .catch(err => console.log(err))
   };
 
   handlePortfolioImageSubmit = event => {
@@ -132,10 +134,10 @@ class Profile extends Component {
       about: imageAbout
     };
     
-    Api
-    .updatePorfolioItem(userId, portfolioItem)
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
+    // Api
+    // .updatePorfolioItem(userId, portfolioItem)
+    // .then(data => console.log(data))
+    // .catch(err => console.log(err))
   };
 
   mediaLinks(link){
@@ -187,7 +189,7 @@ class Profile extends Component {
               <Row className="justify-content-between">
                 {this.state.portfolio.length ? (
                   this.state.portfolio.map(imageInfo => (
-                    <ProfileCard key={imageInfo.url} image={imageInfo} />
+                    <ProfileCard key={imageInfo.imageId} image={imageInfo} />
                   ))
                 ) : (
                   <h3>I don't have any items in my porfolio</h3>
