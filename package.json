@@ -22,6 +22,7 @@
     "nodemon": "^1.18.7"
   },
   "dependencies": {
+    "@google/maps": "^0.5.5",
     "bcrypt-nodejs": "0.0.3",
     "dotenv": "^7.0.0",
     "express": "^4.16.3",

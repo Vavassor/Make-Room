@@ -47,6 +47,6 @@ module.exports = {
   },
 
   serializeUser: function(user, done) {
-    return done(null, user.id);
+    return done(null, user._id);
   },
 };

@@ -2,6 +2,19 @@ import axios from "axios";
 import Auth from "./Auth";
 
 export default {
+  createEvent: function(event) {
+    const token = Auth.getToken();
+    return axios.post(
+      "/api/event",
+      event,
+      {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+    );
+  },
+
   createAccount: function(username, password) {
     const data = {
       username: username.trim(),

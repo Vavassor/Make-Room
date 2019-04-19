@@ -11,6 +11,7 @@ const portfolioSeeds = [
     portfolioDetails: "This is my portfolio.  There are many like it, but this one is mine! ",
     images: [
       {
+        imageId: ,
         url: "https://s.abcnews.com/images/Lifestyle/BR_snail_frog_jef_160825_3x2_1600.jpg",
         title: "Love this Frog and Snail",
         about: "Frog and Snail, best freinds for life.  ",
