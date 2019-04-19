@@ -9,6 +9,8 @@ const userSeeds = [
   {
     _id: mongoose.Types.ObjectId("5cb36af71767efad3f77a128"),
     username: "vavassor",
+    firstname: "Andrew",
+    lastname: "Dawson",
     password: bcrypt.hashSync("password", bcrypt.genSaltSync(10)),
   },
   {

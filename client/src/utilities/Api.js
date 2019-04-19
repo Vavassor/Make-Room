@@ -2,6 +2,19 @@ import axios from "axios";
 import Auth from "./Auth";
 
 export default {
+  attendEvent: function(event) {
+    const token = Auth.getToken();
+    return axios.patch(
+      `/api/event/${event._id}/attendee`,
+      {},
+      {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+    );
+  },
+
   createEvent: function(event) {
     const token = Auth.getToken();
     return axios.post(

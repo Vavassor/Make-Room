@@ -15,7 +15,7 @@ module.exports = {
         },
         {
           $push: {
-            attendees: request.body,
+            attendees: request.user._id,
           },
         }
       )
@@ -95,6 +95,7 @@ module.exports = {
   getEventById: function(request, response){
     models.Event
       .findById(request.params.id)
+      .populate("attendees")
       .then(event => response.json(event))
       .catch(error => response.status(422).json(error));
   },
