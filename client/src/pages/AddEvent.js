@@ -86,7 +86,7 @@ class AddEvent extends Component {
       Api
         .createEvent(event)
         .then(response => {
-          console.log(response.data);
+          this.props.history.push(`/event/${response.data._id}`);
         })
         .catch(error => {
           console.error(error);
