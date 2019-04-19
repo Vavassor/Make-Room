@@ -25,6 +25,16 @@ body::-webkit-scrollbar { /* WebKit */
   border-radius: 0 !important;
 }
 
+.profile-jumbo h1 {
+  display: inline-block;
+}
+
+.profile-jumbo button {
+  transform: scale(0.75);
+  vertical-align: 1em;
+  margin-left: 1em;
+}
+
 .web-link a {
   color: orange;
 }

@@ -1,34 +1,29 @@
 import React, {Component} from "react";
 
 // bootstrap components
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import Modal from "react-bootstrap/Modal";
 
 //custom components
 import ProfileCard from "../components/ProfileCard";
-// import ProfileForm from "../components/ProfileForm";
-import ProfileFormModal from "../components/ProfileFormModal";
 
 
 
 // utils
 import Api from "../utilities/Api";
-// import Auth from "../utilities/Auth";
 
 // css library
 import "./pages.css"
 
 
-class Profile extends Component {
+class ProfileView extends Component {
   constructor(props) {
     super(props);
 
-    // this.handleLogOut = this.handleLogOut.bind(this);
 
     this.state = {
       username: "",
@@ -40,30 +35,20 @@ class Profile extends Component {
       email: "",
       blurb: "",
       website:"",
-      imageUrl: "",
-      imageTitle: "",
-      imageAbout: "",
-      imageId: ""
     };
   }
 
 
   componentDidMount() {
-    Api
-    .getSelf()
-    .then((response) => {
-      const {id, username} = response.data;
-      this.getProfilePortfolio(id)
-      this.getUserInfo(id);
-      this.setState({
-        id: id,
-        username: username
-      });
-    })
-    .catch(error => console.error(error));
-  }
+    this.getUserAndPorfolio(this.props.match.params.id)
+  };
 
-  getUserInfo(id){
+  getUserAndPorfolio = (id) => {
+    this.getProfilePortfolio(id)
+    this.getUserInfo(id);
+  };
+
+  getUserInfo= (id) => {
     Api
       .getUserInfoById(id)
       .then(response => {
@@ -86,57 +71,6 @@ class Profile extends Component {
 
   }
 
-  handleInputChange = event => {
-    event.preventDefault();
-    const { name, value } = event.target;
-    this.setState({[name]: value});
-  };
-
-  handleFormSubmit = event => {
-    event.preventDefault();
-    let userInfo = {...this.state}
-    delete userInfo.id
-    delete userInfo.username
-    userInfo = {
-      firstname: userInfo.firstname,
-      lastname: userInfo.lastname,
-      blurb: userInfo.blurb,
-      website: userInfo.website,
-      email: userInfo.email
-    }
-    const {id} = this.state
-
-    Api
-    .updateUserProfile(id, userInfo)
-    .then(result => console.log(result))
-    .catch(err => console.error(err))
-  };
-
-  handlePortfolioInfoSubmit = event => {
-    event.preventDefault();
-
-
-    Api
-    .updatePorfolioInfo(userId, portfolioInfo)
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
-  };
-
-  handlePortfolioImageSubmit = event => {
-    event.preventDefault();
-    let {imageId, imageUrl, imageTitle, imageAbout} = this.state
-    let portfolioItem = {
-      id: imageId,
-      url: imageUrl,
-      title: imageTitle,
-      about: imageAbout
-    };
-    
-    Api
-    .updatePorfolioItem(userId, portfolioItem)
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
-  };
 
   mediaLinks(link){
     let x = Object.entries(link);
@@ -154,7 +88,6 @@ class Profile extends Component {
                   ? this.state.firstname + " " + this.state.lastname
                   : "Anon"}
               </h1>
-              <UpdateModal handleInputChange={this.handleInputChange} handleFormSubmit = {this.handleFormSubmit} userInfo={this.state}/>
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-1">
@@ -176,7 +109,7 @@ class Profile extends Component {
                   <Card.Text>
                     {this.state.portfolioInfo
                       ? this.state.portfolioInfo
-                      : "Oops, I haven't added any info about my porfolio"}
+                      : "Oops, they haven't added any info about my porfolio"}
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -190,7 +123,7 @@ class Profile extends Component {
                     <ProfileCard key={imageInfo.url} image={imageInfo} />
                   ))
                 ) : (
-                  <h3>I don't have any items in my porfolio</h3>
+                  <h3>They don't have any items in their porfolio</h3>
                 )}
               </Row>
             </Col>
@@ -200,47 +133,6 @@ class Profile extends Component {
     );
   }
 }
-export default Profile;
+export default ProfileView;
 
 
-class UpdateModal extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-
-    this.state = {
-      show: false,
-    };
-  }
-
-  handleClose() {
-    this.setState({ show: false });
-  }
-
-  handleShow() {
-    this.setState({ show: true });
-  }
-
-  render() {
-    return (
-      <>
-        <Button variant="primary" size="sm" onClick={this.handleShow}>
-        <i className="fas fa-user-edit"></i>
-        </Button>
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Update Profile</Modal.Title>
-          </Modal.Header>
-          <Modal.Body><ProfileFormModal {...this.props} handleClose={this.handleClose}/></Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    );
-  }
-}
