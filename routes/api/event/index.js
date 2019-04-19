@@ -1,6 +1,7 @@
-const router = require("express").Router();
-const eventController = require("../../controllers/eventController");
+const attendeeRoutes = require("./attendee");
+const eventController = require("../../../controllers/eventController");
 const passport = require("passport");
+const router = require("express").Router();
 
 router.route("/")
   .get(eventController.getAllEvents)
@@ -13,5 +14,7 @@ router.route("/:id")
   .get(eventController.getEventById)
   .patch(eventController.updateEvent)
   .delete(eventController.deleteEvent);
+
+router.use("/:id/attendee", attendeeRoutes);
 
 module.exports = router;

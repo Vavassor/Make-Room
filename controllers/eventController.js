@@ -7,6 +7,22 @@ const googleMapsClient = googleMaps.createClient({
 });
 
 module.exports = {
+  attendEvent: function(request, response) {
+    models.Event
+      .updateOne(
+        {
+          _id: request.params.id,
+        },
+        {
+          $push: {
+            attendees: request.body,
+          },
+        }
+      )
+      .then(updateResponse => response.status(204).end())
+      .catch(error => response.status(422).json(error));
+  },
+
   createEvent: function(request, response){
     const event = request.body;
     event.creator = request.user._id;
@@ -66,6 +82,13 @@ module.exports = {
   
     query
       .then(events => response.json(events))
+      .catch(error => response.status(422).json(error));
+  },
+
+  getAttendees: function(request, response) {
+    models.Event
+      .findById(request.params.id)
+      .then(event => response.status(200).json(event.attendees))
       .catch(error => response.status(422).json(error));
   },
 
