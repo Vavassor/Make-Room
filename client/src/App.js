@@ -10,30 +10,78 @@ import ProfilePage from "./pages/ProfilePage";
 import ProfilePageView from "./pages/ProfilePageView";
 import PageNotFound from "./pages/PageNotFound";
 import NavTabs from "./components/NavTabs";
-import PrivateRoute from "./components/PrivateRoute";
 import Footer from "./components/Footer";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./App.css";
+import Auth from "./utilities/Auth";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showLoggedIn: false,
+    };
+
+    this.handleLogIn = this.handleLogIn.bind(this);
+    this.handleLogOut = this.handleLogOut.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      showLoggedIn: Auth.isAuthenticated(),
+    })
+  }
+
+  handleLogIn() {
+    this.setState({showLoggedIn: true});
+  }
+
+  handleLogOut() {
+    this.setState({showLoggedIn: false});
+  }
+
+  loggedInRoutes() {
+    return (
+      <Switch>
+        <Route exact path="/" render={(props) => (
+          <Main {...props} handleLogIn={this.handleLogIn} isLoggedIn={this.state.showLoggedIn} />
+        )} /> 
+        <Route exact path="/add-event" component={AddEvent} />
+        <Route exact path="/create-account" component={CreateAccount} />
+        <Route exact path="/event-list" component={EventList} />
+        <Route exact path="/event/:id" component={Event} />
+        <Route exact path="/profile" component={ProfilePage} />
+        <Route exact path="/profile/:id" component={ProfilePageView} />
+        <Route component={PageNotFound} />
+      </Switch>
+    );
+  }
+
+  loggedOutRoutes() {
+    return (
+      <Switch>
+        <Route exact path="/" render={(props) => (
+          <Main {...props} handleLogIn={this.handleLogIn} isLoggedIn={this.state.showLoggedIn} />
+        )} />
+        <Route exact path="/add-event" component={AddEvent} />
+        <Route exact path="/create-account" component={CreateAccount} />
+        <Route component={PageNotFound} />
+      </Switch>
+    );
+  }
 
   render() {
     return (
       <>
         <Router>
-            <NavTabs />
-            <Switch>
-              <Route exact path="/" component={Main} />
-              <Route exact path="/add-event" component={AddEvent} />
-              <Route exact path="/create-account" component={CreateAccount} />
-              <PrivateRoute exact path="/event-list" component={EventList} />
-              <PrivateRoute exact path="/event/:id" component={Event} />
-              <PrivateRoute exact path="/profile" component={ProfilePage} />
-              <PrivateRoute exact path="/profile/:id" component={ProfilePageView} />
-              <Route component={PageNotFound} />
-            </Switch>
+          <NavTabs
+            showLoggedIn={this.state.showLoggedIn}
+            handleLogOut={this.handleLogOut}
+          />
+          {this.state.showLoggedIn ? this.loggedInRoutes() : this.loggedOutRoutes()}
         </Router>
         <Footer/>
       </>

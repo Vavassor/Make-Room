@@ -15,10 +15,8 @@ class NavTabs extends Component {
   constructor(props) {
     super(props);
 
-    // this.handleLogOut = this.handleLogOut.bind(this);
-
     this.state = {
-      page: ""
+      page: "",
     };
   }
 
@@ -27,14 +25,13 @@ class NavTabs extends Component {
   }
   
   componentDidMount (){
-    const log = Auth.isAuthenticated()
-    console.log(log)
-    this.setState({page: window.location.pathname})
+    this.setState({page: window.location.pathname});
   }
 
   handleLogOut() {
-    this.setPage("/")
+    this.setPage("/");
     Auth.logOut();
+    this.props.handleLogOut();
   }
 
   renderNavTabs(){
@@ -70,19 +67,15 @@ class NavTabs extends Component {
           </Link>
         </li>
         <li>
-          {this.state.page === "/" ? (
-            ""
-          ) : (
-            <Link to="/">
-              <Button
-                variant="warning"
-                type="button"
-                onClick={() => this.handleLogOut()}
-              >
-                Log Out
-              </Button>
-            </Link>
-          )}
+          <Link to="/">
+            <Button
+              variant="warning"
+              type="button"
+              onClick={() => this.handleLogOut()}
+            >
+              Log Out
+            </Button>
+          </Link>
         </li>
       </>
     );
@@ -106,7 +99,7 @@ class NavTabs extends Component {
               Home
             </Link>
           </li>
-          {this.state.page === "loggedIn" ? "" : this.renderNavTabs()}
+          {!this.props.showLoggedIn ? "" : this.renderNavTabs()}
         </ul>
       </>
     );
