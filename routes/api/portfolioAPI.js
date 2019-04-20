@@ -20,12 +20,31 @@ function updatePortfolio(req, res){
     .catch(err => res.staus(422).json(err))
 };
 
-function deletePortfolio(req, res){
+function createPortfolioItem(req, res){
+  db.Portfolio
+  .updateOne(
+    {userId: req.params.id},
+    {$push: {images:{}}},
+    {new: true}
+  )
+  .then(data => {
+    // console.log(data)
+    res.json(data)
+  })
+  .catch(err => {
+    console.log("create porfolio item api: ", err)
+    res.status(422).json(err)
+  })
+}
 
+
+function deletePortfolio(req, res){
+  console.log(req)
 };
 
-function updatePortfolioItems(req,res){
+function updatePortfolioItem(req,res){
   console.log(req.body);
+  
   // db.portfolio
   //   .updatOne(
   //     {userId: req.params.id}
@@ -34,12 +53,33 @@ function updatePortfolioItems(req,res){
 
 };
 
+function deletePortolioItem(req, res){
+console.log("delete Item Api", req.params.id);
+console.log(req.params.itemId);
+db.Portfolio
+  .update(
+    {userId: req.params.id}, 
+    {$pull: {images: {_id: req.params.itemId} } }
+    )
+  .then(data => {
+    // console.log(data);
+    res.json(data)
+  })
+  .catch(err => {
+    console.log(err)
+    res.json(err);
+  })
+}
+
 router.route("/info/:id")
   .get(getPortfolioById)
   .patch(updatePortfolio)
   .delete(deletePortfolio);
 
-router.route("/item/:id")
-  .patch(updatePortfolioItems);
+router.route("/item/:id/:itemId?")
+  .patch(updatePortfolioItem)
+  .post(createPortfolioItem)
+  .delete(deletePortolioItem)
+  
 
 module.exports = router;

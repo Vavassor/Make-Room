@@ -40,7 +40,8 @@ const userSchema = new Schema({
   },
   joined: {
     type: Date, 
-    default: Date.now
+    default: Date.now,
+    required: true
   },
   lastactive: {
     type: Date,

@@ -8,13 +8,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
+import CardColumns from "react-bootstrap/CardColumns";
 
 
 //custom components
 import ProfileCard from "../components/ProfileCard";
 // import ProfileForm from "../components/ProfileForm";
 import ProfileFormModal from "../components/ProfileFormModal";
-import {PortfolioInfoButton, ItemUpdateButton, CreateItemButton } from "../components/ButtonComponent"
+import {PortfolioInfoButton, ItemButton, CreateItemButton } from "../components/ButtonComponent"
 
 
 
@@ -140,9 +141,34 @@ class Profile extends Component {
     // .catch(err => console.log(err))
   };
 
+  createNewPortfolioItem = (event) => {
+    event.preventDefault();
+    Api
+    .addPortfolioItem(this.state.id)
+    .then(data => {
+      // console.log(data)
+      this.getProfilePortfolio(this.state.id);
+    })
+    .catch(err => console.error(err))
+  };
+
+  deletePortfolioItem = (itemId) => {
+    Api
+    .deletePortfolioItem(this.state.id, itemId)
+    .then(data => {
+      // console.log(data)
+      this.getProfilePortfolio(this.state.id);
+    })
+    .catch(err => console.error(err))
+  }
+
   mediaLinks(link){
     let x = Object.entries(link);
     return x.map(item => <Col key={item[1]} sm={2}><a href={item[1]} target="_blank" rel="noopener noreferrer">{item[0]}</a></Col>)
+  }
+
+  portfolioSort = (items) => {
+    return items.sort((a, b) => new Date(b.order) - new Date(a.order))
   }
 
   render() {
@@ -156,7 +182,11 @@ class Profile extends Component {
                   ? this.state.firstname + " " + this.state.lastname
                   : "Anon"}
               </h1>
-              <UpdateModal handleInputChange={this.handleInputChange} handleFormSubmit = {this.handleFormSubmit} userInfo={this.state}/>
+              <UpdateModal
+                handleInputChange={this.handleInputChange}
+                handleFormSubmit={this.handleFormSubmit}
+                userInfo={this.state}
+              />
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-1">
@@ -165,8 +195,33 @@ class Profile extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-4">
-            {this.state.email ?  <Col className="web-link" sm={2}><a href={this.state.email} target="_blank" rel="noopener noreferrer">Email:</a></Col>: ""}
-            {this.state.website ? <Col className="web-link" sm={2}><a href={this.state.website} target="_blank" rel="noopener noreferrer">Website:</a></Col>: ""}
+            {/* <a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">Send Mail</a> */}
+            {this.state.email ? (
+              <Col className="web-link" sm={2}>
+                <a
+                  href={`mailto:${this.state.email}?Subject=Hi%20There`}
+                  target="_top"
+                  rel="noopener noreferrer"
+                >
+                  {this.state.email}
+                </a>
+              </Col>
+            ) : (
+              ""
+            )}
+            {this.state.website ? (
+              <Col className="web-link" sm={2}>
+                <a
+                  href={this.state.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Website
+                </a>
+              </Col>
+            ) : (
+              ""
+            )}
           </Row>
         </Jumbotron>
         <Container className="profile-container">
@@ -174,11 +229,17 @@ class Profile extends Component {
             <Col xs={10}>
               <Card>
                 <Card.Body>
-                  <Card.Title>About My Work</Card.Title>
+                  <Card.Title>
+                    About My Work
+                    <ItemButton action={this.createNewPortfolioItem}>
+                      Add
+                    </ItemButton>
+                  </Card.Title>
                   <Card.Text>
                     {this.state.portfolioInfo
                       ? this.state.portfolioInfo
                       : "Oops, I haven't added any info about my porfolio"}
+                    <PortfolioInfoButton />
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -186,15 +247,35 @@ class Profile extends Component {
           </Row>
           <Row className="justify-content-center portfolio-images">
             <Col xs={10}>
-              <Row className="justify-content-between">
+            <CardColumns>
+              {/* <Row className="justify-content-between"> */}
                 {this.state.portfolio.length ? (
-                  this.state.portfolio.map(imageInfo => (
-                    <ProfileCard key={imageInfo.imageId} image={imageInfo} />
-                  ))
+                  this.portfolioSort([...this.state.portfolio]).map(
+                    imageInfo => (
+                      <ProfileCard
+                        key={imageInfo._id}
+                        image={imageInfo}
+                        imgId={imageInfo._id}
+                      >  
+                        <ItemButton variant={"info"}>
+                          Update
+                        </ItemButton>
+                        <ItemButton
+                          variant={"danger"}
+                          action={ 
+                            () => this.deletePortfolioItem(imageInfo._id)
+                          }
+                        >
+                          Del
+                        </ItemButton>
+                      </ProfileCard>
+                    )
+                  )
                 ) : (
                   <h3>I don't have any items in my porfolio</h3>
                 )}
-              </Row>
+              {/* </Row> */}
+              </CardColumns>
             </Col>
           </Row>
         </Container>

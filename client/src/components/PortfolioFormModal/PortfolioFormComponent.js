@@ -103,13 +103,13 @@ import "./portflioForm.css";
     return (
       <Form>
         <Form.Group controlId="porfolioInfoForm">
-          <Form.Label>Blurb</Form.Label>
+          <Form.Label>Portfolio Info:</Form.Label>
           <Form.Control
             type="text"
             as="textarea"
             rows="3"
             placeholder="Info about your art"
-            value={props.userInfo.blurb}
+            value={props.portofolioInfo}
             onChange={props.handleInputChange}
             name="portfolioInfo"
           />
