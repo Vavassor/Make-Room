@@ -121,7 +121,9 @@ class Event extends Component {
             </Col>
 
             <Col>
-              {this.renderAttendButton()}
+              <div className="mb-3">
+                {this.renderAttendButton()}
+              </div>
               
               <ul className="list-group">
                 {
