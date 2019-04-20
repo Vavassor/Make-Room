@@ -47,6 +47,7 @@ class Main extends Component {
         .logIn(this.state.username, this.state.password)
         .then((response) => {
           Auth.authenticate(response.data.token);
+          this.props.handleLogIn();
           this.props.history.push("/profile");
         })
         .catch(error => console.error(error));

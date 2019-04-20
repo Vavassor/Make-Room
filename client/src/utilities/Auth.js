@@ -7,6 +7,10 @@ export default {
     return localStorage.getItem("jwt");
   },
 
+  getTokenKey: function() {
+    return "jwt";
+  },
+
   isAuthenticated: function() {
     return localStorage.getItem("jwt") !== null;
   },
