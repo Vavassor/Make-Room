@@ -6,7 +6,7 @@ const portfolioSchema = new Schema({
     type: String,
     required: true,
   },
-  porfolioDetails: {
+  portfolioDetails: {
     type: String,
     required: false
   },

@@ -9,18 +9,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-// css
-import "./portfolioForm.css";
 
 
 
   // function PortolfioImages(props){
     // console.log(props);
 
-    // function saveButton(e){
-    //   props.handleFormSubmit(e);
-    //   props.handleClose();
-    // };
+
 
 
   // export function ImageUpdateForm (props) {
@@ -99,7 +94,13 @@ import "./portfolioForm.css";
   //   );
   // };
 
-  export default function PortfolioInfoForm (props) {
+  export function PortfolioInfoForm (props) {
+
+    function saveButton(e){
+      props.handleFormSubmit(e);
+      props.handleClose();
+    };
+    
     return (
       <Form>
         <Form.Group controlId="porfolioInfoForm">
@@ -109,16 +110,16 @@ import "./portfolioForm.css";
             as="textarea"
             rows="3"
             placeholder="Info about your art"
-            // value={props.portofolioInfo}
-            // onChange={props.handleInputChange}
+            value={props.portfolioInfo}
+            onChange={props.handleInputChange}
             name="portfolioInfo"
           />
         </Form.Group>
         <Button
           variant="primary"
           type="submit"
-          // onClick={props.handleFormSubmit}
-          // onClick={e => saveButton(e)}
+          onClick={props.handleFormSubmit}
+          onClick={e => saveButton(e)}
         >
           Save!
         </Button>

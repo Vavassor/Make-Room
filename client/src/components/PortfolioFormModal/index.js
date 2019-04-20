@@ -1,2 +1,2 @@
-import PortoflioInfoForm from "./PortfolioFormComponent";
+import PortoflioInfoForm from "../PortfolioFormComponent";
 export default PortoflioInfoForm

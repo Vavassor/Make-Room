@@ -11,10 +11,11 @@ function getPortfolioById(req, res){
 };
 
 function updatePortfolio(req, res){
+  console.log(req.body)
   db.Portfolio
     .updateOne(
       {userId: req.params.id},
-      {portfolioDetails: req.body.portfolioDetails}
+      {portfolioDetails: req.body.portfolioInfo}
       )
     .then(data => res.json(data))
     .catch(err => res.staus(422).json(err))
@@ -36,7 +37,6 @@ function createPortfolioItem(req, res){
     res.status(422).json(err)
   })
 }
-
 
 function deletePortfolio(req, res){
   console.log(req)

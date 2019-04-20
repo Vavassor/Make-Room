@@ -13,16 +13,14 @@ import CardColumns from "react-bootstrap/CardColumns";
 
 //custom components
 import ProfileCard from "../components/ProfileCard";
-// import ProfileForm from "../components/ProfileForm";
 import ProfileFormModal from "../components/ProfileFormModal";
-import PortfolioInfoForm from "../components/PortfolioFormModal";
-import {PortfolioInfoButton, ItemButton} from "../components/ButtonComponent"
+import { PortfolioInfoForm } from "../components/PortfolioFormComponent";
+import { ItemButton } from "../components/ButtonComponent"
 
 
 
 // utils
 import Api from "../utilities/Api";
-// import Auth from "../utilities/Auth";
 
 // css library
 import "./pages.css"
@@ -94,6 +92,7 @@ class Profile extends Component {
   handleInputChange = event => {
     event.preventDefault();
     const { name, value } = event.target;
+    // console.log(name,": ",  value)
     this.setState({[name]: value});
   };
 
@@ -113,18 +112,17 @@ class Profile extends Component {
 
     Api
     .updateUserProfile(id, userInfo)
-    .then(result => console.log(result))
+    // .then(result => console.log(result))
     .catch(err => console.error(err))
   };
 
   handlePortfolioInfoSubmit = event => {
     event.preventDefault();
-
-
-    // Api
-    // .updatePorfolioInfo(userId, portfolioInfo)
+    let {id, portfolioInfo} = this.state;
+    Api
+    .updatePorfolioInfo(id, {portfolioInfo:portfolioInfo})
     // .then(data => console.log(data))
-    // .catch(err => console.log(err))
+    .catch(err => console.log(err))
   };
 
   handlePortfolioImageSubmit = event => {
@@ -186,6 +184,7 @@ class Profile extends Component {
               </h1>
               <UpdateModal
                 form={"profile"}
+                task={"Update Profile"}
                 handleInputChange={this.handleInputChange}
                 handleFormSubmit={this.handleFormSubmit}
                 userInfo={this.state}
@@ -243,9 +242,10 @@ class Profile extends Component {
                       ? this.state.portfolioInfo
                       : "Oops, I haven't added any info about my porfolio"}
                       <UpdateModal
+                        task="Update Portfolio Info"
                         form={"portfolioInfo"}
                         handleInputChange={this.handleInputChange}
-                        handleFormSubmit={this.handleFormSubmit}
+                        handleFormSubmit={this.handlePortfolioInfoSubmit}
                         userInfo={this.state}
                       />
                   </Card.Text>
@@ -315,9 +315,29 @@ class UpdateModal extends React.Component {
     this.setState({ show: true });
   }
 
-  render() {
-    switch (this.props.form){
+  swtichCaseContent(form){
+    switch (form){
       case "profile":
+      return(
+        <ProfileFormModal {...this.props} handleClose={this.handleClose}/>
+      )
+      break;
+      case"portfolioInfo":
+      return(
+        <PortfolioInfoForm {...this.props} handleClose={this.handleClose}/>
+      )
+      break;
+      case "itemInfo":
+      return (
+        <ProfileFormModal {...this.props} handleClose={this.handleClose}/>
+      )
+      break;
+
+    }
+
+  }
+
+  render() {
       return(
         <>
           <Button variant="primary" size="sm" onClick={this.handleShow}>
@@ -325,9 +345,9 @@ class UpdateModal extends React.Component {
           </Button>
           <Modal show={this.state.show} onHide={this.handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Update Profile</Modal.Title>
+              <Modal.Title>{this.props.task}</Modal.Title>
             </Modal.Header>
-            <Modal.Body><ProfileFormModal {...this.props} handleClose={this.handleClose}/></Modal.Body>
+            <Modal.Body>{this.swtichCaseContent(this.props.form)}</Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={this.handleClose}>
                 Close
@@ -336,47 +356,5 @@ class UpdateModal extends React.Component {
           </Modal>
         </>
       );
-      break;
-      case "portfolioInfo":
-      return (
-        <>
-        <Button variant="primary" size="sm" onClick={this.handleShow}>
-        <i className="fas fa-user-edit"></i>
-        </Button>
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Update Porfolio Info</Modal.Title>
-          </Modal.Header>
-          <Modal.Body><PortfolioInfoForm {...this.props} handleClose={this.handleClose}/></Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-      );
-      break;
-      case "itemInfo":
-      return (
-        <>
-        <Button variant="primary" size="sm" onClick={this.handleShow}>
-        <i className="fas fa-user-edit"></i>
-        </Button>
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Update Profile</Modal.Title>
-          </Modal.Header>
-          <Modal.Body><ProfileFormModal {...this.props} handleClose={this.handleClose}/></Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-      );
-      break;
     }
-}
 }
