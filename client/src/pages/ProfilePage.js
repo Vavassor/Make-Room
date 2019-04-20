@@ -14,7 +14,7 @@ import CardColumns from "react-bootstrap/CardColumns";
 //custom components
 import ProfileCard from "../components/ProfileCard";
 import ProfileFormModal from "../components/ProfileFormModal";
-import { PortfolioInfoForm } from "../components/PortfolioFormComponent";
+import { PortfolioInfoForm, ItemForm } from "../components/PortfolioFormComponent";
 import { ItemButton } from "../components/ButtonComponent"
 
 
@@ -246,7 +246,7 @@ class Profile extends Component {
                         form={"portfolioInfo"}
                         handleInputChange={this.handleInputChange}
                         handleFormSubmit={this.handlePortfolioInfoSubmit}
-                        userInfo={this.state}
+                        portfolioInfo={this.state.portfolioInfo}
                       />
                   </Card.Text>
                 </Card.Body>
@@ -265,10 +265,21 @@ class Profile extends Component {
                         image={imageInfo}
                         imgId={imageInfo._id}
                       >  
-                        <ItemButton variant={"info"}
+                        {/* <ItemButton variant={"info"}
                         >
                           Update
-                        </ItemButton>
+                        </ItemButton> */}
+                        <button onClick={() => console.log("click")}>
+                        <UpdateModal
+                          form={"itemInfo"}
+                          task={"Update Item"}
+                          handleInputChange={this.handleInputChange}
+                          handleFormSubmit={this.handleItemSubmit}
+                          userInfo={this.state}
+                          // onClick={() => console.log("click")}
+                        />
+                        
+                        </button>
                         <ItemButton
                           variant={"danger"}
                           action={ 
@@ -329,7 +340,7 @@ class UpdateModal extends React.Component {
       break;
       case "itemInfo":
       return (
-        <ProfileFormModal {...this.props} handleClose={this.handleClose}/>
+        <ItemForm {...this.props} handleClose={this.handleClose}/>
       )
       break;
 

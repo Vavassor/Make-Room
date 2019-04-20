@@ -94,6 +94,39 @@ import Button from "react-bootstrap/Button";
   //   );
   // };
 
+  export function ItemForm (props) {
+
+    function saveButton(e){
+      props.handleFormSubmit(e);
+      props.handleClose();
+    };
+    
+    return (
+      <Form>
+        <Form.Group controlId="porfolioInfoForm">
+          <Form.Label>Portfolio Info:</Form.Label>
+          <Form.Control
+            type="text"
+            as="textarea"
+            rows="3"
+            placeholder="Info about your art"
+            value={props.portfolioInfo}
+            onChange={props.handleInputChange}
+            name="portfolioInfo"
+          />
+        </Form.Group>
+        <Button
+          variant="primary"
+          type="submit"
+          onClick={props.handleFormSubmit}
+          onClick={e => saveButton(e)}
+        >
+          Save!
+        </Button>
+      </Form>
+    );
+  };
+
   export function PortfolioInfoForm (props) {
 
     function saveButton(e){
