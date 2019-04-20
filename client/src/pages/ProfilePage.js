@@ -93,6 +93,7 @@ class Profile extends Component {
     event.preventDefault();
     const { name, value } = event.target;
     // console.log(name,": ",  value)
+    console.log(this.state);
     this.setState({[name]: value});
   };
 
@@ -125,20 +126,25 @@ class Profile extends Component {
     .catch(err => console.log(err))
   };
 
-  handlePortfolioImageSubmit = event => {
+  handlePortfolioItemSubmit = event => {
     event.preventDefault();
     let {imageId, imageUrl, imageTitle, imageAbout, imageOrder} = this.state
     let portfolioItem = {
+      _id: imageId,
       url: imageUrl,
       title: imageTitle,
       about: imageAbout,
       order: imageOrder
     };
+    console.log(portfolioItem);
     
-    // Api
-    // .updatePorfolioItem(userId, portfolioItem)
-    // .then(data => console.log(data))
-    // .catch(err => console.log(err))
+    Api
+    .updatePortfolioItem(this.state.id, portfolioItem)
+    .then(data => {
+      console.log("Update Portfolio: ", data)
+      this.getProfilePortfolio(this.state.id);
+    })
+    .catch(err => console.log(err))
   };
 
   createNewPortfolioItem = (event) => {
@@ -160,6 +166,18 @@ class Profile extends Component {
       this.getProfilePortfolio(this.state.id);
     })
     .catch(err => console.error(err))
+  }
+
+  setItemState = (item) => {
+    console.log("State Item: ", item)
+
+    this.setState({
+      imageUrl: item.url,
+      imageTitle: item.title,
+      imageAbout: item.about,
+      imageId: item._id,
+      imageOrder: item.order,
+    })
   }
 
   mediaLinks(link){
@@ -249,7 +267,7 @@ class Profile extends Component {
                       task="Update Portfolio Info"
                       form={"portfolioInfo"}
                       handleInputChange={this.handleInputChange}
-                      handleFormSubmit={this.handlePortfolioInfoSubmit}
+                      handleFormSubmit={this.handlePortfolioItemSubmit}
                       portfolioInfo={this.state.portfolioInfo}
                     />
                   </Card.Text>
@@ -276,8 +294,10 @@ class Profile extends Component {
                             variant="success"
                             icon={"Update"}
                             handleInputChange={this.handleInputChange}
-                            handleFormSubmit={this.handleItemSubmit}
-                            userInfo={this.state}
+                            handleFormSubmit={this.handlePortfolioItemSubmit}
+                            imageInfo={imageInfo}
+                            item={this.state}
+                            function={this.setItemState}
                           />
 
                           <ItemButton
@@ -328,6 +348,11 @@ class UpdateModal extends React.Component {
     this.setState({ show: true });
   }
 
+  multiFunction = (func1, func2, itemInfo) => {
+    func1();
+    if (func2){func2(itemInfo)}
+  }
+
   swtichCaseContent(form){
     switch (form){
       case "profile":
@@ -353,7 +378,7 @@ class UpdateModal extends React.Component {
   render() {
       return(
         <>
-          <Button className="mx-2" variant={this.props.variant? this.props.variant: "primary"} size="sm" onClick={this.handleShow}>
+          <Button className="mx-2" variant={this.props.variant? this.props.variant: "primary"} size="sm" onClick={() => this.multiFunction (this.handleShow, this.props.function, this.props.imageInfo)}>
           {this.props.icon? this.props.icon :<i className="fas fa-user-edit"></i>}
           </Button>
           <Modal show={this.state.show} onHide={this.handleClose}>
