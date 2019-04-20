@@ -3,6 +3,7 @@ import Api from "../utilities/Api";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
+import {Link} from "react-router-dom";
 import MapContainer from "../components/MapContainer";
 import Row from "react-bootstrap/Row";
 import Spinner from "../components/Spinner";
@@ -133,7 +134,7 @@ class Event extends Component {
                         className="list-group-item"
                         key={attendee._id}
                       >
-                        {attendee.firstname} {attendee.lastname}
+                        <Link to={"/profile/" + attendee._id}>{attendee.firstname} {attendee.lastname}</Link>
                       </li>
                     );
                   })
