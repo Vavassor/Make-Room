@@ -9,17 +9,18 @@ import "./profileCard.css"
 
 
 
-function ProfileCard({image}){
+function ProfileCard({image, children}){
   return (
-    <Col sm="4">
+    // <Col sm="6" className="pb-3">
       <Card>
         <Card.Img variant="top" src={image.url} />
         <Card.Body>
           <Card.Title>{image.title}</Card.Title>
           <Card.Text>{image.about}</Card.Text>
         </Card.Body>
+        <Card.Footer className="text-center">{children? children: ""}</Card.Footer>
       </Card>
-    </Col>
+    // </Col>
   );
 
 }

@@ -1,2 +1,2 @@
-
-export { portofolioInfo, imageUpdateForm } from "./PorftolioFormComponent";
+import PortoflioInfoForm from "../PortfolioFormComponent";
+export default PortoflioInfoForm

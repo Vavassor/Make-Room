@@ -8,19 +8,19 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
+import CardColumns from "react-bootstrap/CardColumns";
 
 
 //custom components
 import ProfileCard from "../components/ProfileCard";
-// import ProfileForm from "../components/ProfileForm";
 import ProfileFormModal from "../components/ProfileFormModal";
-import {PortfolioInfoButton, ItemUpdateButton, CreateItemButton } from "../components/ButtonComponent"
+import { PortfolioInfoForm, ItemForm } from "../components/PortfolioFormComponent";
+import { ItemButton } from "../components/ButtonComponent"
 
 
 
 // utils
 import Api from "../utilities/Api";
-// import Auth from "../utilities/Auth";
 
 // css library
 import "./pages.css"
@@ -45,7 +45,8 @@ class Profile extends Component {
       imageUrl: "",
       imageTitle: "",
       imageAbout: "",
-      imageId: ""
+      imageId: "",
+      imageOrder: ""
     };
   }
 
@@ -91,6 +92,7 @@ class Profile extends Component {
   handleInputChange = event => {
     event.preventDefault();
     const { name, value } = event.target;
+    // console.log(name,": ",  value)
     this.setState({[name]: value});
   };
 
@@ -110,28 +112,27 @@ class Profile extends Component {
 
     Api
     .updateUserProfile(id, userInfo)
-    .then(result => console.log(result))
+    // .then(result => console.log(result))
     .catch(err => console.error(err))
   };
 
   handlePortfolioInfoSubmit = event => {
     event.preventDefault();
-
-
-    // Api
-    // .updatePorfolioInfo(userId, portfolioInfo)
+    let {id, portfolioInfo} = this.state;
+    Api
+    .updatePorfolioInfo(id, {portfolioInfo:portfolioInfo})
     // .then(data => console.log(data))
-    // .catch(err => console.log(err))
+    .catch(err => console.log(err))
   };
 
   handlePortfolioImageSubmit = event => {
     event.preventDefault();
-    let {imageId, imageUrl, imageTitle, imageAbout} = this.state
+    let {imageId, imageUrl, imageTitle, imageAbout, imageOrder} = this.state
     let portfolioItem = {
-      id: imageId,
       url: imageUrl,
       title: imageTitle,
-      about: imageAbout
+      about: imageAbout,
+      order: imageOrder
     };
     
     // Api
@@ -140,9 +141,34 @@ class Profile extends Component {
     // .catch(err => console.log(err))
   };
 
+  createNewPortfolioItem = (event) => {
+    event.preventDefault();
+    Api
+    .addPortfolioItem(this.state.id)
+    .then(data => {
+      // console.log(data)
+      this.getProfilePortfolio(this.state.id);
+    })
+    .catch(err => console.error(err))
+  };
+
+  deletePortfolioItem = (itemId) => {
+    Api
+    .deletePortfolioItem(this.state.id, itemId)
+    .then(data => {
+      // console.log(data)
+      this.getProfilePortfolio(this.state.id);
+    })
+    .catch(err => console.error(err))
+  }
+
   mediaLinks(link){
     let x = Object.entries(link);
     return x.map(item => <Col key={item[1]} sm={2}><a href={item[1]} target="_blank" rel="noopener noreferrer">{item[0]}</a></Col>)
+  }
+
+  portfolioSort = (items) => {
+    return items.sort((a, b) => new Date(b.order) - new Date(a.order))
   }
 
   render() {
@@ -156,7 +182,13 @@ class Profile extends Component {
                   ? this.state.firstname + " " + this.state.lastname
                   : "Anon"}
               </h1>
-              <UpdateModal handleInputChange={this.handleInputChange} handleFormSubmit = {this.handleFormSubmit} userInfo={this.state}/>
+              <UpdateModal
+                form={"profile"}
+                task={"Update Profile"}
+                handleInputChange={this.handleInputChange}
+                handleFormSubmit={this.handleFormSubmit}
+                userInfo={this.state}
+              />
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-1">
@@ -165,8 +197,33 @@ class Profile extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-4">
-            {this.state.email ?  <Col className="web-link" sm={2}><a href={this.state.email} target="_blank" rel="noopener noreferrer">Email:</a></Col>: ""}
-            {this.state.website ? <Col className="web-link" sm={2}><a href={this.state.website} target="_blank" rel="noopener noreferrer">Website:</a></Col>: ""}
+            {/* <a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">Send Mail</a> */}
+            {this.state.email ? (
+              <Col className="web-link" sm={2}>
+                <a
+                  href={`mailto:${this.state.email}?Subject=Hi%20There`}
+                  target="_top"
+                  rel="noopener noreferrer"
+                >
+                  {this.state.email}
+                </a>
+              </Col>
+            ) : (
+              ""
+            )}
+            {this.state.website ? (
+              <Col className="web-link" sm={2}>
+                <a
+                  href={this.state.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Website
+                </a>
+              </Col>
+            ) : (
+              ""
+            )}
           </Row>
         </Jumbotron>
         <Container className="profile-container">
@@ -174,11 +231,27 @@ class Profile extends Component {
             <Col xs={10}>
               <Card>
                 <Card.Body>
-                  <Card.Title>About My Work</Card.Title>
+                  <Card.Title>
+                    About My Work
+                    <ItemButton
+                      action={this.createNewPortfolioItem}
+                      size="sm"
+                      variant="success"
+                    >
+                      <i className="far fa-plus-square" />
+                    </ItemButton>
+                  </Card.Title>
                   <Card.Text>
                     {this.state.portfolioInfo
                       ? this.state.portfolioInfo
                       : "Oops, I haven't added any info about my porfolio"}
+                    <UpdateModal
+                      task="Update Portfolio Info"
+                      form={"portfolioInfo"}
+                      handleInputChange={this.handleInputChange}
+                      handleFormSubmit={this.handlePortfolioInfoSubmit}
+                      portfolioInfo={this.state.portfolioInfo}
+                    />
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -186,15 +259,45 @@ class Profile extends Component {
           </Row>
           <Row className="justify-content-center portfolio-images">
             <Col xs={10}>
-              <Row className="justify-content-between">
-                {this.state.portfolio.length ? (
-                  this.state.portfolio.map(imageInfo => (
-                    <ProfileCard key={imageInfo.imageId} image={imageInfo} />
-                  ))
-                ) : (
-                  <h3>I don't have any items in my porfolio</h3>
-                )}
-              </Row>
+              {/* <Row className="justify-content-between"> */}
+              {this.state.portfolio.length ? (
+                <CardColumns>
+                  {
+                    this.portfolioSort([...this.state.portfolio]).map(
+                      imageInfo => (
+                        <ProfileCard
+                          key={imageInfo._id}
+                          image={imageInfo}
+                          imgId={imageInfo._id}
+                        >
+                          <UpdateModal
+                            form={"itemInfo"}
+                            task={"Update Item"}
+                            variant="success"
+                            icon={"Update"}
+                            handleInputChange={this.handleInputChange}
+                            handleFormSubmit={this.handleItemSubmit}
+                            userInfo={this.state}
+                          />
+
+                          <ItemButton
+                            size="sm"
+                            variant={"danger"}
+                            action={() =>
+                              this.deletePortfolioItem(imageInfo._id)
+                            }
+                          >
+                            <i className="far fa-trash-alt" />
+                          </ItemButton>
+                        </ProfileCard>
+                      )
+                    )
+                  }
+                </CardColumns>
+              ) : (
+                <h3>I don't have any items in my porfolio</h3>
+              )}
+              {/* </Row> */}
             </Col>
           </Row>
         </Container>
@@ -225,24 +328,46 @@ class UpdateModal extends React.Component {
     this.setState({ show: true });
   }
 
-  render() {
-    return (
-      <>
-        <Button variant="primary" size="sm" onClick={this.handleShow}>
-        <i className="fas fa-user-edit"></i>
-        </Button>
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Update Profile</Modal.Title>
-          </Modal.Header>
-          <Modal.Body><ProfileFormModal {...this.props} handleClose={this.handleClose}/></Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    );
+  swtichCaseContent(form){
+    switch (form){
+      case "profile":
+      return(
+        <ProfileFormModal {...this.props} handleClose={this.handleClose}/>
+      )
+      break;
+      case"portfolioInfo":
+      return(
+        <PortfolioInfoForm {...this.props} handleClose={this.handleClose}/>
+      )
+      break;
+      case "itemInfo":
+      return (
+        <ItemForm {...this.props} handleClose={this.handleClose}/>
+      )
+      break;
+
+    }
+
   }
+
+  render() {
+      return(
+        <>
+          <Button className="mx-2" variant={this.props.variant? this.props.variant: "primary"} size="sm" onClick={this.handleShow}>
+          {this.props.icon? this.props.icon :<i className="fas fa-user-edit"></i>}
+          </Button>
+          <Modal show={this.state.show} onHide={this.handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>{this.props.task}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>{this.swtichCaseContent(this.props.form)}</Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.handleClose}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      );
+    }
 }

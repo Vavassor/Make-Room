@@ -1,18 +1,20 @@
+import React, { Component } from "react";
+import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
+
+import Main from "./pages/Main";
 import AddEvent from "./pages/AddEvent";
 import CreateAccount from "./pages/CreateAccount";
 import Event from "./pages/Event";
 import EventList from "./pages/EventList";
-import Main from "./pages/Main";
 import ProfilePage from "./pages/ProfilePage";
 import ProfilePageView from "./pages/ProfilePageView";
-// import ChatIndex from "./pages/ChatIndex";
 import PageNotFound from "./pages/PageNotFound";
-import React, { Component } from "react";
-import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
 import NavTabs from "./components/NavTabs";
 import PrivateRoute from "./components/PrivateRoute";
 import Footer from "./components/Footer";
+
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./App.css";
 
 class App extends Component {
