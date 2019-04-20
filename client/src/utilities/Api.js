@@ -2,6 +2,19 @@ import axios from "axios";
 import Auth from "./Auth";
 
 export default {
+  attendEvent: function(event) {
+    const token = Auth.getToken();
+    return axios.post(
+      `/api/event/${event._id}/attendee`,
+      {},
+      {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+    );
+  },
+
   createEvent: function(event) {
     const token = Auth.getToken();
     return axios.post(
@@ -64,6 +77,18 @@ export default {
       password: password,
     };
     return axios.post("/api/auth/token", data);
+  },
+
+  stopAttendingEvent: function(event) {
+    const token = Auth.getToken();
+    return axios.delete(
+      `/api/event/${event._id}/attendee`,
+      {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+    );
   },
 
   // profile routes

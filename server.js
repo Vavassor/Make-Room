@@ -8,7 +8,6 @@ const passport = require("passport");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const routes = require("./routes");
-const session = require("express-session");
 const app = express();
 
 require("dotenv").config();
@@ -19,14 +18,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  saveUninitialized: true,
-  resave: true,
-}));
-
 app.use(passport.initialize());
-app.use(passport.session());
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

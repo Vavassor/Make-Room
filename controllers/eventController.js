@@ -7,9 +7,24 @@ const googleMapsClient = googleMaps.createClient({
 });
 
 module.exports = {
-  createEvent: function(request, response){
+  attendEvent: function(request, response) {
+    models.Event
+      .findByIdAndUpdate(
+        request.params.id,
+        {
+          $addToSet: {
+            attendees: request.user._id,
+          },
+        }
+      )
+      .then(event => response.json(event))
+      .catch(error => response.status(422).json(error));
+  },
+
+  createEvent: function(request, response) {
     const event = request.body;
     event.creator = request.user._id;
+    event.attendees = [event.creator];
 
     googleMapsClient
       .geocode({address: event.place.address})
@@ -69,11 +84,28 @@ module.exports = {
       .catch(error => response.status(422).json(error));
   },
 
-  getEventById: function(request, response){
+  getEventById: function(request, response) {
     models.Event
       .findById(request.params.id)
+      .populate("attendees", "-password")
       .then(event => response.json(event))
       .catch(error => response.status(422).json(error));
+  },
+
+  stopAttendingEvent: function(request, response) {
+    models.Event
+      .updateOne(
+        {
+          _id: request.params.id,
+        },
+        {
+          $pull: {
+            attendees: request.user._id,
+          },
+        }
+      )
+      .then(updateResponse => response.status(204).end())
+      .catch(error => response.status(500).json(error));
   },
 
   updateEvent: function(request, response) {

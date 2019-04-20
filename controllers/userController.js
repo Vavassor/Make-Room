@@ -33,15 +33,18 @@ module.exports = {
       })
       .then((user) => {
         models.Portfolio
-        .create({
-          userId: user._id
-        })
-        response.json({
-          id: user._id,
-          username: user.username,
-        });
+          .create({
+            userId: user._id,
+          })
+          .then((portfolio) => {
+            response.json({
+              id: user._id,
+              username: user.username,
+            });
+          })
+          .catch(error => handleError(error, response));
       })
-      .catch(error => handleError(error, response));;
+      .catch(error => handleError(error, response));
   },
 
   getSelf: function(request, response) {
