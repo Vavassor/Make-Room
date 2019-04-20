@@ -1,8 +1,7 @@
-const attendeeRoutes = require("./attendee");
-const eventController = require("../../../controllers/eventController");
+const eventController = require("../../controllers/eventController");
+const router = require("express").Router({mergeParams: true});
 const passport = require("passport");
-const router = require("express").Router();
-
+  
 router.route("/")
   .get(eventController.getAllEvents)
   .post(
@@ -15,6 +14,11 @@ router.route("/:id")
   .patch(eventController.updateEvent)
   .delete(eventController.deleteEvent);
 
-router.use("/:id/attendee", attendeeRoutes);
+router.route("/attendee")
+  .get(eventController.getAttendees)
+  .patch(
+    passport.authenticate("jwt", {session: false}),
+    eventController.attendEvent
+  );
 
 module.exports = router;
