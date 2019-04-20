@@ -233,21 +233,25 @@ class Profile extends Component {
                 <Card.Body>
                   <Card.Title>
                     About My Work
-                    <ItemButton action={this.createNewPortfolioItem}>
-                      Add 
+                    <ItemButton
+                      action={this.createNewPortfolioItem}
+                      size="sm"
+                      variant="success"
+                    >
+                      <i className="far fa-plus-square" />
                     </ItemButton>
                   </Card.Title>
                   <Card.Text>
                     {this.state.portfolioInfo
                       ? this.state.portfolioInfo
                       : "Oops, I haven't added any info about my porfolio"}
-                      <UpdateModal
-                        task="Update Portfolio Info"
-                        form={"portfolioInfo"}
-                        handleInputChange={this.handleInputChange}
-                        handleFormSubmit={this.handlePortfolioInfoSubmit}
-                        portfolioInfo={this.state.portfolioInfo}
-                      />
+                    <UpdateModal
+                      task="Update Portfolio Info"
+                      form={"portfolioInfo"}
+                      handleInputChange={this.handleInputChange}
+                      handleFormSubmit={this.handlePortfolioInfoSubmit}
+                      portfolioInfo={this.state.portfolioInfo}
+                    />
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -255,47 +259,45 @@ class Profile extends Component {
           </Row>
           <Row className="justify-content-center portfolio-images">
             <Col xs={10}>
-            <CardColumns>
               {/* <Row className="justify-content-between"> */}
-                {this.state.portfolio.length ? (
-                  this.portfolioSort([...this.state.portfolio]).map(
-                    imageInfo => (
-                      <ProfileCard
-                        key={imageInfo._id}
-                        image={imageInfo}
-                        imgId={imageInfo._id}
-                      >  
-                        {/* <ItemButton variant={"info"}
+              {this.state.portfolio.length ? (
+                <CardColumns>
+                  {
+                    this.portfolioSort([...this.state.portfolio]).map(
+                      imageInfo => (
+                        <ProfileCard
+                          key={imageInfo._id}
+                          image={imageInfo}
+                          imgId={imageInfo._id}
                         >
-                          Update
-                        </ItemButton> */}
-                        <button onClick={() => console.log("click")}>
-                        <UpdateModal
-                          form={"itemInfo"}
-                          task={"Update Item"}
-                          handleInputChange={this.handleInputChange}
-                          handleFormSubmit={this.handleItemSubmit}
-                          userInfo={this.state}
-                          // onClick={() => console.log("click")}
-                        />
-                        
-                        </button>
-                        <ItemButton
-                          variant={"danger"}
-                          action={ 
-                            () => this.deletePortfolioItem(imageInfo._id)
-                          }
-                        >
-                          Del
-                        </ItemButton>
-                      </ProfileCard>
+                          <UpdateModal
+                            form={"itemInfo"}
+                            task={"Update Item"}
+                            variant="success"
+                            icon={"Update"}
+                            handleInputChange={this.handleInputChange}
+                            handleFormSubmit={this.handleItemSubmit}
+                            userInfo={this.state}
+                          />
+
+                          <ItemButton
+                            size="sm"
+                            variant={"danger"}
+                            action={() =>
+                              this.deletePortfolioItem(imageInfo._id)
+                            }
+                          >
+                            <i className="far fa-trash-alt" />
+                          </ItemButton>
+                        </ProfileCard>
+                      )
                     )
-                  )
-                ) : (
-                  <h3>I don't have any items in my porfolio</h3>
-                )}
+                  }
+                </CardColumns>
+              ) : (
+                <h3>I don't have any items in my porfolio</h3>
+              )}
               {/* </Row> */}
-              </CardColumns>
             </Col>
           </Row>
         </Container>
@@ -351,8 +353,8 @@ class UpdateModal extends React.Component {
   render() {
       return(
         <>
-          <Button variant="primary" size="sm" onClick={this.handleShow}>
-          <i className="fas fa-user-edit"></i>
+          <Button className="mx-2" variant={this.props.variant? this.props.variant: "primary"} size="sm" onClick={this.handleShow}>
+          {this.props.icon? this.props.icon :<i className="fas fa-user-edit"></i>}
           </Button>
           <Modal show={this.state.show} onHide={this.handleClose}>
             <Modal.Header closeButton>
