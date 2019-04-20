@@ -9,16 +9,18 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
 
+
 //custom components
 import ProfileCard from "../components/ProfileCard";
-import ProfileForm from "../components/ProfileForm";
+// import ProfileForm from "../components/ProfileForm";
 import ProfileFormModal from "../components/ProfileFormModal";
+import {PortfolioInfoButton, ItemUpdateButton, CreateItemButton } from "../components/ButtonComponent"
 
 
 
 // utils
 import Api from "../utilities/Api";
-import Auth from "../utilities/Auth";
+// import Auth from "../utilities/Auth";
 
 // css library
 import "./pages.css"
@@ -28,7 +30,7 @@ class Profile extends Component {
   constructor(props) {
     super(props);
 
-    this.handleLogOut = this.handleLogOut.bind(this);
+    // this.handleLogOut = this.handleLogOut.bind(this);
 
     this.state = {
       username: "",
@@ -40,6 +42,10 @@ class Profile extends Component {
       email: "",
       blurb: "",
       website:"",
+      imageUrl: "",
+      imageTitle: "",
+      imageAbout: "",
+      imageId: ""
     };
   }
 
@@ -60,8 +66,6 @@ class Profile extends Component {
   }
 
   getUserInfo(id){
-    console.log(typeof id)
-    console.log(id.length);
     Api
       .getUserInfoById(id)
       .then(response => {
@@ -87,16 +91,21 @@ class Profile extends Component {
   handleInputChange = event => {
     event.preventDefault();
     const { name, value } = event.target;
-    console.log(name, value)
     this.setState({[name]: value});
   };
 
   handleFormSubmit = event => {
     event.preventDefault();
     let userInfo = {...this.state}
-    console.log(userInfo);
     delete userInfo.id
     delete userInfo.username
+    userInfo = {
+      firstname: userInfo.firstname,
+      lastname: userInfo.lastname,
+      blurb: userInfo.blurb,
+      website: userInfo.website,
+      email: userInfo.email
+    }
     const {id} = this.state
 
     Api
@@ -105,10 +114,31 @@ class Profile extends Component {
     .catch(err => console.error(err))
   };
 
-  handleLogOut(event) {
-    Auth.logOut();
-    this.props.history.push("/");
-  }
+  handlePortfolioInfoSubmit = event => {
+    event.preventDefault();
+
+
+    // Api
+    // .updatePorfolioInfo(userId, portfolioInfo)
+    // .then(data => console.log(data))
+    // .catch(err => console.log(err))
+  };
+
+  handlePortfolioImageSubmit = event => {
+    event.preventDefault();
+    let {imageId, imageUrl, imageTitle, imageAbout} = this.state
+    let portfolioItem = {
+      id: imageId,
+      url: imageUrl,
+      title: imageTitle,
+      about: imageAbout
+    };
+    
+    // Api
+    // .updatePorfolioItem(userId, portfolioItem)
+    // .then(data => console.log(data))
+    // .catch(err => console.log(err))
+  };
 
   mediaLinks(link){
     let x = Object.entries(link);
@@ -123,20 +153,10 @@ class Profile extends Component {
             <Col sm={6}>
               <h1>
                 {this.state.firstname
-                  ? this.state.firstname +
-                    ", " +
-                    this.state.lastname
+                  ? this.state.firstname + " " + this.state.lastname
                   : "Anon"}
               </h1>
               <UpdateModal handleInputChange={this.handleInputChange} handleFormSubmit = {this.handleFormSubmit} userInfo={this.state}/>
-              <Button
-                variant="warning"
-                type="button"
-                onClick={this.handleLogOut}
-              >
-                Log Out
-              </Button>
-              
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-1">
@@ -145,7 +165,8 @@ class Profile extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-4">
-            {this.state.socialMediaHandles ? this.mediaLinks(this.state.socialMediaHandles) : ""}
+            {this.state.email ?  <Col className="web-link" sm={2}><a href={this.state.email} target="_blank" rel="noopener noreferrer">Email:</a></Col>: ""}
+            {this.state.website ? <Col className="web-link" sm={2}><a href={this.state.website} target="_blank" rel="noopener noreferrer">Website:</a></Col>: ""}
           </Row>
         </Jumbotron>
         <Container className="profile-container">
@@ -164,11 +185,11 @@ class Profile extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">
-            <Col xs={11}>
-              <Row className="justify-content-center">
+            <Col xs={10}>
+              <Row className="justify-content-between">
                 {this.state.portfolio.length ? (
                   this.state.portfolio.map(imageInfo => (
-                    <ProfileCard key={imageInfo.url} image={imageInfo} />
+                    <ProfileCard key={imageInfo.imageId} image={imageInfo} />
                   ))
                 ) : (
                   <h3>I don't have any items in my porfolio</h3>
@@ -181,7 +202,6 @@ class Profile extends Component {
     );
   }
 }
-
 export default Profile;
 
 
@@ -208,15 +228,14 @@ class UpdateModal extends React.Component {
   render() {
     return (
       <>
-        <Button variant="primary" onClick={this.handleShow}>
-          Update Profile
+        <Button variant="primary" size="sm" onClick={this.handleShow}>
+        <i className="fas fa-user-edit"></i>
         </Button>
-
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Update Profile</Modal.Title>
           </Modal.Header>
-          <Modal.Body><ProfileFormModal {...this.props}/></Modal.Body>
+          <Modal.Body><ProfileFormModal {...this.props} handleClose={this.handleClose}/></Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
               Close
@@ -227,5 +246,3 @@ class UpdateModal extends React.Component {
     );
   }
 }
-
-// render(<UpdateModal />);

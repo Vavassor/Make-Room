@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { database } from '../../utilities/firebase';
+// import { database } from '../../utilities/firebase';
 
 class EventChat extends Component {
   constructor() {
@@ -17,7 +17,7 @@ class EventChat extends Component {
   componentWillMount() {
     this.setState({event: this.props.event})
     // console.log(this.props);
-    const messagesRef = database.ref(this.currentEvent)
+    // const messagesRef = database.ref(this.currentEvent)
       .orderByKey()
       .limitToLast(100);
 
@@ -33,7 +33,7 @@ class EventChat extends Component {
   onAddMessage(event) {
     event.preventDefault();
 
-    database.ref(this.currentEvent).push(this.input.value);
+    // database.ref(this.currentEvent).push(this.input.value);
 
     this.input.value = '';
   }

@@ -1,7 +1,19 @@
+html {
+  /* overflow-x: hidden; */
+}
+
 body {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
   min-height: 100vh;
   background-color: lightgrey;
   background-image: linear-gradient(to bottom, transparent, darkgrey)
+
+}
+body::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
 }
 
 .profile-jumbo{
@@ -13,6 +25,24 @@ body {
   border-radius: 0 !important;
 }
 
+.profile-jumbo h1 {
+  display: inline-block;
+}
+
+.profile-jumbo button {
+  transform: scale(0.75);
+  vertical-align: 1em;
+  margin-left: 1em;
+}
+
+.web-link a {
+  color: orange;
+}
+
 .profile-container {
 
+}
+
+.row {
+  width: 100% !important;
 }
