@@ -15,18 +15,32 @@ class Event extends Component {
     this.state = {
       event: null,
       failedToLoad: false,
+      selfId: null,
     };
 
     this.handleAttend = this.handleAttend.bind(this);
+    this.handleStopAttending = this.handleStopAttending.bind(this);
   }
   
   componentDidMount() {
     this.loadEvent();
+    
+    Api
+      .getSelf()
+      .then(response => this.setState({selfId: response.data.id}))
+      .catch(error => console.error(error));
   }
 
   handleAttend(event) {
     Api
       .attendEvent(this.state.event)
+      .then(response => this.loadEvent())
+      .catch(error => console.error(error));
+  }
+
+  handleStopAttending(event) {
+    Api
+      .stopAttendingEvent(this.state.event)
       .then(response => this.loadEvent())
       .catch(error => console.error(error));
   }
@@ -60,6 +74,36 @@ class Event extends Component {
     );
   }
 
+  renderAttendButton() {
+    let attending = false;
+    if (this.state.event) {
+      const attendee = this.state.event.attendees.find((attendee) => {
+        return attendee._id === this.state.selfId;
+      });
+      attending = attendee !== undefined;
+    }
+
+    if (attending) {
+      return (
+        <Button
+          variant="primary"
+          onClick={this.handleStopAttending}
+        >
+          Stop Attending
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          variant="primary"
+          onClick={this.handleAttend}
+        >
+          Attend
+        </Button>
+      );
+    }
+  }
+
   renderContent() {
     const event = this.state.event;
 
@@ -77,12 +121,18 @@ class Event extends Component {
             </Col>
 
             <Col>
-              <Button variant="primary" onClick={this.handleAttend}>Attend</Button>
-              <ul>
+              {this.renderAttendButton()}
+              
+              <ul className="list-group">
                 {
                   event.attendees.map((attendee) => {
                     return (
-                      <li>{attendee.firstname} {attendee.lastname}</li>
+                      <li
+                        className="list-group-item"
+                        key={attendee._id}
+                      >
+                        {attendee.firstname} {attendee.lastname}
+                      </li>
                     );
                   })
                 }

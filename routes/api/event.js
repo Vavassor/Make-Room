@@ -14,11 +14,14 @@ router.route("/:id")
   .patch(eventController.updateEvent)
   .delete(eventController.deleteEvent);
 
-router.route("/attendee")
-  .get(eventController.getAttendees)
-  .patch(
+router.route("/:id/attendee")
+  .post(
     passport.authenticate("jwt", {session: false}),
     eventController.attendEvent
+  )
+  .delete(
+    passport.authenticate("jwt", {session: false}),
+    eventController.stopAttendingEvent
   );
 
 module.exports = router;

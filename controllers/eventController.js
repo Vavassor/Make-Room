@@ -9,21 +9,19 @@ const googleMapsClient = googleMaps.createClient({
 module.exports = {
   attendEvent: function(request, response) {
     models.Event
-      .updateOne(
+      .findByIdAndUpdate(
+        request.params.id,
         {
-          _id: request.params.id,
-        },
-        {
-          $push: {
+          $addToSet: {
             attendees: request.user._id,
           },
         }
       )
-      .then(updateResponse => response.status(204).end())
+      .then(event => response.json(event))
       .catch(error => response.status(422).json(error));
   },
 
-  createEvent: function(request, response){
+  createEvent: function(request, response) {
     const event = request.body;
     event.creator = request.user._id;
 
@@ -85,19 +83,28 @@ module.exports = {
       .catch(error => response.status(422).json(error));
   },
 
-  getAttendees: function(request, response) {
+  getEventById: function(request, response) {
     models.Event
       .findById(request.params.id)
-      .then(event => response.status(200).json(event.attendees))
+      .populate("attendees", "-password")
+      .then(event => response.json(event))
       .catch(error => response.status(422).json(error));
   },
 
-  getEventById: function(request, response){
+  stopAttendingEvent: function(request, response) {
     models.Event
-      .findById(request.params.id)
-      .populate("attendees")
-      .then(event => response.json(event))
-      .catch(error => response.status(422).json(error));
+      .updateOne(
+        {
+          _id: request.params.id,
+        },
+        {
+          $pull: {
+            attendees: request.user._id,
+          },
+        }
+      )
+      .then(updateResponse => response.status(204).end())
+      .catch(error => response.status(500).json(error));
   },
 
   updateEvent: function(request, response) {

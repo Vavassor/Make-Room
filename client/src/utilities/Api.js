@@ -4,7 +4,7 @@ import Auth from "./Auth";
 export default {
   attendEvent: function(event) {
     const token = Auth.getToken();
-    return axios.patch(
+    return axios.post(
       `/api/event/${event._id}/attendee`,
       {},
       {
@@ -79,6 +79,18 @@ export default {
     return axios.post("/api/auth/token", data);
   },
 
+  stopAttendingEvent: function(event) {
+    const token = Auth.getToken();
+    return axios.delete(
+      `/api/event/${event._id}/attendee`,
+      {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+    );
+  },
+
   // profile routes
   getProfilePortfolioById: function(userId){
     return axios.get("/api/portfolio/" + userId)
@@ -93,5 +105,4 @@ export default {
   updateUserProfile: function(userId, userInfo){
     return axios.patch("/api/profile/" + userId, userInfo)
   }
-
 };
