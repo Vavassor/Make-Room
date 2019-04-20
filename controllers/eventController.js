@@ -24,6 +24,7 @@ module.exports = {
   createEvent: function(request, response) {
     const event = request.body;
     event.creator = request.user._id;
+    event.attendees = [event.creator];
 
     googleMapsClient
       .geocode({address: event.place.address})
