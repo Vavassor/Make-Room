@@ -46,7 +46,9 @@ class App extends Component {
   loggedInRoutes() {
     return (
       <Switch>
-        <Route exact path="/" render={(props) => <Main {...props} handleLogIn={this.handleLogIn} />} />
+        <Route exact path="/" render={(props) => (
+          <Main {...props} handleLogIn={this.handleLogIn} isLoggedIn={this.state.showLoggedIn} />
+        )} /> 
         <Route exact path="/add-event" component={AddEvent} />
         <Route exact path="/create-account" component={CreateAccount} />
         <Route exact path="/event-list" component={EventList} />
@@ -61,7 +63,9 @@ class App extends Component {
   loggedOutRoutes() {
     return (
       <Switch>
-        <Route exact path="/" render={(props) => <Main {...props} handleLogIn={this.handleLogIn} />} />
+        <Route exact path="/" render={(props) => (
+          <Main {...props} handleLogIn={this.handleLogIn} isLoggedIn={this.state.showLoggedIn} />
+        )} />
         <Route exact path="/add-event" component={AddEvent} />
         <Route exact path="/create-account" component={CreateAccount} />
         <Route component={PageNotFound} />

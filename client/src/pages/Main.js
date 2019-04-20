@@ -20,7 +20,7 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    if (Auth.isAuthenticated()) {
+    if (this.props.isLoggedIn) {
       this.props.history.push("/profile");
     }
   }
