@@ -6,15 +6,30 @@ const portfolioSchema = new Schema({
     type: String,
     required: true,
   },
-  porfolioDetails: {
+  portfolioDetails: {
     type: String,
     required: false
   },
   images: [
     {
-    url: String,
-    title: String,
-    about: String
+    order: {
+      type: Date,
+      default: Date.now,
+      required: false
+    },
+    url: 
+    {type: String,
+      required: false,
+      default: "./images/default-item.png"
+    },
+    title: {
+      type: String,
+      default: "New Item"
+    },
+    about: {
+      type: String,
+      default: "Porfolio Item Info"
+    }
   }
 ],
   porfolioaDisplayType: {
@@ -26,3 +41,4 @@ const portfolioSchema = new Schema({
 const Portfolio = mongoose.model("Portfolio", portfolioSchema);
 
 module.exports = Portfolio;
+

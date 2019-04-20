@@ -96,22 +96,34 @@ export default {
     return axios.get("/api/portfolio/info/" + userId)
   },
 
-  updatePorfolioInfo: function(userId, portfolioInfo){
-    let url = "/api/portfolio/info" + userId
-    return axios.patch(url, portfolioInfo);
-  },
-
-  updatePortfolioItem: function(userId, portfolioItem){
-    let url = "/api/portfolio/item" + userId
-    return axios.patch(url, portfolioItem);
-  },
-
   getUserInfoById: function(userId){
     let url = "/api/profile/" + userId;
     return axios.get(url)
   },
-
+  
   updateUserProfile: function(userId, userInfo){
     return axios.patch("/api/profile/" + userId, userInfo)
-  }
+  },
+  
+  // portfolio routes
+  updatePorfolioInfo: function(userId, portfolioInfo){
+    let url = "/api/portfolio/info/" + userId
+    return axios.patch(url, portfolioInfo);
+  },
+
+  addPortfolioItem: function (userId){
+    let url = '/api/portfolio/item/' + userId
+    return axios.post(url);
+  },
+
+  deletePortfolioItem: function (userId, itemId){
+    let url = `/api/portfolio/item/${userId}/${itemId}`
+    return axios.delete(url);
+  },
+
+  updatePortfolioItem: function(userId, portfolioItem){
+    let url = "/api/portfolio/item/" + userId
+    return axios.patch(url, portfolioItem);
+  },
+
 };

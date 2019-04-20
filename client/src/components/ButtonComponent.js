@@ -2,7 +2,7 @@ import React from "react";
 
 import Button from "react-bootstrap/Button";
 
-export function PortfolioInfobutton (props){
+export function PortfolioInfoButton (props){
   return (
     <>
     <Button>Update</Button>
@@ -18,11 +18,11 @@ export function ItemUpdateButton (props){
   )
 };
 
-export function CreateItemButton(props){
+export function ItemButton(props){
 
   return(
     <>
-       <Button>Create</Button>
+       <Button className="mx-1" variant={props.variant} onClick={props.action} size={props.size}>{props.children}</Button>
     </>
   )
 };
