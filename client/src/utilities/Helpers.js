@@ -21,7 +21,6 @@ export default {
 
   sortByDate: function (items) {
     return items.sort((a, b) => new Date(b.order) - new Date(a.order))
-  }
-
+  },
 
 }
