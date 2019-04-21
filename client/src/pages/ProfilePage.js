@@ -1,5 +1,8 @@
 import React, {Component} from "react";
 
+import moment from "moment";
+
+
 // bootstrap components
 import Card from "react-bootstrap/Card";
 import Jumbotron from "react-bootstrap/Jumbotron";
@@ -62,7 +65,7 @@ class Profile extends Component {
       });
     })
     .catch(error => console.error(error));
-  }
+  };
 
   getUserInfo(id){
     Api
@@ -163,13 +166,28 @@ class Profile extends Component {
     })
   };
 
+  setAsFirst = (id) => {
+    let newOrder = moment(Date.now()).toISOString()
+    let portfolioItem = {
+      _id: id,
+      order: newOrder
+    };
+    
+    Api
+    .updatePortfolioItem(this.state.id, portfolioItem)
+    .then(data => {
+      this.getProfilePortfolio(this.state.id);
+    })
+    .catch(err => console.log(err))
+  };
+
 
   render() {
     return (
       <>
         <Jumbotron className="profile-jumbo fluid mx-0">
           <Row className="justify-content-center text-center">
-            <Col sm={6}>
+            <Col className="jumbo-header" sm={6}>
               <h1>
                 {this.state.firstname
                   ? this.state.firstname + " " + this.state.lastname
@@ -219,28 +237,12 @@ class Profile extends Component {
           </Row>
         </Jumbotron>
         <Container className="profile-container">
-          <Row className="justify-content-center about-me mb-2">
+          <Row className="justify-content-center about-me-row mb-2">
             <Col xs={12}>
               <Card>
                 <Card.Body>
-                  <Card.Title>
+                  <Card.Title className="about-me-card-title">
                     About My Work
-                    <ItemButton
-                      action={this.createNewPortfolioItem}
-                      size="sm"
-                      variant="success"
-                    >
-                      <i className="far fa-plus-square" />
-                    </ItemButton>
-                  </Card.Title>
-                  <div>
-                    {this.state.portfolioInfo ? (
-                      Help.addLineBreaks(this.state.portfolioInfo)
-                    ) : (
-                      <p>
-                        Oops, I haven't added any info about my porfolio
-                      </p>
-                    )}
                     <UpdateModal
                       task="Update Portfolio Info"
                       form={"portfolioInfo"}
@@ -248,13 +250,29 @@ class Profile extends Component {
                       handleFormSubmit={this.handleSubmitPortfolioInfo}
                       portfolioInfo={this.state.portfolioInfo}
                     />
+                  </Card.Title>
+                  <div className="about-me-card-text">
+                    {this.state.portfolioInfo ? (
+                      Help.addLineBreaks(this.state.portfolioInfo)
+                    ) : (
+                      <p>
+                        Oops, I haven't added any info about my porfolio
+                      </p>
+                    )}
                   </div>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">
-            <Col xs={12}>
+            <ItemButton
+              action={this.createNewPortfolioItem}
+              size="sm"
+              variant="primary"
+            >
+              Add New Portfolio Item <i className="far fa-plus-square" />
+            </ItemButton>
+            <Col xs={12} className="mt-2">
               {this.state.portfolio.length ? (
                 <MasonryLayout columns={3} gap={25}>
                   {Help.sortByDate([...this.state.portfolio]).map(
@@ -264,10 +282,19 @@ class Profile extends Component {
                         image={imageInfo}
                         imgId={imageInfo._id}
                       >
+                        <ItemButton
+                          size="sm"
+                          variant={"primary"}
+                          action={() =>
+                            this.setAsFirst(imageInfo._id)
+                          }
+                        >
+                          Set as First
+                        </ItemButton>
                         <UpdateModal
                           form={"itemInfo"}
                           task={"Update Item"}
-                          variant="success"
+                          variant="primary"
                           icon={"Update"}
                           handleInputChange={this.handleInputChange}
                           handleFormSubmit={this.handleSubmitPortfolioItem}

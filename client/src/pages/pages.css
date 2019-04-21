@@ -16,6 +16,10 @@ body::-webkit-scrollbar { /* WebKit */
   height: 0;
 }
 
+/* profile jumbotron */
+/* profile jumbotron */
+/* profile jumbotron */
+
 .profile-jumbo{
   padding: 2rem 0 !important;
   text-justify: center;
@@ -25,24 +29,52 @@ body::-webkit-scrollbar { /* WebKit */
   border-radius: 0 !important;
 }
 
-.profile-jumbo h1 {
-  display: inline-block;
+.jumbo-header {
+  position: relative;
 }
 
-.profile-jumbo button {
+.jumbo-header button {
+  position: absolute;
+  right: 0;
   transform: scale(0.75);
   vertical-align: 1em;
   margin-left: 1em;
+}
+.profile-jumbo h1 {
+  display: inline-block;
 }
 
 .web-link a {
   color: orange;
 }
 
-.profile-container {
+/* about me card css */
+/* about me card css */
+/* about me card css */
 
+.about-me-card-title {
+  position: relative;
 }
 
+.about-me-card-title button {
+  position: absolute;
+  right: -2.6em;
+  top: 0;
+}
+
+.about-me-card-text {
+  position: relative;
+}
+
+.about-me-card-text button {
+  position: absolute;
+  right: -3em;
+  top: 0;
+}
+
+/* masonry box css */
+/* masonry box css */
+/* masonry box css */
 .masonry-box {
   display: flex;
 }
@@ -50,6 +82,8 @@ body::-webkit-scrollbar { /* WebKit */
 .row {
   width: 100% !important;
 }
+
+
 
 @media only screen and (max-width: 768px) {
   .masonry-box{

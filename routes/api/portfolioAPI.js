@@ -48,11 +48,15 @@ function updatePortfolioItem(req,res){
   db.Portfolio
     .updateOne(
       { userId: req.params.id, "images._id": req.body._id },
+      req.body.url || req.body.about || req.body.title ? 
       { $set: { 
         "images.$.url" : req.body.url,
         "images.$.about" : req.body.about,
-        "images.$.order" : req.body.order,
         "images.$.title" : req.body.title,
+        }
+      }
+      : { $set: { 
+        "images.$.order" : req.body.order,
         }
       }
     )
