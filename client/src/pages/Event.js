@@ -3,10 +3,13 @@ import Api from "../utilities/Api";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
+import {Link} from "react-router-dom";
+import ListGroup from "react-bootstrap/ListGroup";
 import MapContainer from "../components/MapContainer";
 import Row from "react-bootstrap/Row";
 import Spinner from "../components/Spinner";
 import TimeRange from "../components/TimeRange";
+import UpdateModal from "../components/UpdateModal";
 
 class Event extends Component {
   constructor(props) {
@@ -19,6 +22,7 @@ class Event extends Component {
     };
 
     this.handleAttend = this.handleAttend.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
     this.handleStopAttending = this.handleStopAttending.bind(this);
   }
   
@@ -35,6 +39,18 @@ class Event extends Component {
     Api
       .attendEvent(this.state.event)
       .then(response => this.loadEvent())
+      .catch(error => console.error(error));
+  }
+
+  handleEdit(event, closeForm) {
+    event._id = this.state.event._id;
+
+    Api
+      .updateEvent(event)
+      .then((response) => {
+        this.loadEvent();
+        closeForm();
+      })
       .catch(error => console.error(error));
   }
 
@@ -109,9 +125,17 @@ class Event extends Component {
 
     if (event) {
       return (
-        <div>
+        <>
           <Row>
             <Col>
+              <UpdateModal
+                form={"event"}
+                task={"Edit Event"}
+                handleFormSubmit={this.handleEdit}
+                event={this.state.event}
+                submitButtonText="Edit Event"
+              />
+
               <h3 className="card-title">{event.name}</h3>
 
               <p><TimeRange startTime={event.startTime} endTime={event.endTime} /></p>
@@ -125,20 +149,19 @@ class Event extends Component {
                 {this.renderAttendButton()}
               </div>
               
-              <ul className="list-group">
-                {
-                  event.attendees.map((attendee) => {
-                    return (
-                      <li
-                        className="list-group-item"
-                        key={attendee._id}
-                      >
-                        {attendee.firstname} {attendee.lastname}
-                      </li>
-                    );
-                  })
-                }
-              </ul>
+              <div className="attendee-list-shadow">
+                <ListGroup className="attendee-list">
+                  {
+                    event.attendees.map((attendee) => {
+                      return (
+                        <ListGroup.Item key={attendee._id}>
+                          <Link to={"/profile/" + attendee._id}>{attendee.firstname} {attendee.lastname}</Link>
+                        </ListGroup.Item>
+                      );
+                    })
+                  }
+                </ListGroup>
+              </div>
             </Col>
           </Row>
 
@@ -152,7 +175,7 @@ class Event extends Component {
               />
             </Col>
           </Row>
-        </div>
+        </>
       );
     } else if (this.state.failedToLoad) {
       return (

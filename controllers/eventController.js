@@ -109,8 +109,28 @@ module.exports = {
   },
 
   updateEvent: function(request, response) {
-    models.Event
-      .findOneAndUpdate({_id: request.body.id})
+    const event = request.body;
+    
+    googleMapsClient
+      .geocode({address: event.place.address})
+      .asPromise()
+      .then((response) => {
+        if (response.json.status !== "OK") {
+          throw new Error("Google maps did not find the address.");
+        }
+
+        const firstResult = response.json.results[0];
+        event.address = firstResult.formatted_address;
+
+        const location = firstResult.geometry.location;
+        event.place.position = {
+          latitude: location.lat,
+          longitude: location.lng,
+        };
+
+        return models.Event
+          .findOneAndUpdate({_id: request.params.id}, event);
+      })
       .then(event => response.json(event))
       .catch(error => response.status(422).json(error));
   },
