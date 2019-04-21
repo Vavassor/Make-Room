@@ -83,7 +83,20 @@ body::-webkit-scrollbar { /* WebKit */
   width: 100% !important;
 }
 
+<<<<<<< HEAD
 
+=======
+.attendee-list {
+  border-bottom: .1em solid #dfdfdf;
+  border-top: .1em solid #dfdfdf;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.attendee-list-shadow {
+  padding-bottom: 2em;
+}
+>>>>>>> master
 
 @media only screen and (max-width: 768px) {
   .masonry-box{
