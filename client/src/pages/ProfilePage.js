@@ -1,21 +1,18 @@
 import React, {Component} from "react";
 
 // bootstrap components
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import Modal from "react-bootstrap/Modal";
 import CardColumns from "react-bootstrap/CardColumns";
 
 
 //custom components
 import ProfileCard from "../components/ProfileCard";
-import ProfileFormModal from "../components/ProfileFormModal";
-import { PortfolioInfoForm, ItemForm } from "../components/PortfolioFormComponent";
 import { ItemButton } from "../components/ButtonComponent"
+import UpdateModal from "../components/UpdateModal"
 
 
 
@@ -30,8 +27,6 @@ import "./pages.css"
 class Profile extends Component {
   constructor(props) {
     super(props);
-
-    // this.handleLogOut = this.handleLogOut.bind(this);
 
     this.state = {
       username: "",
@@ -83,12 +78,10 @@ class Profile extends Component {
       this.setState({
         portfolio: data.data[0].images,
         portfolioInfo:data.data[0].portfolioDetails
-
       })
     })
     .catch(error => console.error(error));
-
-  }
+  };
 
   handleInputChange = event => {
     event.preventDefault();
@@ -97,7 +90,7 @@ class Profile extends Component {
     this.setState({[name]: value});
   };
 
-  handleFormSubmit = event => {
+  handleFormSubmitProfile = event => {
     event.preventDefault();
     let user = {...this.state}
     let userInfo = {
@@ -114,7 +107,7 @@ class Profile extends Component {
     .catch(err => console.error(err))
   };
 
-  handlePortfolioInfoSubmit = event => {
+  handleSubmitPortfolioInfo = event => {
     event.preventDefault();
     let {id, portfolioInfo} = this.state;
     Api
@@ -122,7 +115,7 @@ class Profile extends Component {
     .catch(err => console.log(err))
   };
 
-  handlePortfolioItemSubmit = event => {
+  handleSubmitPortfolioItem = event => {
     event.preventDefault();
     let {imageId, imageUrl, imageTitle, imageAbout, imageOrder} = this.state
     let portfolioItem = {
@@ -184,7 +177,7 @@ class Profile extends Component {
                 form={"profile"}
                 task={"Update Profile"}
                 handleInputChange={this.handleInputChange}
-                handleFormSubmit={this.handleFormSubmit}
+                handleFormSubmit={this.handleFormSubmitProfile}
                 userInfo={this.state}
               />
             </Col>
@@ -246,7 +239,7 @@ class Profile extends Component {
                       task="Update Portfolio Info"
                       form={"portfolioInfo"}
                       handleInputChange={this.handleInputChange}
-                      handleFormSubmit={this.handlePortfolioInfoSubmit}
+                      handleFormSubmit={this.handleSubmitPortfolioInfo}
                       portfolioInfo={this.state.portfolioInfo}
                     />
                   </div>
@@ -272,10 +265,11 @@ class Profile extends Component {
                           variant="success"
                           icon={"Update"}
                           handleInputChange={this.handleInputChange}
-                          handleFormSubmit={this.handlePortfolioItemSubmit}
-                          imageInfo={imageInfo}
+                          handleFormSubmit={this.handleSubmitPortfolioItem}
                           item={this.state}
-                          function={this.setItemState}
+                          func2={this.setItemState}
+                          func2Args={imageInfo}
+                          imageInfo={imageInfo}
                         />
                         <ItemButton
                           size="sm"
@@ -302,74 +296,3 @@ class Profile extends Component {
   }
 }
 export default Profile;
-
-
-class UpdateModal extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-
-    this.state = {
-      show: false,
-    };
-  }
-
-  handleClose() {
-    this.setState({ show: false });
-  }
-
-  handleShow() {
-    this.setState({ show: true });
-  }
-
-  multiFunction = (func1, func2, itemInfo) => {
-    func1();
-    if (func2){func2(itemInfo)}
-  }
-
-  swtichCaseContent(form){
-    switch (form){
-      case "profile":
-      return(
-        <ProfileFormModal {...this.props} handleClose={this.handleClose}/>
-      );
-      // break;
-      case"portfolioInfo":
-      return(
-        <PortfolioInfoForm {...this.props} handleClose={this.handleClose}/>
-      );
-      // break;
-      case "itemInfo":
-      return (
-        <ItemForm {...this.props} handleClose={this.handleClose}/>
-      );
-      // break;
-      default: return <h2>Nothing to see here...</h2>
-
-    }
-
-  }
-
-  render() {
-      return(
-        <>
-          <Button className="mx-2" variant={this.props.variant? this.props.variant: "primary"} size="sm" onClick={() => this.multiFunction (this.handleShow, this.props.function, this.props.imageInfo)}>
-          {this.props.icon? this.props.icon :<i className="fas fa-user-edit"></i>}
-          </Button>
-          <Modal show={this.state.show} onHide={this.handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>{this.props.task}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>{this.swtichCaseContent(this.props.form)}</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={this.handleClose}>
-                Close
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        </>
-      );
-    }
-}

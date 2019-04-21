@@ -24,17 +24,17 @@ class NavTabs extends Component {
     this.setState({page: newPage});
   }
   
-  componentDidMount (){
+  componentDidMount = () => {
     this.setState({page: window.location.pathname});
   }
 
-  handleLogOut() {
+  handleLogOut = () => {
     this.setPage("/");
     Auth.logOut();
     this.props.handleLogOut();
   }
 
-  renderNavTabs(){
+  renderNavTabs =() => {
     return (
       <>
         <li className="nav-item">
@@ -81,7 +81,7 @@ class NavTabs extends Component {
     );
   }
 
-  render() {
+  render = () => {
     return (
       <>
         <ul className="nav nav-tabs">
