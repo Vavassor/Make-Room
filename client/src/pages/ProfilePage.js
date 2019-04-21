@@ -99,21 +99,18 @@ class Profile extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    let userInfo = {...this.state}
-    delete userInfo.id
-    delete userInfo.username
-    userInfo = {
-      firstname: userInfo.firstname,
-      lastname: userInfo.lastname,
-      blurb: userInfo.blurb,
-      website: userInfo.website,
-      email: userInfo.email
+    let user = {...this.state}
+    let userInfo = {
+      firstname: user.firstname,
+      lastname: user.lastname,
+      blurb: user.blurb,
+      website: user.website,
+      email: user.email
     }
-    const {id} = this.state
+    let {id} = user
 
     Api
     .updateUserProfile(id, userInfo)
-    // .then(result => console.log(result))
     .catch(err => console.error(err))
   };
 
@@ -122,7 +119,6 @@ class Profile extends Component {
     let {id, portfolioInfo} = this.state;
     Api
     .updatePorfolioInfo(id, {portfolioInfo:portfolioInfo})
-    // .then(data => console.log(data))
     .catch(err => console.log(err))
   };
 
@@ -136,12 +132,10 @@ class Profile extends Component {
       about: imageAbout,
       order: imageOrder
     };
-    console.log(portfolioItem);
     
     Api
     .updatePortfolioItem(this.state.id, portfolioItem)
     .then(data => {
-      console.log("Update Portfolio: ", data)
       this.getProfilePortfolio(this.state.id);
     })
     .catch(err => console.log(err))
