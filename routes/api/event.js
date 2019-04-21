@@ -11,7 +11,10 @@ router.route("/")
 
 router.route("/:id")
   .get(eventController.getEventById)
-  .patch(eventController.updateEvent)
+  .post(
+    passport.authenticate("jwt", {session: false}),
+    eventController.updateEvent
+  )
   .delete(eventController.deleteEvent);
 
 router.route("/:id/attendee")

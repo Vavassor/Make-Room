@@ -43,10 +43,12 @@ class Event extends Component {
   }
 
   handleEdit(event, closeForm) {
+    event._id = this.state.event._id;
+
     Api
       .updateEvent(event)
       .then((response) => {
-        this.setState({event: event});
+        this.loadEvent();
         closeForm();
       })
       .catch(error => console.error(error));

@@ -98,7 +98,7 @@ class EventForm extends Component {
         startTime: startTime.toISOString(),
       };
 
-      this.props.handleFormSubmit(event, this.handleClose);
+      this.props.handleFormSubmit(event, this.props.handleClose);
     }
   }
 
