@@ -6,7 +6,6 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-// import CardColumns from "react-bootstrap/CardColumns";
 
 
 //custom components
@@ -257,7 +256,7 @@ class Profile extends Component {
           <Row className="justify-content-center portfolio-images">
             <Col xs={12}>
               {this.state.portfolio.length ? (
-                <MasonryLayout columns={3} gap={25}>
+                <MasonryLayout columns={Help.colNum(this.state.portfolio.length)} gap={25}>
                   {Help.sortByDate([...this.state.portfolio]).map(
                     imageInfo => (
                       <ProfileCard

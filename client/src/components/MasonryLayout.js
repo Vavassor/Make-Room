@@ -40,6 +40,7 @@ const MasonryLayout = props => {
           flex: 1,
         }}>
         {columnWrapper[`column${i}`]}
+        {console.log(columnWrapper[`column${i}`][0].key)}
       </div>
     );
   }  
