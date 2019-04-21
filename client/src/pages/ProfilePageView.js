@@ -29,7 +29,6 @@ class ProfileView extends Component {
   constructor(props) {
     super(props);
 
-
     this.state = {
       username: "",
       id: "",
@@ -69,18 +68,10 @@ class ProfileView extends Component {
       this.setState({
         portfolio: data.data[0].images,
         portfolioInfo:data.data[0].portfolioDetails
-
       })
     })
     .catch(error => console.error(error));
-
-  }
-
-
-  mediaLinks(link){
-    let x = Object.entries(link);
-    return x.map(item => <Col key={item[1]} sm={2}><a href={item[1]} target="_blank" rel="noopener noreferrer">{item[0]}</a></Col>)
-  }
+  };
 
   render() {
     return (
@@ -108,7 +99,7 @@ class ProfileView extends Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Email:
+                  {this.state.email}
                 </a>
               </Col>
             ) : (
@@ -121,7 +112,7 @@ class ProfileView extends Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Website:
+                  Website
                 </a>
               </Col>
             ) : (
@@ -150,7 +141,7 @@ class ProfileView extends Component {
                 <MasonryLayout columns={3} gap={25}>
                 {
                   Help.sortByDate([...this.state.portfolio]).map(imageInfo => (
-                  <ProfileCard key={imageInfo.url} image={imageInfo} />) )
+                  <ProfileCard key={imageInfo._id} image={imageInfo} />) )
                    } 
                 </MasonryLayout>
               ) : (
@@ -162,7 +153,8 @@ class ProfileView extends Component {
       </>
     );
   }
-}
+};
+
 export default ProfileView;
 
 

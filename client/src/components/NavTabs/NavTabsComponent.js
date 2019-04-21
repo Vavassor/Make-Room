@@ -47,7 +47,7 @@ class NavTabs extends Component {
                 : "nav-link"
             }
           >
-            profile
+            Profile
           </Link>
         </li>
         <li className="nav-item">
