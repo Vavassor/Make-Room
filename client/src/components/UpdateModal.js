@@ -8,8 +8,7 @@ import Modal from "react-bootstrap/Modal";
 //custom components
 import ProfileFormModal from "../components/ProfileFormModal";
 import { PortfolioInfoForm, ItemForm } from "../components/PortfolioFormComponent";
-
-
+import EventForm from "../components/EventForm";
 
 
 class UpdateModal extends React.Component {
@@ -39,6 +38,10 @@ class UpdateModal extends React.Component {
 
   swtichCaseContent(form){
     switch (form){
+      case "event":
+      return (
+        <EventForm {...this.props} handleClose={this.handleClose} />
+      );
       case "profile":
       return(
         <ProfileFormModal {...this.props} handleClose={this.handleClose}/>

@@ -42,8 +42,14 @@ class Event extends Component {
       .catch(error => console.error(error));
   }
 
-  handleEdit(event) {
-
+  handleEdit(event, closeForm) {
+    Api
+      .updateEvent(event)
+      .then((response) => {
+        this.setState({event: event});
+        closeForm();
+      })
+      .catch(error => console.error(error));
   }
 
   handleStopAttending(event) {
@@ -123,9 +129,9 @@ class Event extends Component {
               <UpdateModal
                 form={"event"}
                 task={"Edit Event"}
-                handleInputChange={this.handleInputChange}
-                handleFormSubmit={this.handleFormSubmit}
-                userInfo={this.state}
+                handleFormSubmit={this.handleEdit}
+                event={this.state.event}
+                submitButtonText="Edit Event"
               />
 
               <h3 className="card-title">{event.name}</h3>

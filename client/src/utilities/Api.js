@@ -91,6 +91,19 @@ export default {
     );
   },
 
+  updateEvent: function(event) {
+    const token = Auth.getToken();
+    return axios.post(
+      `/api/event/${event._id}`,
+      event,
+      {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+    );
+  },
+
   // profile routes
   getProfilePortfolioById: function(userId){
     return axios.get("/api/portfolio/info/" + userId)
