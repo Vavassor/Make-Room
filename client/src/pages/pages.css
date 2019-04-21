@@ -46,3 +46,14 @@ body::-webkit-scrollbar { /* WebKit */
 .row {
   width: 100% !important;
 }
+
+.attendee-list {
+  border-bottom: .1em solid #dfdfdf;
+  border-top: .1em solid #dfdfdf;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.attendee-list-shadow {
+  padding-bottom: 2em;
+}

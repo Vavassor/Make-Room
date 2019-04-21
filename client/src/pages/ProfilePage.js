@@ -1,20 +1,16 @@
 import React, {Component} from "react";
 
 // bootstrap components
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import Modal from "react-bootstrap/Modal";
 import CardColumns from "react-bootstrap/CardColumns";
-
+import UpdateModal from "../components/UpdateModal";
 
 //custom components
 import ProfileCard from "../components/ProfileCard";
-import ProfileFormModal from "../components/ProfileFormModal";
-import { PortfolioInfoForm, ItemForm } from "../components/PortfolioFormComponent";
 import { ItemButton } from "../components/ButtonComponent"
 
 
@@ -306,68 +302,3 @@ class Profile extends Component {
   }
 }
 export default Profile;
-
-
-class UpdateModal extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-
-    this.state = {
-      show: false,
-    };
-  }
-
-  handleClose() {
-    this.setState({ show: false });
-  }
-
-  handleShow() {
-    this.setState({ show: true });
-  }
-
-  swtichCaseContent(form){
-    switch (form){
-      case "profile":
-      return(
-        <ProfileFormModal {...this.props} handleClose={this.handleClose}/>
-      )
-      break;
-      case"portfolioInfo":
-      return(
-        <PortfolioInfoForm {...this.props} handleClose={this.handleClose}/>
-      )
-      break;
-      case "itemInfo":
-      return (
-        <ItemForm {...this.props} handleClose={this.handleClose}/>
-      )
-      break;
-
-    }
-
-  }
-
-  render() {
-      return(
-        <>
-          <Button className="mx-2" variant={this.props.variant? this.props.variant: "primary"} size="sm" onClick={this.handleShow}>
-          {this.props.icon? this.props.icon :<i className="fas fa-user-edit"></i>}
-          </Button>
-          <Modal show={this.state.show} onHide={this.handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>{this.props.task}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>{this.swtichCaseContent(this.props.form)}</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={this.handleClose}>
-                Close
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        </>
-      );
-    }
-}
