@@ -6,17 +6,22 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import CardColumns from "react-bootstrap/CardColumns";
-import UpdateModal from "../components/UpdateModal";
+// import CardColumns from "react-bootstrap/CardColumns";
+
 
 //custom components
 import ProfileCard from "../components/ProfileCard";
 import { ItemButton } from "../components/ButtonComponent"
 
+//custom components
+import UpdateModal from "../components/UpdateModal"
+import MasonryLayout from "../components/MasonryLayout"
+
 
 
 // utils
 import Api from "../utilities/Api";
+import Help from "../utilities/Helpers";
 
 // css library
 import "./pages.css"
@@ -25,8 +30,6 @@ import "./pages.css"
 class Profile extends Component {
   constructor(props) {
     super(props);
-
-    // this.handleLogOut = this.handleLogOut.bind(this);
 
     this.state = {
       username: "",
@@ -78,12 +81,10 @@ class Profile extends Component {
       this.setState({
         portfolio: data.data[0].images,
         portfolioInfo:data.data[0].portfolioDetails
-
       })
     })
     .catch(error => console.error(error));
-
-  }
+  };
 
   handleInputChange = event => {
     event.preventDefault();
@@ -92,49 +93,48 @@ class Profile extends Component {
     this.setState({[name]: value});
   };
 
-  handleFormSubmit = event => {
+  handleFormSubmitProfile = event => {
     event.preventDefault();
-    let userInfo = {...this.state}
-    delete userInfo.id
-    delete userInfo.username
-    userInfo = {
-      firstname: userInfo.firstname,
-      lastname: userInfo.lastname,
-      blurb: userInfo.blurb,
-      website: userInfo.website,
-      email: userInfo.email
+    let user = {...this.state}
+    let userInfo = {
+      firstname: user.firstname,
+      lastname: user.lastname,
+      blurb: user.blurb,
+      website: user.website,
+      email: user.email
     }
-    const {id} = this.state
+    let {id} = user
 
     Api
     .updateUserProfile(id, userInfo)
-    // .then(result => console.log(result))
     .catch(err => console.error(err))
   };
 
-  handlePortfolioInfoSubmit = event => {
+  handleSubmitPortfolioInfo = event => {
     event.preventDefault();
     let {id, portfolioInfo} = this.state;
     Api
     .updatePorfolioInfo(id, {portfolioInfo:portfolioInfo})
-    // .then(data => console.log(data))
     .catch(err => console.log(err))
   };
 
-  handlePortfolioImageSubmit = event => {
+  handleSubmitPortfolioItem = event => {
     event.preventDefault();
     let {imageId, imageUrl, imageTitle, imageAbout, imageOrder} = this.state
     let portfolioItem = {
+      _id: imageId,
       url: imageUrl,
       title: imageTitle,
       about: imageAbout,
       order: imageOrder
     };
     
-    // Api
-    // .updatePorfolioItem(userId, portfolioItem)
-    // .then(data => console.log(data))
-    // .catch(err => console.log(err))
+    Api
+    .updatePortfolioItem(this.state.id, portfolioItem)
+    .then(data => {
+      this.getProfilePortfolio(this.state.id);
+    })
+    .catch(err => console.log(err))
   };
 
   createNewPortfolioItem = (event) => {
@@ -142,7 +142,6 @@ class Profile extends Component {
     Api
     .addPortfolioItem(this.state.id)
     .then(data => {
-      // console.log(data)
       this.getProfilePortfolio(this.state.id);
     })
     .catch(err => console.error(err))
@@ -151,21 +150,20 @@ class Profile extends Component {
   deletePortfolioItem = (itemId) => {
     Api
     .deletePortfolioItem(this.state.id, itemId)
-    .then(data => {
-      // console.log(data)
-      this.getProfilePortfolio(this.state.id);
-    })
+    .then(data => { this.getProfilePortfolio(this.state.id) })
     .catch(err => console.error(err))
   }
 
-  mediaLinks(link){
-    let x = Object.entries(link);
-    return x.map(item => <Col key={item[1]} sm={2}><a href={item[1]} target="_blank" rel="noopener noreferrer">{item[0]}</a></Col>)
-  }
+  setItemState = (item) => {
+    this.setState({
+      imageUrl: item.url,
+      imageTitle: item.title,
+      imageAbout: item.about,
+      imageId: item._id,
+      imageOrder: item.order,
+    })
+  };
 
-  portfolioSort = (items) => {
-    return items.sort((a, b) => new Date(b.order) - new Date(a.order))
-  }
 
   render() {
     return (
@@ -182,18 +180,17 @@ class Profile extends Component {
                 form={"profile"}
                 task={"Update Profile"}
                 handleInputChange={this.handleInputChange}
-                handleFormSubmit={this.handleFormSubmit}
+                handleFormSubmit={this.handleFormSubmitProfile}
                 userInfo={this.state}
               />
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-1">
             <Col sm={6}>
-              <h5>{this.state.blurb}</h5>
+              <h5>{Help.addLineBreaks(this.state.blurb)}</h5>
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-4">
-            {/* <a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">Send Mail</a> */}
             {this.state.email ? (
               <Col className="web-link" sm={2}>
                 <a
@@ -224,7 +221,7 @@ class Profile extends Component {
         </Jumbotron>
         <Container className="profile-container">
           <Row className="justify-content-center about-me mb-2">
-            <Col xs={10}>
+            <Col xs={12}>
               <Card>
                 <Card.Body>
                   <Card.Title>
@@ -237,63 +234,65 @@ class Profile extends Component {
                       <i className="far fa-plus-square" />
                     </ItemButton>
                   </Card.Title>
-                  <Card.Text>
-                    {this.state.portfolioInfo
-                      ? this.state.portfolioInfo
-                      : "Oops, I haven't added any info about my porfolio"}
+                  <div>
+                    {this.state.portfolioInfo ? (
+                      Help.addLineBreaks(this.state.portfolioInfo)
+                    ) : (
+                      <p>
+                        Oops, I haven't added any info about my porfolio
+                      </p>
+                    )}
                     <UpdateModal
                       task="Update Portfolio Info"
                       form={"portfolioInfo"}
                       handleInputChange={this.handleInputChange}
-                      handleFormSubmit={this.handlePortfolioInfoSubmit}
+                      handleFormSubmit={this.handleSubmitPortfolioInfo}
                       portfolioInfo={this.state.portfolioInfo}
                     />
-                  </Card.Text>
+                  </div>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">
-            <Col xs={10}>
-              {/* <Row className="justify-content-between"> */}
+            <Col xs={12}>
               {this.state.portfolio.length ? (
-                <CardColumns>
-                  {
-                    this.portfolioSort([...this.state.portfolio]).map(
-                      imageInfo => (
-                        <ProfileCard
-                          key={imageInfo._id}
-                          image={imageInfo}
-                          imgId={imageInfo._id}
+                <MasonryLayout columns={3} gap={25}>
+                  {Help.sortByDate([...this.state.portfolio]).map(
+                    imageInfo => (
+                      <ProfileCard
+                        key={imageInfo._id}
+                        image={imageInfo}
+                        imgId={imageInfo._id}
+                      >
+                        <UpdateModal
+                          form={"itemInfo"}
+                          task={"Update Item"}
+                          variant="success"
+                          icon={"Update"}
+                          handleInputChange={this.handleInputChange}
+                          handleFormSubmit={this.handleSubmitPortfolioItem}
+                          item={this.state}
+                          func2={this.setItemState}
+                          func2Args={imageInfo}
+                          imageInfo={imageInfo}
+                        />
+                        <ItemButton
+                          size="sm"
+                          variant={"danger"}
+                          action={() =>
+                            this.deletePortfolioItem(imageInfo._id)
+                          }
                         >
-                          <UpdateModal
-                            form={"itemInfo"}
-                            task={"Update Item"}
-                            variant="success"
-                            icon={"Update"}
-                            handleInputChange={this.handleInputChange}
-                            handleFormSubmit={this.handleItemSubmit}
-                            userInfo={this.state}
-                          />
-
-                          <ItemButton
-                            size="sm"
-                            variant={"danger"}
-                            action={() =>
-                              this.deletePortfolioItem(imageInfo._id)
-                            }
-                          >
-                            <i className="far fa-trash-alt" />
-                          </ItemButton>
-                        </ProfileCard>
-                      )
+                          <i className="far fa-trash-alt" />
+                        </ItemButton>
+                      </ProfileCard>
                     )
-                  }
-                </CardColumns>
+                  )}
+                </MasonryLayout>
               ) : (
-                <h3>I don't have any items in my porfolio</h3>
+                <h3>I don't have any items in my porfolio, Yet.</h3>
               )}
-              {/* </Row> */}
             </Col>
           </Row>
         </Container>

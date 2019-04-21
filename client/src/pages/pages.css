@@ -43,6 +43,10 @@ body::-webkit-scrollbar { /* WebKit */
 
 }
 
+.masonry-box {
+  display: flex;
+}
+
 .row {
   width: 100% !important;
 }
@@ -56,4 +60,9 @@ body::-webkit-scrollbar { /* WebKit */
 
 .attendee-list-shadow {
   padding-bottom: 2em;
+}
+@media only screen and (max-width: 768px) {
+  .masonry-box{
+    display: block;
+  }
 }

@@ -10,8 +10,8 @@ function getPortfolioById(req, res){
   .catch(err => res.status(422).json(err))
 };
 
-function updatePortfolio(req, res){
-  console.log(req.body)
+function updatePortfolioInfo(req, res){
+  console.log("Update Portfolio Info: ", req.body.id)
   db.Portfolio
     .updateOne(
       {userId: req.params.id},
@@ -45,12 +45,25 @@ function deletePortfolio(req, res){
 function updatePortfolioItem(req,res){
   console.log(req.body);
   
-  // db.portfolio
-  //   .updatOne(
-  //     {userId: req.params.id}
-
-  //   )
-
+  db.Portfolio
+    .updateOne(
+      { userId: req.params.id, "images._id": req.body._id },
+      { $set: { 
+        "images.$.url" : req.body.url,
+        "images.$.about" : req.body.about,
+        "images.$.order" : req.body.order,
+        "images.$.title" : req.body.title,
+        }
+      }
+    )
+    .then( data => {
+      console.log(data)
+      res.json(data)
+    })
+    .catch (err => {
+      console.error(err);
+      res.json(err);
+    })
 };
 
 function deletePortolioItem(req, res){
@@ -73,7 +86,7 @@ db.Portfolio
 
 router.route("/info/:id")
   .get(getPortfolioById)
-  .patch(updatePortfolio)
+  .patch(updatePortfolioInfo)
   .delete(deletePortfolio);
 
 router.route("/item/:id/:itemId?")

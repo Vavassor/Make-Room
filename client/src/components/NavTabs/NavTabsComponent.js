@@ -24,17 +24,17 @@ class NavTabs extends Component {
     this.setState({page: newPage});
   }
   
-  componentDidMount (){
+  componentDidMount = () => {
     this.setState({page: window.location.pathname});
   }
 
-  handleLogOut() {
+  handleLogOut = () => {
     this.setPage("/");
     Auth.logOut();
     this.props.handleLogOut();
   }
 
-  renderNavTabs(){
+  renderNavTabs =() => {
     return (
       <>
         <li className="nav-item">
@@ -42,14 +42,12 @@ class NavTabs extends Component {
             to="/profile"
             onClick={() => this.setPage("/profile")}
             className={
-              // window.location.pathname === "/profile"
-
               this.state.page === "/profile"
                 ? "nav-link active"
                 : "nav-link"
             }
           >
-            profile
+            Profile
           </Link>
         </li>
         <li className="nav-item">
@@ -57,7 +55,6 @@ class NavTabs extends Component {
             to="/event-list"
             onClick={() => this.setPage("/event-list")}
             className={
-              // window.location.pathname === "/event-list"
               this.state.page === "/event-list"
                 ? "nav-link active"
                 : "nav-link"
@@ -81,7 +78,7 @@ class NavTabs extends Component {
     );
   }
 
-  render() {
+  render = () => {
     return (
       <>
         <ul className="nav nav-tabs">
@@ -90,7 +87,6 @@ class NavTabs extends Component {
               to="/"
               onClick={() => this.setPage("/")}
               className={
-                // window.location.pathname === "/"
                 this.state.page === "/"
                   ? "nav-link active"
                   : "nav-link"
