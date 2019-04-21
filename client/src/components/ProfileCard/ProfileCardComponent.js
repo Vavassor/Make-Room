@@ -1,11 +1,11 @@
 import React from "react";
 
+import Help from "../../utilities/Helpers";
 import Card from "react-bootstrap/Card";
-import Col from "react-bootstrap/Col";
+// import Col from "react-bootstrap/Col";
 
 
 import "./profileCard.css"
-
 
 
 
@@ -16,7 +16,7 @@ function ProfileCard({image, children}){
         <Card.Img variant="top" src={image.url} />
         <Card.Body>
           <Card.Title>{image.title}</Card.Title>
-          <Card.Text>{image.about}</Card.Text>
+          <div>{Help.addLineBreaks(image.about)}</div>
         </Card.Body>
         <Card.Footer className="text-center">{children? children: ""}</Card.Footer>
       </Card>

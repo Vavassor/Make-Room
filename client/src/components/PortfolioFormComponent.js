@@ -59,7 +59,6 @@ import Button from "react-bootstrap/Button";
         <Button
           variant="primary"
           type="submit"
-          onClick={props.handleFormSubmit}
           onClick={e => saveButton(e)}
         >
           Save!
@@ -92,7 +91,6 @@ import Button from "react-bootstrap/Button";
         <Button
           variant="primary"
           type="submit"
-          onClick={props.handleFormSubmit}
           onClick={e => saveButton(e)}
         >
           Save!
