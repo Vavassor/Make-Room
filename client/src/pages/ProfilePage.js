@@ -6,13 +6,16 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import CardColumns from "react-bootstrap/CardColumns";
+// import CardColumns from "react-bootstrap/CardColumns";
 
 
 //custom components
 import ProfileCard from "../components/ProfileCard";
 import { ItemButton } from "../components/ButtonComponent"
+
+//custom components
 import UpdateModal from "../components/UpdateModal"
+import MasonryLayout from "../components/MasonryLayout"
 
 
 
@@ -218,7 +221,7 @@ class Profile extends Component {
         </Jumbotron>
         <Container className="profile-container">
           <Row className="justify-content-center about-me mb-2">
-            <Col xs={10}>
+            <Col xs={12}>
               <Card>
                 <Card.Body>
                   <Card.Title>
@@ -232,9 +235,13 @@ class Profile extends Component {
                     </ItemButton>
                   </Card.Title>
                   <div>
-                    {this.state.portfolioInfo
-                      ? Help.addLineBreaks(this.state.portfolioInfo)
-                      : <p>Oops, I haven't added any info about my porfolio</p>}
+                    {this.state.portfolioInfo ? (
+                      Help.addLineBreaks(this.state.portfolioInfo)
+                    ) : (
+                      <p>
+                        Oops, I haven't added any info about my porfolio
+                      </p>
+                    )}
                     <UpdateModal
                       task="Update Portfolio Info"
                       form={"portfolioInfo"}
@@ -248,10 +255,9 @@ class Profile extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">
-            <Col xs={10}>
-              {/* <Row className="justify-content-between"> */}
+            <Col xs={12}>
               {this.state.portfolio.length ? (
-                <CardColumns>
+                <MasonryLayout columns={3} gap={25}>
                   {Help.sortByDate([...this.state.portfolio]).map(
                     imageInfo => (
                       <ProfileCard
@@ -283,11 +289,10 @@ class Profile extends Component {
                       </ProfileCard>
                     )
                   )}
-                </CardColumns>
+                </MasonryLayout>
               ) : (
                 <h3>I don't have any items in my porfolio, Yet.</h3>
               )}
-              {/* </Row> */}
             </Col>
           </Row>
         </Container>

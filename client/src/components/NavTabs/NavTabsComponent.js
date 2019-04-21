@@ -42,8 +42,6 @@ class NavTabs extends Component {
             to="/profile"
             onClick={() => this.setPage("/profile")}
             className={
-              // window.location.pathname === "/profile"
-
               this.state.page === "/profile"
                 ? "nav-link active"
                 : "nav-link"
@@ -57,7 +55,6 @@ class NavTabs extends Component {
             to="/event-list"
             onClick={() => this.setPage("/event-list")}
             className={
-              // window.location.pathname === "/event-list"
               this.state.page === "/event-list"
                 ? "nav-link active"
                 : "nav-link"
@@ -90,7 +87,6 @@ class NavTabs extends Component {
               to="/"
               onClick={() => this.setPage("/")}
               className={
-                // window.location.pathname === "/"
                 this.state.page === "/"
                   ? "nav-link active"
                   : "nav-link"

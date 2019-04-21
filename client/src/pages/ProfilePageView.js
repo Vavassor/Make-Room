@@ -10,11 +10,16 @@ import Container from "react-bootstrap/Container";
 
 //custom components
 import ProfileCard from "../components/ProfileCard";
+import MasonryLayout from "../components/MasonryLayout"
+
 
 
 
 // utils
 import Api from "../utilities/Api";
+import Help from "../utilities/Helpers";
+
+
 
 // css library
 import "./pages.css"
@@ -96,36 +101,61 @@ class ProfileView extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-4">
-            {this.state.email ?  <Col className="web-link" sm={2}><a href={this.state.email} target="_blank" rel="noopener noreferrer">Email:</a></Col>: ""}
-            {this.state.website ? <Col className="web-link" sm={2}><a href={this.state.website} target="_blank" rel="noopener noreferrer">Website:</a></Col>: ""}
+            {this.state.email ? (
+              <Col className="web-link" sm={2}>
+                <a
+                  href={this.state.email}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Email:
+                </a>
+              </Col>
+            ) : (
+              ""
+            )}
+            {this.state.website ? (
+              <Col className="web-link" sm={2}>
+                <a
+                  href={this.state.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Website:
+                </a>
+              </Col>
+            ) : (
+              ""
+            )}
           </Row>
         </Jumbotron>
         <Container className="profile-container">
           <Row className="justify-content-center about-me mb-2">
-            <Col xs={10}>
+            <Col xs={12}>
               <Card>
                 <Card.Body>
                   <Card.Title>About My Work</Card.Title>
-                  <Card.Text>
+                  <div>
                     {this.state.portfolioInfo
-                      ? this.state.portfolioInfo
-                      : "Oops, they haven't added any info about my porfolio"}
-                  </Card.Text>
+                      ? Help.addLineBreaks(this.state.portfolioInfo)
+                      : <p>"Oops, they haven't added any info about their porfolio"</p>}
+                  </div>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">
-            <Col xs={10}>
-              <Row className="justify-content-between">
-                {this.state.portfolio.length ? (
-                  this.state.portfolio.map(imageInfo => (
-                    <ProfileCard key={imageInfo.url} image={imageInfo} />
-                  ))
-                ) : (
-                  <h3>They don't have any items in their porfolio</h3>
-                )}
-              </Row>
+            <Col xs={12}>
+              {this.state.portfolio.length ? (
+                <MasonryLayout columns={3} gap={25}>
+                {
+                  Help.sortByDate([...this.state.portfolio]).map(imageInfo => (
+                  <ProfileCard key={imageInfo.url} image={imageInfo} />) )
+                   } 
+                </MasonryLayout>
+              ) : (
+                <h3>They don't have any items in their porfolio</h3>
+              )}
             </Col>
           </Row>
         </Container>
