@@ -10,8 +10,8 @@ function getPortfolioById(req, res){
   .catch(err => res.status(422).json(err))
 };
 
-function updatePortfolio(req, res){
-  console.log(req.body)
+function updatePortfolioInfo(req, res){
+  console.log("Update Portfolio Info: ", req.body.id)
   db.Portfolio
     .updateOne(
       {userId: req.params.id},
@@ -86,7 +86,7 @@ db.Portfolio
 
 router.route("/info/:id")
   .get(getPortfolioById)
-  .patch(updatePortfolio)
+  .patch(updatePortfolioInfo)
   .delete(deletePortfolio);
 
 router.route("/item/:id/:itemId?")
