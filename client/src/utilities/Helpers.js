@@ -23,10 +23,4 @@ export default {
     return items.sort((a, b) => new Date(b.order) - new Date(a.order))
   },
 
-  colNum: function (num){
-    if(num < 3 ) {return num}
-    return 3
-  }
-
-
 }

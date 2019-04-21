@@ -256,7 +256,7 @@ class Profile extends Component {
           <Row className="justify-content-center portfolio-images">
             <Col xs={12}>
               {this.state.portfolio.length ? (
-                <MasonryLayout columns={Help.colNum(this.state.portfolio.length)} gap={25}>
+                <MasonryLayout columns={3} gap={25}>
                   {Help.sortByDate([...this.state.portfolio]).map(
                     imageInfo => (
                       <ProfileCard
