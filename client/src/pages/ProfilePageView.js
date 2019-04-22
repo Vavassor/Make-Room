@@ -1,10 +1,13 @@
 import React, {Component} from "react";
+import { Link } from "react-router-dom";
 
 // bootstrap components
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import Dropdown from "react-bootstrap/Dropdown";
+
 
 //custom components
 import ProfileCard, { ProfileInfoCard } from "../components/ProfileCard";
@@ -34,6 +37,7 @@ class ProfileView extends Component {
       email: "",
       blurb: "",
       website:"",
+      events:"",
     };
   }
 
@@ -68,7 +72,24 @@ class ProfileView extends Component {
     .catch(error => console.error(error));
   };
 
+  getUserEvents = (userId) => {
+    Api
+      .getUserEvents(userId)
+      .then(response => { 
+        let events = response.data.map(event => {
+          return {
+            name: event.name,
+            id: event._id
+          }})
+        this.setState({events: events});
+      })
+      .catch(error => { console.error(error)  });
+  };
+
   render() {
+
+    let cEvents = [...this.state.events]
+
     return (
       <>
         <Jumbotron className="profile-jumbo fluid mx-0">
@@ -117,6 +138,20 @@ class ProfileView extends Component {
         </Jumbotron>
         <Container className="profile-container">
           <Row className="justify-content-center about-me mb-2">
+          <Col xs={6} className='text-center'>
+          <Dropdown>
+                <Dropdown.Toggle className='mb-2' variant="success" id="events-attending-dropdown">
+                  Events Attending
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {cEvents.length ? (
+                    cEvents.map(event => this.renderEventList(event))
+                  ) : (
+                    <Dropdown.Item>Not Attending Events</Dropdown.Item>
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
+          </Col>
             <Col xs={12}>
             <ProfileInfoCard portfolioTitle={"About My Work"}>
               {
@@ -147,6 +182,10 @@ class ProfileView extends Component {
       </>
     );
   }
+  renderEventList =(event) => {
+    return <Link className='dropdown-item' to={"/event/" + event.id} key={event.id}><p className="user-event-li">{event.name}</p></Link>
+  }
+
 };
 
 export default ProfileView;

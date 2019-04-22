@@ -10,6 +10,7 @@ import moment from "moment";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Dropdown from "react-bootstrap/Dropdown";
 import Container from "react-bootstrap/Container";
 
 
@@ -259,14 +260,26 @@ class Profile extends Component {
         </Jumbotron>
         <Container className="profile-container">
           <Row className="justify-content-center about-me-row mb-2">
-            <Col xs={6}>
-            {cEvents.length? cEvents.map(event => this.renderEventList(event)) : <p>Not Currently Attenting Any Events</p>}
+            <Col className="text-center" xs={6}>
+
+              <Dropdown>
+                <Dropdown.Toggle className='mb-2' variant="success" id="events-attending-dropdown">
+                  Events Attending
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {cEvents.length ? (
+                    cEvents.map(event => this.renderEventList(event))
+                  ) : (
+                    <Dropdown.Item>Not Attending Events</Dropdown.Item>
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
 
             </Col>
             <Col xs={12}>
               <ProfileInfoCard
                 portfolioTitle={"About My Work"}
-                updateButton = {
+                updateButton={
                   <UpdateModal
                     task="Update Portfolio Info"
                     form={"portfolioInfo"}
@@ -276,13 +289,9 @@ class Profile extends Component {
                   />
                 }
               >
-              {
-                this.state.portfolioInfo ? (
-                  Help.addLineBreaks(this.state.portfolioInfo)
-                ) : (
-                    "Oops, I haven't added any info about my porfolio"
-                )
-              }
+                {this.state.portfolioInfo
+                  ? Help.addLineBreaks(this.state.portfolioInfo)
+                  : "Oops, I haven't added any info about my porfolio"}
               </ProfileInfoCard>
             </Col>
           </Row>
@@ -307,9 +316,7 @@ class Profile extends Component {
                         <ItemButton
                           size="sm"
                           variant={"primary"}
-                          action={() =>
-                            this.setAsFirst(imageInfo._id)
-                          }
+                          action={() => this.setAsFirst(imageInfo._id)}
                         >
                           Set as First
                         </ItemButton>
@@ -349,7 +356,7 @@ class Profile extends Component {
   }
 
   renderEventList =(event) => {
-    return <Link to={"/event/" + event.id} key={event.id}><p className="user-event-li">{event.name}</p></Link>
+    return <Link className='dropdown-item' to={"/event/" + event.id} key={event.id}><p className="user-event-li">{event.name}</p></Link>
   }
 
 }
