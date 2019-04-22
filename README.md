@@ -1,29 +1,35 @@
-# Create React Express App
+# Make Room - React Based App
+**Richmond Va Maker Form Even Scheduler**
+[Make Room Even Scheduler](https://make-room-3.herokuapp.com/ "Make Room!")
 
-## About This Boilerplate
+## Technologies Used: 
+- React
+- Bootstrap
+- Passport.js
+- Nodejs
+- Express
+- Mongodb
+- Mongoose
+- Google Maps npm
+- Momentjs
 
-This setup allows for a Node/Express/React app which can be easily deployed to Heroku.
+Richmond Makers Forum is a facebook chat room.
+Being a contstant feed of information, memebers complain that 
+once events scroll off the bottom of the fee they are hard to find again.
 
-The front-end React app will auto-reload as it's updated via webpack dev server, and the backend Express app will auto-reload independently with nodemon.
+They want a place where all events are collected in one spot.  
+A place where people can sign up and commit to attending an event.
+A place where they can also checkout the attendees wares before going.
 
-## Starting the app locally
+This is an attempt to solve that by putting all events in once place and
+connecting event attendees to a profile/portfolio that can be reviewed by other members.
 
-Start by installing front and backend dependencies. While in this directory, run the following command:
 
-```
-npm install
-```
+Future Features: 
 
-This should install node modules within the server and the client folder.
-
-After both installations complete, run the following command in your terminal:
-
-```
-npm start
-```
-
-Your app should now be running on <http://localhost:3000>. The Express server should intercept any AJAX requests from the client.
-
-## Deployment (Heroku)
-
-To deploy, simply add and commit your changes, and push to Heroku. As is, the NPM scripts should take care of the rest.
+1. Event Specific Chat 
+1. Larger Overal categorize chat room
+1. Private Messages
+1. More event customization
+1. More profile customization
+1. Follow specific members
