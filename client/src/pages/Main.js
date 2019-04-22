@@ -96,7 +96,7 @@ class Main extends Component {
                 </Col>
 
                 <Col md="auto">
-                  <a className="btn btn-secondary" href="/create-account" role="button">Create Account</a>
+                  <Link className="btn btn-secondary" to="/create-account" role="button">Create Account</Link>
                 </Col>
               </Form.Row>
             </Form>
