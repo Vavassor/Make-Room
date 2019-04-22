@@ -1,6 +1,7 @@
 import Api from "../utilities/Api";
 import Card from "react-bootstrap/Card";
 import EventItem from "../components/EventItem";
+import {Link} from "react-router-dom";
 import LoadingPlaceholder from "../components/LoadingPlaceholder";
 import moment from "moment";
 import React, {Component} from "react";
@@ -54,7 +55,7 @@ class EventList extends Component {
         <Card>
           <Card.Body>
             <div className="mb-4">
-              <a className="btn btn-primary" href="/add-event">Add Event</a>
+              <Link className="btn btn-primary" to="/add-event">Add Event</Link>
             </div>
 
             <hr />

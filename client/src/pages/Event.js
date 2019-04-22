@@ -124,19 +124,25 @@ class Event extends Component {
 
   renderContent() {
     const event = this.state.event;
+    const selfId = this.state.selfId;
 
     if (event) {
       return (
         <>
           <Row>
             <Col>
-              <UpdateModal
-                form={"event"}
-                task={"Edit Event"}
-                handleFormSubmit={this.handleEdit}
-                event={this.state.event}
-                submitButtonText="Edit Event"
-              />
+              {
+                event && selfId && event.creator === selfId
+                ? (
+                  <UpdateModal
+                    form={"event"}
+                    task={"Edit Event"}
+                    handleFormSubmit={this.handleEdit}
+                    event={this.state.event}
+                    submitButtonText="Edit Event"
+                  />
+                ) : ""
+              }
 
               <h3 className="card-title">{event.name}</h3>
 

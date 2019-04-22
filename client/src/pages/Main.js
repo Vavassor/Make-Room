@@ -6,6 +6,7 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Jumbotron from "react-bootstrap/Jumbotron";
+import {Link} from "react-router-dom";
 
 class Main extends Component {
   constructor(props) {
@@ -96,7 +97,7 @@ class Main extends Component {
                 </Col>
 
                 <Col md="auto">
-                  <a className="btn btn-secondary" href="/create-account" role="button">Create Account</a>
+                  <Link className="btn btn-secondary" to="/create-account" role="button">Create Account</Link>
                 </Col>
               </Form.Row>
             </Form>
