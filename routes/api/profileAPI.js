@@ -21,13 +21,33 @@ function updateProfile(req, res){
   .catch(err => console.log(err))
 };
 
-function deleteProfile(req, res){
+function getUserEvents(req, res){
+  db.Event
+  .find(
+    {
+      attendees: {$in: req.params.id},
+      endTime: {$gt: new Date()}
+    },
+    )
+    .sort({ "startTime": 1 })
+    .then(data => {
+      res.json(data)
+    })
+    .catch(err => res.json(err))
+  };
+  
 
-};
+  function deleteProfile(req, res){
+  
+  };
 
-router.route("/:id")
+
+  router.route("/info/:id")
   .get(getProfileById)
   .patch(updateProfile)
   .delete(deleteProfile);
+
+router.route("/events/:id")
+  .get(getUserEvents)
 
 module.exports = router;

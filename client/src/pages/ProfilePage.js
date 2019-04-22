@@ -1,4 +1,6 @@
 import React, {Component} from "react";
+import { Link } from "react-router-dom";
+
 
 import moment from "moment";
 
@@ -47,7 +49,8 @@ class Profile extends Component {
       imageTitle: "",
       imageAbout: "",
       imageId: "",
-      imageOrder: ""
+      imageOrder: "",
+      events:"",
     };
   }
 
@@ -59,6 +62,7 @@ class Profile extends Component {
       const {id, username} = response.data;
       this.getProfilePortfolio(id)
       this.getUserInfo(id);
+      this.getUserEvents(id);
       this.setState({
         id: id,
         username: username
@@ -181,8 +185,25 @@ class Profile extends Component {
     .catch(err => console.log(err))
   };
 
+  getUserEvents = (userId) => {
+    Api
+      .getUserEvents(userId)
+      .then(response => { 
+        let events = response.data.map(event => {
+          return {
+            name: event.name,
+            id: event._id
+          }})
+        this.setState({events: events});
+      })
+      .catch(error => { console.error(error)  });
+  }
+
 
   render() {
+
+    let cEvents = [...this.state.events]
+
     return (
       <>
         <Jumbotron className="profile-jumbo fluid mx-0">
@@ -238,6 +259,10 @@ class Profile extends Component {
         </Jumbotron>
         <Container className="profile-container">
           <Row className="justify-content-center about-me-row mb-2">
+            <Col xs={6}>
+            {cEvents.length? cEvents.map(event => this.renderEventList(event)) : <p>Not Currently Attenting Any Events</p>}
+
+            </Col>
             <Col xs={12}>
               <ProfileInfoCard
                 portfolioTitle={"About My Work"}
@@ -322,5 +347,10 @@ class Profile extends Component {
       </>
     );
   }
+
+  renderEventList =(event) => {
+    return <Link to={"/event/" + event.id} key={event.id}><p className="user-event-li">{event.name}</p></Link>
+  }
+
 }
 export default Profile;
