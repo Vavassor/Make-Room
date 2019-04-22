@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const ImageList = require("../helpers/defaultImageList")
+
+function randomImage (){
+  let i = ImageList.length
+  let rand = Math.floor(Math.random() * i)
+ return ImageList[rand];
+};
+
 const portfolioSchema = new Schema({
   userId: {
     type: String,
@@ -20,7 +28,7 @@ const portfolioSchema = new Schema({
     url: 
     {type: String,
       required: false,
-      default: "./images/default-item.png"
+      default: randomImage
     },
     title: {
       type: String,
