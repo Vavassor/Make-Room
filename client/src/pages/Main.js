@@ -6,6 +6,7 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Jumbotron from "react-bootstrap/Jumbotron";
+import {Link} from "react-router-dom";
 
 class Main extends Component {
   constructor(props) {
