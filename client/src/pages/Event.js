@@ -10,6 +10,8 @@ import Row from "react-bootstrap/Row";
 import Spinner from "../components/Spinner";
 import TimeRange from "../components/TimeRange";
 import UpdateModal from "../components/UpdateModal";
+import Help from "../utilities/Helpers";
+
 
 class Event extends Component {
   constructor(props) {
@@ -141,7 +143,7 @@ class Event extends Component {
               <p><TimeRange startTime={event.startTime} endTime={event.endTime} /></p>
               <p>{event.place.name}</p>
               <p>{event.place.address}</p>
-              <p>{event.description}</p>
+              <p>{Help.addLineBreaks(event.description)}</p>
             </Col>
 
             <Col>

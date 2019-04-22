@@ -1,1 +1,1 @@
-export { default } from "./ProfileCardComponent";
+export { default, ProfileInfoCard } from "./ProfileCardComponent";

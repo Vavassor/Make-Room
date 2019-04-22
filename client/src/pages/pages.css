@@ -48,9 +48,9 @@ body::-webkit-scrollbar { /* WebKit */
   color: orange;
 }
 
-/* about me card css */
-/* about me card css */
-/* about me card css */
+/* about me profile card css */
+/* about me profile card css */
+/* about me profile card css */
 
 .about-me-card-title {
   position: relative;
@@ -83,9 +83,6 @@ body::-webkit-scrollbar { /* WebKit */
   width: 100% !important;
 }
 
-<<<<<<< HEAD
-
-=======
 .attendee-list {
   border-bottom: .1em solid #dfdfdf;
   border-top: .1em solid #dfdfdf;
@@ -96,7 +93,6 @@ body::-webkit-scrollbar { /* WebKit */
 .attendee-list-shadow {
   padding-bottom: 2em;
 }
->>>>>>> master
 
 @media only screen and (max-width: 768px) {
   .masonry-box{

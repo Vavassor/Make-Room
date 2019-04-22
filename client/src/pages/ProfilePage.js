@@ -4,7 +4,7 @@ import moment from "moment";
 
 
 // bootstrap components
-import Card from "react-bootstrap/Card";
+// import Card from "react-bootstrap/Card";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -12,7 +12,7 @@ import Container from "react-bootstrap/Container";
 
 
 //custom components
-import ProfileCard from "../components/ProfileCard";
+import ProfileCard, { ProfileInfoCard } from "../components/ProfileCard";
 import { ItemButton } from "../components/ButtonComponent"
 
 //custom components
@@ -239,29 +239,26 @@ class Profile extends Component {
         <Container className="profile-container">
           <Row className="justify-content-center about-me-row mb-2">
             <Col xs={12}>
-              <Card>
-                <Card.Body>
-                  <Card.Title className="about-me-card-title">
-                    About My Work
-                    <UpdateModal
-                      task="Update Portfolio Info"
-                      form={"portfolioInfo"}
-                      handleInputChange={this.handleInputChange}
-                      handleFormSubmit={this.handleSubmitPortfolioInfo}
-                      portfolioInfo={this.state.portfolioInfo}
-                    />
-                  </Card.Title>
-                  <div className="about-me-card-text">
-                    {this.state.portfolioInfo ? (
-                      Help.addLineBreaks(this.state.portfolioInfo)
-                    ) : (
-                      <p>
-                        Oops, I haven't added any info about my porfolio
-                      </p>
-                    )}
-                  </div>
-                </Card.Body>
-              </Card>
+              <ProfileInfoCard
+                portfolioTitle={"About My Work"}
+                updateButton = {
+                  <UpdateModal
+                    task="Update Portfolio Info"
+                    form={"portfolioInfo"}
+                    handleInputChange={this.handleInputChange}
+                    handleFormSubmit={this.handleSubmitPortfolioInfo}
+                    portfolioInfo={this.state.portfolioInfo}
+                  />
+                }
+              >
+              {
+                this.state.portfolioInfo ? (
+                  Help.addLineBreaks(this.state.portfolioInfo)
+                ) : (
+                    "Oops, I haven't added any info about my porfolio"
+                )
+              }
+              </ProfileInfoCard>
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">
