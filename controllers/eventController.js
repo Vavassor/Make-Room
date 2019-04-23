@@ -59,24 +59,24 @@ module.exports = {
   getAllEvents: function(request, response, next) {
     let query = models.Event.find();
 
-    if (request.query["order_by"]) {
-      const orderBy = request.query["order_by"].split(":");
-      const key = orderBy[0];
-      let direction = "+";
-      if (orderBy.length > 1) {
-        if (orderBy[1] === "asc") {
-          direction = "+";
-        }
-        if (orderBy[1] === "desc") {
-          direction = "-";
-        }
-      }
-      query = query.sort(direction + key);
-    }
-  
     if (request.query["after_time"]) {
       const startTime = request.query["after_time"];
       query = query.where("startTime").gte(startTime);
+    }
+
+    if (request.query["order_by"]) {
+      const orderBy = request.query["order_by"].split(":");
+      const key = orderBy[0];
+      let direction = 1;
+      if (orderBy.length > 1) {
+        if (orderBy[1] === "asc") {
+          direction = 1;
+        }
+        if (orderBy[1] === "desc") {
+          direction = -1;
+        }
+      }
+      query = query.sort({[key]: direction});
     }
   
     query
