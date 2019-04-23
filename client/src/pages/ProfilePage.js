@@ -261,9 +261,12 @@ class Profile extends Component {
         <Container className="profile-container">
           <Row className="justify-content-center about-me-row mb-2">
             <Col className="text-center" xs={6}>
-
               <Dropdown>
-                <Dropdown.Toggle className='mb-2' variant="success" id="events-attending-dropdown">
+                <Dropdown.Toggle
+                  className="mb-2"
+                  variant="success"
+                  id="events-attending-dropdown"
+                >
                   Events Attending
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -274,7 +277,6 @@ class Profile extends Component {
                   )}
                 </Dropdown.Menu>
               </Dropdown>
-
             </Col>
             <Col xs={12}>
               <ProfileInfoCard
@@ -303,6 +305,11 @@ class Profile extends Component {
             >
               Add New Portfolio Item <i className="far fa-plus-square" />
             </ItemButton>
+            <select>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
             <Col xs={12} className="mt-2">
               {this.state.portfolio.length ? (
                 <MasonryLayout columns={3} gap={25}>

@@ -98,7 +98,6 @@ class CreateAccount extends Component {
   
   render() {
     return (
-      <main>
         <Card>
           <Card.Body>
             <Form
@@ -107,7 +106,7 @@ class CreateAccount extends Component {
               onSubmit={this.handleSubmit}
             >
               <Form.Group controlId="username">
-                <Form.Label>Username</Form.Label>
+                <Form.Label>New Username</Form.Label>
                 <Form.Control
                   type="text"
                   name="username"
@@ -166,7 +165,6 @@ class CreateAccount extends Component {
             </Form>
           </Card.Body>
         </Card>
-      </main>
     );
   }
 }
