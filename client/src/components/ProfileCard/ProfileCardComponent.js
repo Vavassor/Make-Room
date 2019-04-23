@@ -12,7 +12,7 @@ import "./profileCard.css"
 export default function ProfileCard({image, children}){
   return (
     // <Col sm="6" className="pb-3">
-      <Card>
+      <Card className='portfolio-card'>
         <a href={image.url} rel="noopener noreferrer" target="_blank"><Card.Img variant="top" src={image.url} /></a>
         <Card.Body>
           <Card.Title>{image.title}</Card.Title>

@@ -1,6 +1,16 @@
 html {
   /* overflow-x: hidden; */
+
 }
+
+* {
+  font-family: 'Raleway', sans-serif;
+}
+
+h1, h2, h4, h4, h5, h6{
+  font-family: 'Righteous', cursive;
+}
+
 
 body {
   overflow-y: scroll;
@@ -11,6 +21,20 @@ body {
   background-image: linear-gradient(to bottom, transparent, darkgrey)
 
 }
+
+.btn {
+  border: solid orange 0.1em !important;
+  border-radius: .5em !important;
+}
+
+.btn-primary{
+  background-color: rgb(86, 86, 242) !important;
+}
+
+.btn-primary:hover {
+  background-color: rgb(42, 42, 242) !important;
+}
+
 body::-webkit-scrollbar { /* WebKit */
   width: 0;
   height: 0;
@@ -20,7 +44,7 @@ body::-webkit-scrollbar { /* WebKit */
 /* profile jumbotron */
 /* profile jumbotron */
 
-.profile-jumbo{
+.jumbotron{
   padding: 2rem 0 !important;
   text-justify: center;
   color: white;
@@ -51,6 +75,11 @@ body::-webkit-scrollbar { /* WebKit */
 /* about me profile card css */
 /* about me profile card css */
 /* about me profile card css */
+
+.portfolio-card {
+  border-radius: 0.5em !important;
+  overflow: hidden;
+}
 
 .about-me-card-title {
   position: relative;
