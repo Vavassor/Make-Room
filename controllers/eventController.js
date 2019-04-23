@@ -128,10 +128,20 @@ module.exports = {
           longitude: location.lng,
         };
 
-        return models.Event
-          .findOneAndUpdate({_id: request.params.id}, event);
+        return models.Event.findOneAndUpdate(
+          {
+            _id: request.params.id,
+            creator: request.user._id,
+          },
+          event
+        );
       })
-      .then(event => response.json(event))
-      .catch(error => response.status(422).json(error));
+      .then((event) => {
+        if (!event) {
+          throw new Error("The event was not found or the authenticated user wasn't its creator.");
+        }
+        response.json(event);
+      })
+      .catch(error => response.status(500).json(error));
   },
 };
