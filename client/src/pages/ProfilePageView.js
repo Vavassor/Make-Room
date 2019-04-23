@@ -1,19 +1,14 @@
 import React, {Component} from "react";
 
 // bootstrap components
-// import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 
 //custom components
-import ProfileCard from "../components/ProfileCard";
+import ProfileCard, { ProfileInfoCard } from "../components/ProfileCard";
 import MasonryLayout from "../components/MasonryLayout"
-
-
-
 
 // utils
 import Api from "../utilities/Api";
@@ -123,16 +118,15 @@ class ProfileView extends Component {
         <Container className="profile-container">
           <Row className="justify-content-center about-me mb-2">
             <Col xs={12}>
-              <Card>
-                <Card.Body>
-                  <Card.Title>About My Work</Card.Title>
-                  <div>
-                    {this.state.portfolioInfo
-                      ? Help.addLineBreaks(this.state.portfolioInfo)
-                      : <p>"Oops, they haven't added any info about their porfolio"</p>}
-                  </div>
-                </Card.Body>
-              </Card>
+            <ProfileInfoCard portfolioTitle={"About My Work"}>
+              {
+                this.state.portfolioInfo ? (
+                  Help.addLineBreaks(this.state.portfolioInfo)
+                ) : (
+                    "Oops, I haven't added any info about my porfolio"
+                )
+              }
+              </ProfileInfoCard>
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">

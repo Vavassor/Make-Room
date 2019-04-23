@@ -121,8 +121,6 @@ export default {
   // portfolio routes
   updatePorfolioInfo: function(userId, portfolioInfo){
     let url = "/api/portfolio/info/" + userId
-    console.log(url);
-    console.log("Portfolio Info: ", portfolioInfo)
     return axios.patch(url, portfolioInfo);
   },
 
@@ -138,6 +136,7 @@ export default {
 
   updatePortfolioItem: function(userId, portfolioItem){
     let url = "/api/portfolio/item/" + userId
+    console.log(portfolioItem);
     return axios.patch(url, portfolioItem);
   },
 

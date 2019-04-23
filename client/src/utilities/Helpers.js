@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import Col from "react-bootstrap/Col";
 
@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 export default {
 
   addLineBreaks: function(text){
-    return text.split ('\n').map ((item, i) => <p key={i}>{item}</p>)
+    return text.split ('\n').map ((item, i) => < Fragment key={i}>{item} <br /></ Fragment>)
   },
 
   addLineBreaksTest: function(text, typ){

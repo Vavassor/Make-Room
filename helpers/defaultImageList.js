@@ -1,0 +1,26 @@
+const ImageList = [
+  "./images/glass-blow-1.jpg",
+  "./images/glass-blow-2.jpg",
+  "./images/glass-blow-3.jpg",
+  "./images/pottery-1.jpg",
+  "./images/pottery-2.jpg",
+  "./images/sculpt-1.jpg",
+  "./images/sculpt-2.jpg",
+  "./images/sculpt-3.jpg",
+  "./images/sculpt-4.jpg",
+  "./images/shawn-1.jpg",
+  "./images/shawn-2.jpg",
+  "./images/shawn-3.jpg",
+  "./images/shawn-4.jpg",
+  "./images/shawn-5.jpg",
+  "./images/painting-1.jpg",
+  "./images/painting-2.jpg",
+  "./images/painting-3.jpg",
+  "./images/steel-forging-1.jpg",
+  "./images/steel-forging-2.jpg",
+  "./images/steel-forging-3.jpg",
+  "./images/steel-forging-4.jpg",
+  "./images/steel-forging-5.png",
+]
+
+module.exports = ImageList

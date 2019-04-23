@@ -1,7 +1,10 @@
 import React, {Component} from "react";
 
+import moment from "moment";
+
+
 // bootstrap components
-import Card from "react-bootstrap/Card";
+// import Card from "react-bootstrap/Card";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -9,7 +12,7 @@ import Container from "react-bootstrap/Container";
 
 
 //custom components
-import ProfileCard from "../components/ProfileCard";
+import ProfileCard, { ProfileInfoCard } from "../components/ProfileCard";
 import { ItemButton } from "../components/ButtonComponent"
 
 //custom components
@@ -62,7 +65,7 @@ class Profile extends Component {
       });
     })
     .catch(error => console.error(error));
-  }
+  };
 
   getUserInfo(id){
     Api
@@ -163,13 +166,28 @@ class Profile extends Component {
     })
   };
 
+  setAsFirst = (id) => {
+    let newOrder = moment(Date.now()).toISOString()
+    let portfolioItem = {
+      _id: id,
+      order: newOrder
+    };
+    
+    Api
+    .updatePortfolioItem(this.state.id, portfolioItem)
+    .then(data => {
+      this.getProfilePortfolio(this.state.id);
+    })
+    .catch(err => console.log(err))
+  };
+
 
   render() {
     return (
       <>
         <Jumbotron className="profile-jumbo fluid mx-0">
           <Row className="justify-content-center text-center">
-            <Col sm={6}>
+            <Col className="jumbo-header" sm={6}>
               <h1>
                 {this.state.firstname
                   ? this.state.firstname + " " + this.state.lastname
@@ -219,42 +237,39 @@ class Profile extends Component {
           </Row>
         </Jumbotron>
         <Container className="profile-container">
-          <Row className="justify-content-center about-me mb-2">
+          <Row className="justify-content-center about-me-row mb-2">
             <Col xs={12}>
-              <Card>
-                <Card.Body>
-                  <Card.Title>
-                    About My Work
-                    <ItemButton
-                      action={this.createNewPortfolioItem}
-                      size="sm"
-                      variant="success"
-                    >
-                      <i className="far fa-plus-square" />
-                    </ItemButton>
-                  </Card.Title>
-                  <div>
-                    {this.state.portfolioInfo ? (
-                      Help.addLineBreaks(this.state.portfolioInfo)
-                    ) : (
-                      <p>
-                        Oops, I haven't added any info about my porfolio
-                      </p>
-                    )}
-                    <UpdateModal
-                      task="Update Portfolio Info"
-                      form={"portfolioInfo"}
-                      handleInputChange={this.handleInputChange}
-                      handleFormSubmit={this.handleSubmitPortfolioInfo}
-                      portfolioInfo={this.state.portfolioInfo}
-                    />
-                  </div>
-                </Card.Body>
-              </Card>
+              <ProfileInfoCard
+                portfolioTitle={"About My Work"}
+                updateButton = {
+                  <UpdateModal
+                    task="Update Portfolio Info"
+                    form={"portfolioInfo"}
+                    handleInputChange={this.handleInputChange}
+                    handleFormSubmit={this.handleSubmitPortfolioInfo}
+                    portfolioInfo={this.state.portfolioInfo}
+                  />
+                }
+              >
+              {
+                this.state.portfolioInfo ? (
+                  Help.addLineBreaks(this.state.portfolioInfo)
+                ) : (
+                    "Oops, I haven't added any info about my porfolio"
+                )
+              }
+              </ProfileInfoCard>
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">
-            <Col xs={12}>
+            <ItemButton
+              action={this.createNewPortfolioItem}
+              size="sm"
+              variant="primary"
+            >
+              Add New Portfolio Item <i className="far fa-plus-square" />
+            </ItemButton>
+            <Col xs={12} className="mt-2">
               {this.state.portfolio.length ? (
                 <MasonryLayout columns={3} gap={25}>
                   {Help.sortByDate([...this.state.portfolio]).map(
@@ -264,10 +279,19 @@ class Profile extends Component {
                         image={imageInfo}
                         imgId={imageInfo._id}
                       >
+                        <ItemButton
+                          size="sm"
+                          variant={"primary"}
+                          action={() =>
+                            this.setAsFirst(imageInfo._id)
+                          }
+                        >
+                          Set as First
+                        </ItemButton>
                         <UpdateModal
                           form={"itemInfo"}
                           task={"Update Item"}
-                          variant="success"
+                          variant="primary"
                           icon={"Update"}
                           handleInputChange={this.handleInputChange}
                           handleFormSubmit={this.handleSubmitPortfolioItem}
