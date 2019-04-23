@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import Alert from "react-bootstrap/Alert";
 import Api from "../utilities/Api";
 import Auth from "../utilities/Auth";
 import Button from "react-bootstrap/Button";
@@ -13,6 +14,7 @@ class Main extends Component {
     super(props);
 
     this.state = {
+      alert: "",
       validated: false,
     };
 
@@ -51,7 +53,12 @@ class Main extends Component {
           this.props.handleLogIn();
           this.props.history.push("/profile");
         })
-        .catch(error => console.error(error));
+        .catch((error) => {
+          if (error.response.status === 401) {
+            this.setState({alert: "Username or password was incorrect."});
+          }
+          console.error(error);
+        });
     }
   }
 
@@ -89,6 +96,8 @@ class Main extends Component {
                 />
               </Form.Group>
 
+              {this.renderAlert()}
+
               <Form.Row>
                 <Col md="auto">
                   <Button variant="primary" type="submit">
@@ -105,6 +114,19 @@ class Main extends Component {
         </Card>
       </main>
     );
+  }
+  
+  renderAlert() {
+    const message = this.state.alert;
+    if (message.length > 0) {
+      return (
+        <Alert variant="danger">
+          {message}
+        </Alert>
+      );
+    } else {
+      return "";
+    }
   }
 }
 

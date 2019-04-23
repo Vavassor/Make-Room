@@ -1,26 +1,25 @@
 const models = require("../models");
 const PasswordHelper = require("../helpers/PasswordHelper");
-
-function handleError(error, response) {
-  console.error(error);
-  response.status(500).json(error);
-}
+const ValidationError = require("../helpers/ValidationError");
 
 module.exports = {
-  create: function(request, response) {
+  create: function(request, response, next) {
     models.User
       .findOne({
         username: request.body.username,
       })
       .then((existingUser) => {
+        const error = new ValidationError();
         if (existingUser) {
-          return response.status(409).json({target: "username", error: "Username taken."});
-        }
-        if (!request.body.username.length) {
-          return response.status(400).json({target: "username", error: "Invalid username."});
+          error.addError("username", "Username taken.");
+        } else if (!request.body.username.length) {
+          error.addError("username", "Please enter a username.");
         }
         if (!request.body.password.length) {
-          return response.status(400).json({target: "password", error: "Invalid password."});
+          error.addError("password", "Please enter a password.");
+        }
+        if (error.isInvalid()) {
+          throw error;
         }
         return PasswordHelper.hash(request.body.password);
       })
@@ -42,9 +41,9 @@ module.exports = {
               username: user.username,
             });
           })
-          .catch(error => handleError(error, response));
+          .catch(next);
       })
-      .catch(error => handleError(error, response));
+      .catch(next);
   },
 
   getSelf: function(request, response) {
