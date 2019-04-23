@@ -31,6 +31,10 @@ body {
   background-color: rgb(86, 86, 242) !important;
 }
 
+.btn-primary:hover {
+  background-color: rgb(42, 42, 242) !important;
+}
+
 body::-webkit-scrollbar { /* WebKit */
   width: 0;
   height: 0;
@@ -40,7 +44,7 @@ body::-webkit-scrollbar { /* WebKit */
 /* profile jumbotron */
 /* profile jumbotron */
 
-.profile-jumbo{
+.jumbotron{
   padding: 2rem 0 !important;
   text-justify: center;
   color: white;
@@ -74,6 +78,7 @@ body::-webkit-scrollbar { /* WebKit */
 
 .portfolio-card {
   border-radius: 0.5em !important;
+  overflow: hidden;
 }
 
 .about-me-card-title {
