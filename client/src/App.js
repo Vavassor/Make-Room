@@ -76,13 +76,15 @@ class App extends Component {
   render() {
     return (
       <>
-        <Router>
-          <NavTabs
-            showLoggedIn={this.state.showLoggedIn}
-            handleLogOut={this.handleLogOut}
-          />
-          {this.state.showLoggedIn ? this.loggedInRoutes() : this.loggedOutRoutes()}
-        </Router>
+        <div className="above-footer">
+          <Router>
+            <NavTabs
+              showLoggedIn={this.state.showLoggedIn}
+              handleLogOut={this.handleLogOut}
+            />
+            {this.state.showLoggedIn ? this.loggedInRoutes() : this.loggedOutRoutes()}
+          </Router>
+        </div>
         <Footer/>
       </>
     );
