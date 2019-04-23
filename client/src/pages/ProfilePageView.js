@@ -44,6 +44,7 @@ class ProfileView extends Component {
 
   componentDidMount() {
     this.getUserAndPorfolio(this.props.match.params.id)
+    this.getUserEvents(this.props.match.params.id)
   };
 
   getUserAndPorfolio = (id) => {
