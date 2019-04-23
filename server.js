@@ -1,4 +1,5 @@
 const authentication = require("./middleware/authentication");
+const errorHandlers = require("./middleware/error-handlers");
 const express = require("express");
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const LocalStrategy = require("passport-local").Strategy;
@@ -32,6 +33,8 @@ passport.deserializeUser(authentication.deserializeUser);
 passport.serializeUser(authentication.serializeUser);
 
 app.use(routes);
+app.use(errorHandlers.validation);
+app.use(errorHandlers.generic);
 app.get("*", function(req, res) {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });

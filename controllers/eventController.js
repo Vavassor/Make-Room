@@ -7,7 +7,7 @@ const googleMapsClient = googleMaps.createClient({
 });
 
 module.exports = {
-  attendEvent: function(request, response) {
+  attendEvent: function(request, response, next) {
     models.Event
       .findByIdAndUpdate(
         request.params.id,
@@ -18,10 +18,10 @@ module.exports = {
         }
       )
       .then(event => response.json(event))
-      .catch(error => response.status(422).json(error));
+      .catch(next);
   },
 
-  createEvent: function(request, response) {
+  createEvent: function(request, response, next) {
     const event = request.body;
     event.creator = request.user._id;
     event.attendees = [event.creator];
@@ -46,17 +46,17 @@ module.exports = {
         return models.Event.create(event);
       })
       .then(event => response.json(event))
-      .catch(error => response.status(422).json(error));
+      .catch(next);
   },
   
-  deleteEvent: function(request, response) {
+  deleteEvent: function(request, response, next) {
     models.Event
       .deleteOne({_id: request.params.id})
       .then(event => response.json(event))
-      .catch(error => response.status(422).json(error));
+      .catch(next);
   },
 
-  getAllEvents: function(request, response) {
+  getAllEvents: function(request, response, next) {
     let query = models.Event.find();
 
     if (request.query["order_by"]) {
@@ -81,18 +81,18 @@ module.exports = {
   
     query
       .then(events => response.json(events))
-      .catch(error => response.status(422).json(error));
+      .catch(next);
   },
 
-  getEventById: function(request, response) {
+  getEventById: function(request, response, next) {
     models.Event
       .findById(request.params.id)
       .populate("attendees", "-password")
       .then(event => response.json(event))
-      .catch(error => response.status(422).json(error));
+      .catch(next);
   },
 
-  stopAttendingEvent: function(request, response) {
+  stopAttendingEvent: function(request, response, next) {
     models.Event
       .updateOne(
         {
@@ -105,10 +105,10 @@ module.exports = {
         }
       )
       .then(updateResponse => response.status(204).end())
-      .catch(error => response.status(500).json(error));
+      .catch(next);
   },
 
-  updateEvent: function(request, response) {
+  updateEvent: function(request, response, next) {
     const event = request.body;
     
     googleMapsClient
@@ -142,6 +142,6 @@ module.exports = {
         }
         response.json(event);
       })
-      .catch(error => response.status(500).json(error));
+      .catch(next);
   },
 };

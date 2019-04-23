@@ -69,13 +69,27 @@ class CreateAccount extends Component {
         })
         .catch((error) => {
           const errorObject = error.response.data;
-          if (errorObject.target === "username") {
-            this.setState({errors: {username: errorObject.error}});
-            this.usernameInput.current.setCustomValidity(errorObject.error);
-          }
-          if (errorObject.target === "password") {
-            this.setState({errors: {password: errorObject.error}});
-            this.passwordInput.current.setCustomValidity(errorObject.error);
+          if (errorObject.kind === "validation") {
+            for (const failure of errorObject.errors) {
+              this.setState((state, props) => {
+                return {
+                  errors: {
+                    ...state.errors,
+                    [failure.target]: failure.message,
+                  },
+                };
+              });
+
+              switch (failure.target) {
+                case "username":
+                  this.usernameInput.current.setCustomValidity(failure.message);
+                  break;
+  
+                case "password":
+                  this.passwordInput.current.setCustomValidity(failure.message);
+                  break;
+              }
+            }
           }
         });
     }
