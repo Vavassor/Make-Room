@@ -105,20 +105,31 @@ export default {
   },
 
   // profile routes
-  getProfilePortfolioById: function(userId){
-    return axios.get("/api/portfolio/info/" + userId)
-  },
-
+  // profile routes
+  // profile routes
+  
   getUserInfoById: function(userId){
-    let url = "/api/profile/" + userId;
+    let url = "/api/profile/info/" + userId;
     return axios.get(url)
   },
   
   updateUserProfile: function(userId, userInfo){
-    return axios.patch("/api/profile/" + userId, userInfo)
+    return axios.patch("/api/profile/info/" + userId, userInfo)
+  },
+
+  getUserEvents: function(userId){
+    console.log("getting user info")
+    return axios.get("/api/profile/events/" + userId)
   },
   
   // portfolio routes
+  // portfolio routes
+  // portfolio routes
+
+  getProfilePortfolioById: function(userId){
+    return axios.get("/api/portfolio/info/" + userId)
+  },
+
   updatePorfolioInfo: function(userId, portfolioInfo){
     let url = "/api/portfolio/info/" + userId
     return axios.patch(url, portfolioInfo);
