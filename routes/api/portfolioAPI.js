@@ -11,11 +11,14 @@ function getPortfolioById(req, res){
 };
 
 function updatePortfolioInfo(req, res){
-  console.log("Update Portfolio Info: ", req.body.id)
+  console.log("Update Portfolio Info: ", req.body)
+  let set=null;
+  req.body.columnCount? set={porfolioaDisplayType: req.body.columnCount} : set={portfolioDetails: req.body.portfolioInfo};
   db.Portfolio
     .updateOne(
       {userId: req.params.id},
-      {portfolioDetails: req.body.portfolioInfo}
+      // {portfolioDetails: req.body.portfolioInfo}
+      set
       )
     .then(data => res.json(data))
     .catch(err => res.staus(422).json(err))

@@ -118,7 +118,6 @@ export default {
   },
 
   getUserEvents: function(userId){
-    console.log("getting user info")
     return axios.get("/api/profile/events/" + userId)
   },
   
@@ -130,7 +129,7 @@ export default {
     return axios.get("/api/portfolio/info/" + userId)
   },
 
-  updatePorfolioInfo: function(userId, portfolioInfo){
+  updatePortfolioInfo: function(userId, portfolioInfo){
     let url = "/api/portfolio/info/" + userId
     return axios.patch(url, portfolioInfo);
   },
@@ -147,7 +146,6 @@ export default {
 
   updatePortfolioItem: function(userId, portfolioItem){
     let url = "/api/portfolio/item/" + userId
-    console.log(portfolioItem);
     return axios.patch(url, portfolioItem);
   },
 
