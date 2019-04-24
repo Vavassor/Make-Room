@@ -11,13 +11,11 @@ function getPortfolioById(req, res){
 };
 
 function updatePortfolioInfo(req, res){
-  console.log("Update Portfolio Info: ", req.body)
   let set=null;
   req.body.columnCount? set={porfolioaDisplayType: req.body.columnCount} : set={portfolioDetails: req.body.portfolioInfo};
   db.Portfolio
     .updateOne(
       {userId: req.params.id},
-      // {portfolioDetails: req.body.portfolioInfo}
       set
       )
     .then(data => res.json(data))
@@ -28,7 +26,7 @@ function createPortfolioItem(req, res){
   db.Portfolio
   .updateOne(
     {userId: req.params.id},
-    {$push: {images:{}}},
+    {$push: { images:{} } },
     {new: true}
   )
   .then(data => {
@@ -74,8 +72,6 @@ function updatePortfolioItem(req,res){
 };
 
 function deletePortolioItem(req, res){
-console.log("delete Item Api", req.params.id);
-console.log(req.params.itemId);
 db.Portfolio
   .update(
     {userId: req.params.id}, 

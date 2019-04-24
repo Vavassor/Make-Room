@@ -39,6 +39,8 @@ class ProfileView extends Component {
       website:"",
       events:"",
       columnCount: "",
+      columnGap: "",
+
 
     };
   }
@@ -67,10 +69,12 @@ class ProfileView extends Component {
     Api
     .getProfilePortfolioById(id)
     .then(data => {
+      let cols = data.data[0].porfolioaDisplayType.split("::")
       this.setState({
         portfolio: data.data[0].images,
         portfolioInfo:data.data[0].portfolioDetails,
-        columnCount: parseInt(data.data[0].porfolioaDisplayType),
+        columnCount: parseInt(cols[0]),
+        columnGap: parseInt(cols[1])
       })
     })
     .catch(error => console.error(error));
@@ -171,7 +175,7 @@ class ProfileView extends Component {
           <Row className="justify-content-center portfolio-images">
             <Col xs={12}>
               {this.state.portfolio.length ? (
-                <MasonryLayout columns={this.state.columnCount} gap={25}>
+                <MasonryLayout columns={this.state.columnCount} gap={this.state.columnGap}>
                 {
                   Help.sortByDate([...this.state.portfolio]).map(imageInfo => (
                   <ProfileCard key={imageInfo._id} image={imageInfo} />) )
