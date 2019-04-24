@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@google/maps": "^0.5.5",
+    "aws-sdk": "^2.441.0",
     "bcrypt-nodejs": "0.0.3",
     "dotenv": "^7.0.0",
     "express": "^4.16.3",
@@ -32,6 +33,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.5.1",
+    "multer": "^1.4.1",
     "passport": "^0.4.0",
     "passport-http": "^0.3.0",
     "passport-jwt": "^4.0.0",

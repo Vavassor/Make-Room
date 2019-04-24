@@ -125,23 +125,22 @@ class Profile extends Component {
     .catch(err => console.log(err))
   };
 
-  handleSubmitPortfolioItem = event => {
+  handleSubmitPortfolioItem = (event, imageFile) => {
     event.preventDefault();
-    let {imageId, imageUrl, imageTitle, imageAbout, imageOrder} = this.state
+
+    let {imageId, imageTitle, imageAbout, imageOrder, imageUrl} = this.state
     let portfolioItem = {
       _id: imageId,
-      url: imageUrl,
       title: imageTitle,
       about: imageAbout,
-      order: imageOrder
+      order: imageOrder,
+      url: imageUrl,
     };
     
     Api
-    .updatePortfolioItem(this.state.id, portfolioItem)
-    .then(data => {
-      this.getProfilePortfolio(this.state.id);
-    })
-    .catch(err => console.log(err))
+      .updatePortfolioItem(this.state.id, portfolioItem, imageFile)
+      .then(data => this.getProfilePortfolio(this.state.id))
+      .catch(err => console.log(err));
   };
 
   createNewPortfolioItem = (event) => {

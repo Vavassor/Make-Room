@@ -145,10 +145,15 @@ export default {
     return axios.delete(url);
   },
 
-  updatePortfolioItem: function(userId, portfolioItem){
-    let url = "/api/portfolio/item/" + userId
-    console.log(portfolioItem);
-    return axios.patch(url, portfolioItem);
+  updatePortfolioItem: function(userId, portfolioItem, imageFile) {
+    let url = "/api/portfolio/item/" + userId;
+    const data = new FormData();
+    data.set("_id", portfolioItem._id);
+    data.set("title", portfolioItem.title);
+    data.set("about", portfolioItem.about);
+    data.set("order", portfolioItem.order);
+    data.set("url", portfolioItem.url);
+    data.set("file", imageFile);
+    return axios.patch(url, data);
   },
-
 };

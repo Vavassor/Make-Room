@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 
 // import Jumbotron from "react-bootstrap/Jumbotron";
 // import FormControl from "react-bootstrap/FormControl";
@@ -9,25 +9,35 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-  export function ItemForm (props) {
+export class ItemForm extends Component {
+  constructor(props) {
+    super(props);
 
-    function saveButton(e){
-      props.handleFormSubmit(e);
-      props.handleClose();
-    };
+    this.imageFile = React.createRef();
+
+    this.saveButton = this.saveButton.bind(this);
+  }
+
+  saveButton(e) {
+    e.preventDefault();
+    this.props.handleFormSubmit(e, this.imageFile.current.files[0]);
+    this.props.handleClose();
+  }
+  
+  render() {
+    const props = this.props;
     
     return (
       <Form>
         <Form.Group controlId="porfolioInfoForm">
         <Row className="my-2">
               <Col xs={12}>
-              <Form.Label>Image Link</Form.Label>
+              <Form.Label>Image File</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="image url"
-                  value={props.item.imageUrl}
-                  onChange={props.handleInputChange}
-                  name="imageUrl"
+                  type="file"
+                  accept="image/*"
+                  name="imageFile"
+                  ref={this.imageFile}
                 />
               </Col>
               <Col xs={12}>
@@ -59,13 +69,14 @@ import Button from "react-bootstrap/Button";
         <Button
           variant="primary"
           type="submit"
-          onClick={e => saveButton(e)}
+          onClick={this.saveButton}
         >
           Save!
         </Button>
       </Form>
     );
-  };
+  }
+}
 
   export function PortfolioInfoForm (props) {
 
