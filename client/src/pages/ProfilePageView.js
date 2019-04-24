@@ -38,7 +38,7 @@ class ProfileView extends Component {
       blurb: "",
       website:"",
       events:"",
-      columnCount: 3,
+      columnCount: "",
 
     };
   }
@@ -67,10 +67,10 @@ class ProfileView extends Component {
     Api
     .getProfilePortfolioById(id)
     .then(data => {
-      console.log(data)
       this.setState({
         portfolio: data.data[0].images,
-        portfolioInfo:data.data[0].portfolioDetails
+        portfolioInfo:data.data[0].portfolioDetails,
+        columnCount: parseInt(data.data[0].porfolioaDisplayType),
       })
     })
     .catch(error => console.error(error));
@@ -171,7 +171,7 @@ class ProfileView extends Component {
           <Row className="justify-content-center portfolio-images">
             <Col xs={12}>
               {this.state.portfolio.length ? (
-                <MasonryLayout columns={3} gap={25}>
+                <MasonryLayout columns={this.state.columnCount} gap={25}>
                 {
                   Help.sortByDate([...this.state.portfolio]).map(imageInfo => (
                   <ProfileCard key={imageInfo._id} image={imageInfo} />) )

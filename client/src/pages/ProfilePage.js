@@ -87,7 +87,6 @@ class Profile extends Component {
     Api
     .getProfilePortfolioById(id)
     .then(data => {
-      console.log(data);
       this.setState({
         portfolio: data.data[0].images,
         portfolioInfo:data.data[0].portfolioDetails,
@@ -190,7 +189,6 @@ class Profile extends Component {
     Api
     .updatePortfolioInfo(id, {columnCount: columnCount})
     .then(data => { 
-      console.log(data)
     })
     .catch(err => console.log(err))
   };
