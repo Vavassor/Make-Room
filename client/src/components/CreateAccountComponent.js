@@ -89,6 +89,7 @@ class CreateAccount extends Component {
                 case "password":
                   this.passwordInput.current.setCustomValidity(failure.message);
                   break;
+                default: return
               }
             }
           }

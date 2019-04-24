@@ -3,7 +3,6 @@ import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
 
 import Main from "./pages/Main";
 import AddEvent from "./pages/AddEvent";
-import CreateAccount from "./pages/CreateAccount";
 import Event from "./pages/Event";
 import EventList from "./pages/EventList";
 import ProfilePage from "./pages/ProfilePage";
@@ -50,7 +49,6 @@ class App extends Component {
           <Main {...props} handleLogIn={this.handleLogIn} isLoggedIn={this.state.showLoggedIn} />
         )} /> 
         <Route exact path="/add-event" component={AddEvent} />
-        <Route exact path="/create-account" component={CreateAccount} />
         <Route exact path="/event-list" component={EventList} />
         <Route exact path="/event/:id" component={Event} />
         <Route exact path="/profile" component={ProfilePage} />
@@ -67,7 +65,6 @@ class App extends Component {
           <Main {...props} handleLogIn={this.handleLogIn} isLoggedIn={this.state.showLoggedIn} />
         )} />
         <Route exact path="/add-event" component={AddEvent} />
-        <Route exact path="/create-account" component={CreateAccount} />
         <Route component={PageNotFound} />
       </Switch>
     );

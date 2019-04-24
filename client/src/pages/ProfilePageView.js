@@ -38,6 +38,8 @@ class ProfileView extends Component {
       blurb: "",
       website:"",
       events:"",
+      columnCount: 3,
+
     };
   }
 
@@ -65,6 +67,7 @@ class ProfileView extends Component {
     Api
     .getProfilePortfolioById(id)
     .then(data => {
+      console.log(data)
       this.setState({
         portfolio: data.data[0].images,
         portfolioInfo:data.data[0].portfolioDetails

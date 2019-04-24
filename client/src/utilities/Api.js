@@ -130,7 +130,7 @@ export default {
     return axios.get("/api/portfolio/info/" + userId)
   },
 
-  updatePorfolioInfo: function(userId, portfolioInfo){
+  updatePortfolioInfo: function(userId, portfolioInfo){
     let url = "/api/portfolio/info/" + userId
     return axios.patch(url, portfolioInfo);
   },
