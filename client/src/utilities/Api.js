@@ -145,15 +145,27 @@ export default {
     return axios.delete(url);
   },
 
-  updatePortfolioItem: function(userId, portfolioItem, imageFile) {
+  updatePortfolioItem: function(userId, portfolioItem, updateProgress) {
     let url = "/api/portfolio/item/" + userId;
     const data = new FormData();
-    data.set("_id", portfolioItem._id);
-    data.set("title", portfolioItem.title);
-    data.set("about", portfolioItem.about);
-    data.set("order", portfolioItem.order);
-    data.set("url", portfolioItem.url);
-    data.set("file", imageFile);
-    return axios.patch(url, data);
+    if (portfolioItem._id) {
+      data.set("_id", portfolioItem._id);
+    }
+    if (portfolioItem.title) {
+      data.set("title", portfolioItem.title);
+    }
+    if (portfolioItem.about) {
+      data.set("about", portfolioItem.about);
+    }
+    if (portfolioItem.order) {
+      data.set("order", portfolioItem.order);
+    }
+    if (portfolioItem.url) {
+      data.set("url", portfolioItem.url);
+    }
+    if (portfolioItem.file) {
+      data.set("file", portfolioItem.file);
+    }
+    return axios.patch(url, data, {onUploadProgress: updateProgress});
   },
 };

@@ -125,22 +125,33 @@ class Profile extends Component {
     .catch(err => console.log(err))
   };
 
-  handleSubmitPortfolioItem = (event, imageFile) => {
+  handleSubmitPortfolioItem = (event, imageFile, handleClose) => {
     event.preventDefault();
 
-    let {imageId, imageTitle, imageAbout, imageOrder, imageUrl} = this.state
+    let {imageId, imageTitle, imageAbout, imageOrder, imageUrl} = this.state;
     let portfolioItem = {
       _id: imageId,
       title: imageTitle,
       about: imageAbout,
       order: imageOrder,
       url: imageUrl,
+      file: imageFile,
     };
     
     Api
-      .updatePortfolioItem(this.state.id, portfolioItem, imageFile)
-      .then(data => this.getProfilePortfolio(this.state.id))
+      .updatePortfolioItem(this.state.id, portfolioItem, this.updateUploadProgress)
+      .then((data) => {
+        handleClose();
+        this.setState({uploadProgress: 0});
+        this.getProfilePortfolio(this.state.id);
+      })
       .catch(err => console.log(err));
+  };
+
+  updateUploadProgress = (event) => {
+    this.setState({
+      uploadProgress: Math.round((100 * event.loaded) / event.total),
+    });
   };
 
   createNewPortfolioItem = (event) => {
@@ -330,6 +341,7 @@ class Profile extends Component {
                           func2={this.setItemState}
                           func2Args={imageInfo}
                           imageInfo={imageInfo}
+                          noFooter={true}
                         />
                         <ItemButton
                           size="sm"

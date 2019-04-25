@@ -1,13 +1,10 @@
 import React, {Component} from "react";
 
-// import Jumbotron from "react-bootstrap/Jumbotron";
-// import FormControl from "react-bootstrap/FormControl";
-
 // bootstrap components
 import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import ProgressBar from "react-bootstrap/ProgressBar";
 
 export class ItemForm extends Component {
   constructor(props) {
@@ -20,8 +17,7 @@ export class ItemForm extends Component {
 
   saveButton(e) {
     e.preventDefault();
-    this.props.handleFormSubmit(e, this.imageFile.current.files[0]);
-    this.props.handleClose();
+    this.props.handleFormSubmit(e, this.imageFile.current.files[0], this.props.handleClose);
   }
   
   render() {
@@ -29,50 +25,68 @@ export class ItemForm extends Component {
     
     return (
       <Form>
-        <Form.Group controlId="porfolioInfoForm">
-        <Row className="my-2">
-              <Col xs={12}>
+        <Form.Row className="my-2">
+          <Col xs={12}>
+            <Form.Group controlId="portfolio-item-image-file">
               <Form.Label>Image File</Form.Label>
-                <Form.Control
-                  type="file"
-                  accept="image/*"
-                  name="imageFile"
-                  ref={this.imageFile}
-                />
-              </Col>
-              <Col xs={12}>
+              <Form.Control
+                type="file"
+                accept="image/*"
+                name="imageFile"
+                ref={this.imageFile}
+              />
+            </Form.Group>
+          </Col>
+
+          <Col xs={12}>
+            <Form.Group controlId="portfolio-item-title">
               <Form.Label>Item Title</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Title of this Item"
-                  value={props.item.imageTitle}
-                  onChange={props.handleInputChange}
-                  name="imageTitle"
-                />
-              </Col>
-              </Row>
-              
+              <Form.Control
+                type="text"
+                placeholder="Title of this Item"
+                value={props.item.imageTitle}
+                onChange={props.handleInputChange}
+                name="imageTitle"
+              />
+            </Form.Group>
+          </Col>
+        </Form.Row>
+
+        <Form.Group controlId="portfolio-item-info">
+          <Form.Label>Info About Porfolio Item: </Form.Label>
+          <Form.Control
+            type="text"
+            as="textarea"
+            rows="3"
+            placeholder="Info about this Item: "
+            maxLength="300"
+            value={props.item.imageAbout}
+            onChange={props.handleInputChange}
+            name="imageAbout"
+          />
         </Form.Group>
-        <Form.Group controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Info About Porfolio Item: </Form.Label>
-            <Form.Control
-              type="text"
-              as="textarea"
-              rows="3"
-              placeholder="Info about this Item: "
-              maxLength="300"
-              value={props.item.imageAbout}
-              onChange={props.handleInputChange}
-              name="imageAbout"
-            />
-          </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          onClick={this.saveButton}
-        >
-          Save!
-        </Button>
+
+        <ProgressBar className="mb-3" now={Math.round(100 * props.item.uploadProgress)} />
+
+        <Form.Row>
+          <Col>
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={this.saveButton}
+            >
+              Save
+            </Button>
+            
+            <Button
+              variant="secondary"
+              onClick={props.handleClose}
+              className="ml-2"
+            >
+              Close
+            </Button>
+          </Col>
+        </Form.Row>
       </Form>
     );
   }
