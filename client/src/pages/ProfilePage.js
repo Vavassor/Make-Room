@@ -88,7 +88,7 @@ class Profile extends Component {
     Api
     .getProfilePortfolioById(id)
     .then(data => {
-      let cols = data.data[0].porfolioaDisplayType.split("::")
+      let cols = data.data[0].porfolioaDisplayType? data.data[0].porfolioaDisplayType.split("::") : "35"
       this.setState({
         portfolio: data.data[0].images,
         portfolioInfo:data.data[0].portfolioDetails,

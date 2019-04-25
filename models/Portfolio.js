@@ -42,7 +42,7 @@ const portfolioSchema = new Schema({
 ],
   porfolioaDisplayType: {
     type: String,
-    required: false,
+    default: "3::20",
   },
 });
 
