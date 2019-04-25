@@ -123,6 +123,14 @@ body::-webkit-scrollbar { /* WebKit */
   padding-bottom: 2em;
 }
 
+.chat-col{
+  border: black solid 2px;
+}
+.chat-list {
+  height: 200px;
+  overflow: auto;
+}
+
 @media only screen and (max-width: 768px) {
   .masonry-box{
     display: block;

@@ -52,8 +52,11 @@ class Profile extends Component {
       imageId: "",
       imageOrder: "",
       events:"",
+      columnCount: 3,
+      columnGap: 20,
     };
   }
+
 
 
   componentDidMount() {
@@ -85,9 +88,12 @@ class Profile extends Component {
     Api
     .getProfilePortfolioById(id)
     .then(data => {
+      let cols = data.data[0].porfolioaDisplayType? data.data[0].porfolioaDisplayType.split("::") : "35"
       this.setState({
         portfolio: data.data[0].images,
-        portfolioInfo:data.data[0].portfolioDetails
+        portfolioInfo:data.data[0].portfolioDetails,
+        columnCount: parseInt(cols[0]),
+        columnGap: parseInt(cols[1])
       })
     })
     .catch(error => console.error(error));
@@ -98,6 +104,15 @@ class Profile extends Component {
     const { name, value } = event.target;
     // console.log(name,": ",  value)
     this.setState({[name]: value});
+  };
+
+  handleColumnChange = event => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    this.setState({[name]: value}, 
+      () => {
+        this.setColumnCount(this.state.columnCount)
+      });
   };
 
   handleFormSubmitProfile = event => {
@@ -121,7 +136,7 @@ class Profile extends Component {
     event.preventDefault();
     let {id, portfolioInfo} = this.state;
     Api
-    .updatePorfolioInfo(id, {portfolioInfo:portfolioInfo})
+    .updatePortfolioInfo(id, {portfolioInfo:portfolioInfo})
     .catch(err => console.log(err))
   };
 
@@ -181,6 +196,18 @@ class Profile extends Component {
     })
   };
 
+  setColumnCount = () => {
+    let {id, columnCount, columnGap} = this.state
+
+    columnCount = `${columnCount}::${columnGap}`
+
+    Api
+    .updatePortfolioInfo(id, {columnCount: columnCount})
+    .then(data => { 
+    })
+    .catch(err => console.log(err))
+  };
+
   setAsFirst = (id) => {
     let newOrder = moment(Date.now()).toISOString()
     let portfolioItem = {
@@ -209,7 +236,7 @@ class Profile extends Component {
       })
       .catch(error => { console.error(error)  });
   }
-
+  
 
   render() {
 
@@ -271,9 +298,12 @@ class Profile extends Component {
         <Container className="profile-container">
           <Row className="justify-content-center about-me-row mb-2">
             <Col className="text-center" xs={6}>
-
               <Dropdown>
-                <Dropdown.Toggle className='mb-2' variant="success" id="events-attending-dropdown">
+                <Dropdown.Toggle
+                  className="mb-2"
+                  variant="success"
+                  id="events-attending-dropdown"
+                >
                   Events Attending
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -284,7 +314,6 @@ class Profile extends Component {
                   )}
                 </Dropdown.Menu>
               </Dropdown>
-
             </Col>
             <Col xs={12}>
               <ProfileInfoCard
@@ -306,16 +335,50 @@ class Profile extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">
-            <ItemButton
-              action={this.createNewPortfolioItem}
-              size="sm"
-              variant="primary"
-            >
-              Add New Portfolio Item <i className="far fa-plus-square" />
-            </ItemButton>
+            <Col className="text-center">
+              <ItemButton
+                action={this.createNewPortfolioItem}
+                size="sm"
+                variant="primary"
+              >
+                Add New Portfolio Item <i className="far fa-plus-square" />
+              </ItemButton>
+              <label className="ml-3">
+                <select
+                  name="columnCount"
+                  value={this.state.columnCount}
+                  onChange={this.handleColumnChange}
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+                #Columns
+              </label>
+              <label className="ml-3">
+                <select
+                  name="columnGap"
+                  value={this.state.columnGap}
+                  onChange={this.handleColumnChange}
+                >
+                  <option value="0">0</option>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                </select>
+                Gap
+              </label>
+            </Col>
+
             <Col xs={12} className="mt-2">
               {this.state.portfolio.length ? (
-                <MasonryLayout columns={3} gap={25}>
+                <MasonryLayout
+                  columns={parseInt(this.state.columnCount)}
+                  gap={parseInt(this.state.columnGap)}
+                >
                   {Help.sortByDate([...this.state.portfolio]).map(
                     imageInfo => (
                       <ProfileCard
@@ -328,7 +391,7 @@ class Profile extends Component {
                           variant={"primary"}
                           action={() => this.setAsFirst(imageInfo._id)}
                         >
-                          Set as First
+                          <i className="fas fa-arrow-up"></i>
                         </ItemButton>
                         <UpdateModal
                           form={"itemInfo"}

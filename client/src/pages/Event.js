@@ -12,6 +12,9 @@ import TimeRange from "../components/TimeRange";
 import UpdateModal from "../components/UpdateModal";
 import Help from "../utilities/Helpers";
 
+import EventChat from "../components/EventChat";
+
+
 
 class Event extends Component {
   constructor(props) {
@@ -21,6 +24,7 @@ class Event extends Component {
       event: null,
       failedToLoad: false,
       selfId: null,
+      userName: null,
     };
 
     this.handleAttend = this.handleAttend.bind(this);
@@ -33,7 +37,12 @@ class Event extends Component {
     
     Api
       .getSelf()
-      .then(response => this.setState({selfId: response.data.id}))
+      .then(response => {
+        this.setState({
+          selfId: response.data.id,
+          userName: response.data.username
+        })
+      })
       .catch(error => console.error(error));
   }
 
@@ -104,23 +113,25 @@ class Event extends Component {
     if (attending) {
       return (
         <Button
-          variant="primary"
+          variant="danger"
           onClick={this.handleStopAttending}
         >
-          Stop Attending
+        <i className="fas fa-minus"></i>
         </Button>
       );
     } else {
       return (
         <Button
-          variant="primary"
+          variant="success"
           onClick={this.handleAttend}
         >
-          Attend
+          <i className="fas fa-plus"></i>
         </Button>
       );
     }
   }
+
+ 
 
   renderContent() {
     const event = this.state.event;
@@ -130,55 +141,68 @@ class Event extends Component {
       return (
         <>
           <Row>
-            <Col>
-              {
-                event && selfId && event.creator === selfId
-                ? (
-                  <UpdateModal
-                    form={"event"}
-                    task={"Edit Event"}
-                    handleFormSubmit={this.handleEdit}
-                    event={this.state.event}
-                    submitButtonText="Edit Event"
-                  />
-                ) : ""
-              }
+            <Col md={12} lg={4} className="event-col">
+              {event && selfId && event.creator === selfId && (
+                <UpdateModal
+                  form={"event"}
+                  task={"Edit Event"}
+                  handleFormSubmit={this.handleEdit}
+                  event={this.state.event}
+                  submitButtonText="Edit Event"
+                />
+              )}
 
               <h3 className="card-title">{event.name}</h3>
 
-              <p><TimeRange startTime={event.startTime} endTime={event.endTime} /></p>
+              <p>
+                <TimeRange
+                  startTime={event.startTime}
+                  endTime={event.endTime}
+                />
+              </p>
               <p>{event.place.name}</p>
               <p>{event.place.address}</p>
               <p>{Help.addLineBreaks(event.description)}</p>
             </Col>
 
-            <Col>
-              <div className="mb-3">
-                {this.renderAttendButton()}
-              </div>
-              
-              <div className="attendee-list-shadow">
-                <ListGroup className="attendee-list">
-                  {
-                    event.attendees.map((attendee) => {
-                      return (
-                        <ListGroup.Item key={attendee._id}>
-                          <Link to={"/profile/" + attendee._id}>{attendee.firstname} {attendee.lastname}</Link>
-                        </ListGroup.Item>
-                      );
-                    })
-                  }
-                </ListGroup>
-              </div>
-            </Col>
-          </Row>
+            <Col xs={12} md={6} lg={4} className="attending-col text-center">
+              <Row>
+                <Col xs={12}>
+                  <div className="mb-3">
+                    <h3>Attendees{this.renderAttendButton()}</h3>
+                  </div>
 
-          <Row>
-            <Col>
+                  <div className="attendee-list-shadow">
+                    <ListGroup className="attendee-list">
+                      {event.attendees.length ? (
+                        event.attendees.map(attendee => {
+                          return (
+                            <ListGroup.Item key={attendee._id}>
+                              <Link to={"/profile/" + attendee._id}>
+                                {Help.renderName(attendee)}
+                              </Link>
+                            </ListGroup.Item>
+                          );
+                        })
+                      ) : (
+                        <ListGroup.Item style={{ color: "red" }}>
+                          No One is Attending Yet!
+                        </ListGroup.Item>
+                      )}
+                    </ListGroup>
+                  </div>
+                </Col>
+                <Col xs={12} className="chat-col">
+                  <EventChat event={this.state.event} eventId = {this.state.event._id} userId={this.state.selfId} userName={this.state.userName}/>
+                </Col>
+              </Row>
+            </Col>
+
+            <Col xs={12} md={6} lg={4} className="map-col">
               <MapContainer
                 marker={{
                   name: event.place.name,
-                  position: event.place.position,
+                  position: event.place.position
                 }}
               />
             </Col>
