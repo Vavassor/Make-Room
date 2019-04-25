@@ -53,6 +53,7 @@ class Profile extends Component {
       imageOrder: "",
       events:"",
       columnCount: 3,
+      columnGap: 20,
     };
   }
 
@@ -87,10 +88,12 @@ class Profile extends Component {
     Api
     .getProfilePortfolioById(id)
     .then(data => {
+      let cols = data.data[0].porfolioaDisplayType? data.data[0].porfolioaDisplayType.split("::") : "35"
       this.setState({
         portfolio: data.data[0].images,
         portfolioInfo:data.data[0].portfolioDetails,
-        columnCount: parseInt(data.data[0].porfolioaDisplayType),
+        columnCount: parseInt(cols[0]),
+        columnGap: parseInt(cols[1])
       })
     })
     .catch(error => console.error(error));
@@ -184,7 +187,9 @@ class Profile extends Component {
   };
 
   setColumnCount = () => {
-    let {id, columnCount} = this.state
+    let {id, columnCount, columnGap} = this.state
+
+    columnCount = `${columnCount}::${columnGap}`
 
     Api
     .updatePortfolioInfo(id, {columnCount: columnCount})
@@ -221,7 +226,7 @@ class Profile extends Component {
       })
       .catch(error => { console.error(error)  });
   }
-
+  
 
   render() {
 
@@ -320,26 +325,50 @@ class Profile extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center portfolio-images">
-            <ItemButton
-              action={this.createNewPortfolioItem}
-              size="sm"
-              variant="primary"
-            >
-              Add New Portfolio Item <i className="far fa-plus-square" />
-            </ItemButton>
-            <label>
-              <select name="columnCount" value={this.state.columnCount} onChange={this.handleColumnChange}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-              #Columns
-            </label>
+            <Col className="text-center">
+              <ItemButton
+                action={this.createNewPortfolioItem}
+                size="sm"
+                variant="primary"
+              >
+                Add New Portfolio Item <i className="far fa-plus-square" />
+              </ItemButton>
+              <label className="ml-3">
+                <select
+                  name="columnCount"
+                  value={this.state.columnCount}
+                  onChange={this.handleColumnChange}
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+                #Columns
+              </label>
+              <label className="ml-3">
+                <select
+                  name="columnGap"
+                  value={this.state.columnGap}
+                  onChange={this.handleColumnChange}
+                >
+                  <option value="0">0</option>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                </select>
+                Gap
+              </label>
+            </Col>
 
             <Col xs={12} className="mt-2">
               {this.state.portfolio.length ? (
-                <MasonryLayout columns={parseInt(this.state.columnCount)} gap={25}>
+                <MasonryLayout
+                  columns={parseInt(this.state.columnCount)}
+                  gap={parseInt(this.state.columnGap)}
+                >
                   {Help.sortByDate([...this.state.portfolio]).map(
                     imageInfo => (
                       <ProfileCard
@@ -347,34 +376,44 @@ class Profile extends Component {
                         image={imageInfo}
                         imgId={imageInfo._id}
                       >
-                        <ItemButton
-                          size="sm"
-                          variant={"primary"}
-                          action={() => this.setAsFirst(imageInfo._id)}
-                        >
-                          Set as First
-                        </ItemButton>
-                        <UpdateModal
-                          form={"itemInfo"}
-                          task={"Update Item"}
-                          variant="primary"
-                          icon={"Update"}
-                          handleInputChange={this.handleInputChange}
-                          handleFormSubmit={this.handleSubmitPortfolioItem}
-                          item={this.state}
-                          func2={this.setItemState}
-                          func2Args={imageInfo}
-                          imageInfo={imageInfo}
-                        />
-                        <ItemButton
-                          size="sm"
-                          variant={"danger"}
-                          action={() =>
-                            this.deletePortfolioItem(imageInfo._id)
-                          }
-                        >
-                          <i className="far fa-trash-alt" />
-                        </ItemButton>
+                        {/* <Row className='justify-content-center p-0 m-0'> */}
+                          {/* <Col className='text-center' xs={"auto"}> */}
+                            <ItemButton
+                              size="sm"
+                              variant={"primary"}
+                              action={() => this.setAsFirst(imageInfo._id)}
+                            >
+                              <i className="fas fa-arrow-up"></i>
+                            </ItemButton>
+                          {/* </Col> */}
+                          {/* <Col className='text-center' xs={"auto"}> */}
+                            <UpdateModal
+                              form={"itemInfo"}
+                              task={"Update Item"}
+                              variant="primary"
+                              icon={<i className="far fa-edit"></i>}
+                              handleInputChange={this.handleInputChange}
+                              handleFormSubmit={
+                                this.handleSubmitPortfolioItem
+                              }
+                              item={this.state}
+                              func2={this.setItemState}
+                              func2Args={imageInfo}
+                              imageInfo={imageInfo}
+                            />
+                          {/* </Col> */}
+                          {/* <Col className='text-center' xs={"auto"}> */}
+                            <ItemButton
+                              size="sm"
+                              variant={"danger"}
+                              action={() =>
+                                this.deletePortfolioItem(imageInfo._id)
+                              }
+                            >
+                              <i className="far fa-trash-alt" />
+                            </ItemButton>
+                          {/* </Col> */}
+                        {/* </Row> */}
                       </ProfileCard>
                     )
                   )}

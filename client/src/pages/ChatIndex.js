@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-// import EventChat from "../components/EventChat";
+import EventChat from "../components/EventChat";
 
 class ChatIndex extends Component {
   render() {
