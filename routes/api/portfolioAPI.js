@@ -1,5 +1,27 @@
-const router = require("express").Router();
+const aws = require("aws-sdk");
 const db = require("../../models");
+const multer = require("multer");
+const path = require("path");
+const router = require("express").Router();
+const upload = multer();
+
+require("dotenv").config();
+
+const S3_BUCKET = process.env.S3_BUCKET;
+aws.config.region = "us-east-1";
+
+function generateFileName(originalName) {
+  const alphabet =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+
+  let id = "";
+  for (let i = 0; i < 21; i++) {
+    const index = Math.floor(64 * Math.random());
+    id += alphabet[index];
+  }
+
+  return id + path.extname(originalName);
+}
 
 function getPortfolioById(req, res){
   db.Portfolio
@@ -43,33 +65,56 @@ function deletePortfolio(req, res){
   console.log(req)
 };
 
-function updatePortfolioItem(req,res){
-  console.log(req.body);
-  
-  db.Portfolio
-    .updateOne(
-      { userId: req.params.id, "images._id": req.body._id },
-      req.body.url || req.body.about || req.body.title ? 
-      { $set: { 
-        "images.$.url" : req.body.url,
-        "images.$.about" : req.body.about,
-        "images.$.title" : req.body.title,
+function updatePortfolioItem(req, res) {
+  const updateItem = (req, url) => {
+    db.Portfolio
+      .updateOne(
+        { userId: req.params.id, "images._id": req.body._id },
+        req.body.url || req.body.about || req.body.title ? 
+        { $set: { 
+          "images.$.url" : url,
+          "images.$.about" : req.body.about,
+          "images.$.title" : req.body.title,
+          }
         }
-      }
-      : { $set: { 
-        "images.$.order" : req.body.order,
+        : { $set: { 
+          "images.$.order" : req.body.order,
+          }
         }
+      )
+      .then( data => {
+        console.log(data)
+        res.json(data)
+      })
+      .catch (err => {
+        console.error(err);
+        res.json(err);
+      });
+  };
+
+  if (req.file) {
+    const fileName = generateFileName(req.file.originalname);
+
+    const s3 = new aws.S3();
+    const s3Params = {
+      Bucket: S3_BUCKET,
+      Key: fileName,
+      ContentType: req.file.mimetype,
+      ACL: "public-read",
+      Body: req.file.buffer,
+    };
+
+    s3.putObject(s3Params, (error, data) => {
+      if (error) {
+        throw error;
       }
-    )
-    .then( data => {
-      console.log(data)
-      res.json(data)
-    })
-    .catch (err => {
-      console.error(err);
-      res.json(err);
-    })
-};
+      const url = `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`;
+      updateItem(req, url);
+    });
+  } else {
+    updateItem(req, req.body.url);
+  }
+}
 
 function deletePortolioItem(req, res){
 db.Portfolio
@@ -93,7 +138,10 @@ router.route("/info/:id")
   .delete(deletePortfolio);
 
 router.route("/item/:id/:itemId?")
-  .patch(updatePortfolioItem)
+  .patch(
+    upload.single("file"),
+    updatePortfolioItem
+  )
   .post(createPortfolioItem)
   .delete(deletePortolioItem)
   

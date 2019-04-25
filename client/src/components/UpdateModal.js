@@ -78,11 +78,15 @@ class UpdateModal extends React.Component {
               <Modal.Title>{this.props.task}</Modal.Title>
             </Modal.Header>
             <Modal.Body>{this.swtichCaseContent(this.props.form)}</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={this.handleClose}>
-                Close
-              </Button>
-            </Modal.Footer>
+            {
+              !this.props.noFooter ? (
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={this.handleClose}>
+                    Close
+                  </Button>
+                </Modal.Footer>
+              ) : ""
+            }
           </Modal>
         </>
       );

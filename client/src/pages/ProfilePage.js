@@ -140,23 +140,33 @@ class Profile extends Component {
     .catch(err => console.log(err))
   };
 
-  handleSubmitPortfolioItem = event => {
+  handleSubmitPortfolioItem = (event, imageFile, handleClose) => {
     event.preventDefault();
-    let {imageId, imageUrl, imageTitle, imageAbout, imageOrder} = this.state
+
+    let {imageId, imageTitle, imageAbout, imageOrder, imageUrl} = this.state;
     let portfolioItem = {
       _id: imageId,
-      url: imageUrl,
       title: imageTitle,
       about: imageAbout,
-      order: imageOrder
+      order: imageOrder,
+      url: imageUrl,
+      file: imageFile,
     };
     
     Api
-    .updatePortfolioItem(this.state.id, portfolioItem)
-    .then(data => {
-      this.getProfilePortfolio(this.state.id);
-    })
-    .catch(err => console.log(err))
+      .updatePortfolioItem(this.state.id, portfolioItem, this.updateUploadProgress)
+      .then((data) => {
+        handleClose();
+        this.setState({uploadProgress: 0});
+        this.getProfilePortfolio(this.state.id);
+      })
+      .catch(err => console.log(err));
+  };
+
+  updateUploadProgress = (event) => {
+    this.setState({
+      uploadProgress: Math.round((100 * event.loaded) / event.total),
+    });
   };
 
   createNewPortfolioItem = (event) => {
@@ -376,44 +386,35 @@ class Profile extends Component {
                         image={imageInfo}
                         imgId={imageInfo._id}
                       >
-                        {/* <Row className='justify-content-center p-0 m-0'> */}
-                          {/* <Col className='text-center' xs={"auto"}> */}
-                            <ItemButton
-                              size="sm"
-                              variant={"primary"}
-                              action={() => this.setAsFirst(imageInfo._id)}
-                            >
-                              <i className="fas fa-arrow-up"></i>
-                            </ItemButton>
-                          {/* </Col> */}
-                          {/* <Col className='text-center' xs={"auto"}> */}
-                            <UpdateModal
-                              form={"itemInfo"}
-                              task={"Update Item"}
-                              variant="primary"
-                              icon={<i className="far fa-edit"></i>}
-                              handleInputChange={this.handleInputChange}
-                              handleFormSubmit={
-                                this.handleSubmitPortfolioItem
-                              }
-                              item={this.state}
-                              func2={this.setItemState}
-                              func2Args={imageInfo}
-                              imageInfo={imageInfo}
-                            />
-                          {/* </Col> */}
-                          {/* <Col className='text-center' xs={"auto"}> */}
-                            <ItemButton
-                              size="sm"
-                              variant={"danger"}
-                              action={() =>
-                                this.deletePortfolioItem(imageInfo._id)
-                              }
-                            >
-                              <i className="far fa-trash-alt" />
-                            </ItemButton>
-                          {/* </Col> */}
-                        {/* </Row> */}
+                        <ItemButton
+                          size="sm"
+                          variant={"primary"}
+                          action={() => this.setAsFirst(imageInfo._id)}
+                        >
+                          <i className="fas fa-arrow-up"></i>
+                        </ItemButton>
+                        <UpdateModal
+                          form={"itemInfo"}
+                          task={"Update Item"}
+                          variant="primary"
+                          icon={"Update"}
+                          handleInputChange={this.handleInputChange}
+                          handleFormSubmit={this.handleSubmitPortfolioItem}
+                          item={this.state}
+                          func2={this.setItemState}
+                          func2Args={imageInfo}
+                          imageInfo={imageInfo}
+                          noFooter={true}
+                        />
+                        <ItemButton
+                          size="sm"
+                          variant={"danger"}
+                          action={() =>
+                            this.deletePortfolioItem(imageInfo._id)
+                          }
+                        >
+                          <i className="far fa-trash-alt" />
+                        </ItemButton>
                       </ProfileCard>
                     )
                   )}
