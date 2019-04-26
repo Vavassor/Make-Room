@@ -63,14 +63,23 @@ class NavTabs extends Component {
             Events
           </Link>
         </li>
-        <li>
-          <Link to="/">
+        <li className="nav-item ml-auto">
+          <Link to="/" className="log-out">
             <Button
               variant="warning"
               type="button"
               onClick={() => this.handleLogOut()}
+              className="d-none d-sm-block"
             >
               Log Out
+            </Button>
+            <Button
+              variant="warning"
+              type="button"
+              onClick={() => this.handleLogOut()}
+              className="d-block d-sm-none"
+            >
+              <i className="fas fa-ban"></i>
             </Button>
           </Link>
         </li>

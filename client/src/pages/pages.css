@@ -135,7 +135,11 @@ body::-webkit-scrollbar { /* WebKit */
 
 
 @media only screen and (max-width: 768px) {
-  .masonry-box{
+  .masonry-box {
     display: block;
+  }
+
+  .masonry-box > div {
+    width: 100% !important;
   }
 }

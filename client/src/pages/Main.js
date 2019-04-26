@@ -119,6 +119,7 @@ class Main extends Component {
                   // to="/create-account"
                   // role="button"
                   onClick={this.toggleCreateAccount}
+                  className="mt-md-0 mt-2"
                 >
                   Create Account
                 </Button>

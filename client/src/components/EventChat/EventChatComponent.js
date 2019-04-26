@@ -118,6 +118,7 @@ function defineClass(p) {
   return className
 }
 
+
 export const ChatMessage = function (props) {
 return (
   <div className={defineClass(props)}>
