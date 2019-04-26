@@ -4,10 +4,10 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import {Link} from "react-router-dom";
+import LoadingPlaceholder from "../components/LoadingPlaceholder";
 import ListGroup from "react-bootstrap/ListGroup";
 import MapContainer from "../components/MapContainer";
 import Row from "react-bootstrap/Row";
-import Spinner from "../components/Spinner";
 import TimeRange from "../components/TimeRange";
 import UpdateModal from "../components/UpdateModal";
 import Help from "../utilities/Helpers";
@@ -25,6 +25,7 @@ class Event extends Component {
       failedToLoad: false,
       selfId: null,
       userName: null,
+      loadStatus: "loading",
     };
 
     this.handleAttend = this.handleAttend.bind(this);
@@ -79,13 +80,13 @@ class Event extends Component {
       .getEventById(id)
       .then((response) => {
         this.setState({
-          failedToLoad: false,
+          loadStatus: "success",
           event: response.data,
         });
       })
       .catch((error) => {
         this.setState({
-          failedToLoad: true,
+          loadStatus: "failure",
         });
         console.error(error);
       });
@@ -209,13 +210,18 @@ class Event extends Component {
           </Row>
         </>
       );
-    } else if (this.state.failedToLoad) {
-      return (
-        <p>Failed to retrive event information. <Button onClick={() => this.loadEvent()}>Retry</Button></p>
-      );
     } else {
       return (
-        <Spinner />
+        <Row>
+          <Col>
+            <LoadingPlaceholder
+              emptyMessage="Event not found."
+              failureMessage="Could not load event information."
+              handleRetryClick={this.handleRetryClick}
+              status={this.state.loadStatus}
+            />
+          </Col>
+        </Row>
       );
     }
   }

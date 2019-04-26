@@ -138,6 +138,9 @@ class Main extends Component {
           <Row className="justify-content-center text-center">
             <Col className="jumbo-header" sm={6}>
               <h1>Make Room!</h1>
+              <p>
+                An event planner and portfolio platform for local RVA artists and craftspeople.
+              </p>
             </Col>
           </Row>
         </Jumbotron>

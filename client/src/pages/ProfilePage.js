@@ -17,11 +17,9 @@ import Container from "react-bootstrap/Container";
 //custom components
 import ProfileCard, { ProfileInfoCard } from "../components/ProfileCard";
 import { ItemButton } from "../components/ButtonComponent"
-
-//custom components
 import UpdateModal from "../components/UpdateModal"
 import MasonryLayout from "../components/MasonryLayout"
-
+import LoadingPlaceholder from "../components/LoadingPlaceholder";
 
 
 // utils
@@ -54,6 +52,7 @@ class Profile extends Component {
       events:"",
       columnCount: 3,
       columnGap: 20,
+      loadStatus: "loading",
     };
   }
 
@@ -93,10 +92,16 @@ class Profile extends Component {
         portfolio: data.data[0].images,
         portfolioInfo:data.data[0].portfolioDetails,
         columnCount: parseInt(cols[0]),
-        columnGap: parseInt(cols[1])
+        columnGap: parseInt(cols[1]),
+        loadStatus: "success",
       })
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+      console.error(error);
+      this.setState({
+        loadStatus: "failure",
+      });
+    });
   };
 
   handleInputChange = event => {
@@ -131,6 +136,13 @@ class Profile extends Component {
     .updateUserProfile(id, userInfo)
     .catch(err => console.error(err))
   };
+
+  handleRetryClick() {
+    this.setState(
+      {loadStatus: "loading"},
+      () => this.getProfilePortfolio(this.state.id)
+    );
+  }
 
   handleSubmitPortfolioInfo = event => {
     event.preventDefault();
@@ -420,8 +432,14 @@ class Profile extends Component {
                   )}
                 </MasonryLayout>
               ) : (
-                <h3>I don't have any items in my porfolio, Yet.</h3>
-              )}
+                  <LoadingPlaceholder
+                    emptyMessage="I don't have any items in my porfolio, yet."
+                    failureMessage="Could not load the portfolio."
+                    handleRetryClick={this.handleRetryClick}
+                    status={this.state.loadStatus}
+                  />
+                )
+              }
             </Col>
           </Row>
         </Container>
