@@ -26,10 +26,10 @@ import "./profileForm.css";
     return (
       <>
         <Form>
-          <Form.Group controlId="exampleForm.ControlInput1">
-            <Row className="my-2">
-              <Col xs={6}>
-              <Form.Label>First Name</Form.Label>
+          <Form.Row className="my-2">
+            <Col xs={6}>
+              <Form.Group controlId="first-name">
+                <Form.Label>First Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="First name"
@@ -37,9 +37,12 @@ import "./profileForm.css";
                   onChange={props.handleInputChange}
                   name="firstname"
                 />
-              </Col>
-              <Col xs={6}>
-              <Form.Label>Last Name</Form.Label>
+              </Form.Group>
+            </Col>
+
+            <Col xs={6}>
+              <Form.Group controlId="last-name">
+                <Form.Label>Last Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Last name"
@@ -47,11 +50,14 @@ import "./profileForm.css";
                   onChange={props.handleInputChange}
                   name="lastname"
                 />
-              </Col>
-              </Row>
-              <Row className="my-2">
-              <Col xs={6}>
-              <Form.Label>Youre Email</Form.Label>
+              </Form.Group>
+            </Col>
+          </Form.Row>
+
+          <Form.Row className="my-2">
+            <Col xs={12} md={6}>
+              <Form.Group controlId="email">
+                <Form.Label>Your Email</Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="Email"
@@ -59,9 +65,12 @@ import "./profileForm.css";
                   onChange={props.handleInputChange}
                   name="email"
                 />
-              </Col>
-              <Col xs={6}>
-              <Form.Label>Your Web Site</Form.Label>
+              </Form.Group>
+            </Col>
+
+            <Col xs={12} md={6}>
+              <Form.Group controlId="website">
+                <Form.Label>Your Web Site</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="WebAddress"
@@ -69,22 +78,28 @@ import "./profileForm.css";
                   onChange={props.handleInputChange}
                   name="website"
                 />
-              </Col>
-            </Row>
-          </Form.Group>
-          <Form.Group controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Blurb</Form.Label>
-            <Form.Control
-              type="text"
-              as="textarea"
-              rows="3"
-              placeholder="Pithy Statement 50 Characters or less"
-              maxLength="50"
-              value={props.userInfo.blurb}
-              onChange={props.handleInputChange}
-              name="blurb"
-            />
-          </Form.Group>
+              </Form.Group>
+            </Col>
+          </Form.Row>
+
+          <Form.Row>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Blurb</Form.Label>
+                <Form.Control
+                  type="text"
+                  as="textarea"
+                  rows="3"
+                  placeholder="Pithy Statement 50 Characters or less"
+                  maxLength="50"
+                  value={props.userInfo.blurb}
+                  onChange={props.handleInputChange}
+                  name="blurb"
+                />
+              </Form.Group>
+            </Col>
+          </Form.Row>
+          
           <Button
             variant="primary"
             type="submit"
