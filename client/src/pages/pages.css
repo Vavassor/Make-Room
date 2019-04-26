@@ -53,16 +53,17 @@ body::-webkit-scrollbar { /* WebKit */
   border-radius: 0 !important;
 }
 
-.jumbo-header {
+.jumbo-header h1 {
   position: relative;
 }
 
 .jumbo-header button {
   position: absolute;
-  /* right: 0; */
+  top: 0;
+  right: -3rem;
   transform: scale(0.75);
   vertical-align: 1em;
-  margin-left: 1em;
+  /* margin-left: 1em; */
 }
 .profile-jumbo h1 {
   display: inline-block;
@@ -81,14 +82,15 @@ body::-webkit-scrollbar { /* WebKit */
   overflow: hidden;
 }
 
-.about-me-card-title {
+.about-me-card-title span {
   position: relative;
 }
 
 .about-me-card-title button {
   position: absolute;
-  /* right: -2.6em; */
-  /* top: 0; */
+  top: -0.5em;
+  right: -3rem;
+  transform: scale(0.75);
 }
 
 .about-me-card-text {

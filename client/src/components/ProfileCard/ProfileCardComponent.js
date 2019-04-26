@@ -28,7 +28,7 @@ export function ProfileInfoCard(props){
   return (
       <Card>
         <Card.Body>
-          <Card.Title className="about-me-card-title">{props.portfolioTitle}{props.updateButton && props.updateButton}</Card.Title>
+          <Card.Title className="about-me-card-title"><span>{props.portfolioTitle}{props.updateButton && props.updateButton}</span></Card.Title>
           <Card.Text className="about-me-card-text">{props.children}</Card.Text>
         </Card.Body>
       </Card>
