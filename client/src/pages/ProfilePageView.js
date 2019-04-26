@@ -12,6 +12,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 //custom components
 import ProfileCard, { ProfileInfoCard } from "../components/ProfileCard";
 import MasonryLayout from "../components/MasonryLayout"
+import LoadingPlaceholder from "../components/LoadingPlaceholder";
 
 // utils
 import Api from "../utilities/Api";
@@ -40,19 +41,17 @@ class ProfileView extends Component {
       events:"",
       columnCount: "",
       columnGap: "",
-
-
+      loadStatus: "loading",
     };
   }
 
-
   componentDidMount() {
-    this.getUserAndPorfolio(this.props.match.params.id)
-    this.getUserEvents(this.props.match.params.id)
+    this.getUserAndPorfolio(this.props.match.params.id);
+    this.getUserEvents(this.props.match.params.id);
   };
 
   getUserAndPorfolio = (id) => {
-    this.getProfilePortfolio(id)
+    this.getProfilePortfolio(id);
     this.getUserInfo(id);
   };
 
@@ -60,9 +59,9 @@ class ProfileView extends Component {
     Api
       .getUserInfoById(id)
       .then(response => {
-        this.setState({...response.data[0]})
+        this.setState({...response.data[0]});
       })
-      .catch(err => console.error("get user error: ", err))
+      .catch(err => console.error("get user error: ", err));
   };
 
   getProfilePortfolio = (id) => {
@@ -74,10 +73,16 @@ class ProfileView extends Component {
         portfolio: data.data[0].images,
         portfolioInfo:data.data[0].portfolioDetails,
         columnCount: parseInt(cols[0]),
-        columnGap: parseInt(cols[1])
+        columnGap: parseInt(cols[1]),
+        loadStatus: "success",
       })
     })
-    .catch(error => console.error(error));
+    .catch((error) => {
+      this.setState({
+        loadStatus: "failure",
+      });
+      console.error(error);
+    });
   };
 
   getUserEvents = (userId) => {
@@ -179,10 +184,15 @@ class ProfileView extends Component {
                 {
                   Help.sortByDate([...this.state.portfolio]).map(imageInfo => (
                   <ProfileCard key={imageInfo._id} image={imageInfo} />) )
-                   } 
+                }
                 </MasonryLayout>
               ) : (
-                <h3>They don't have any items in their porfolio</h3>
+                <LoadingPlaceholder
+                  emptyMessage="There are no items in their porfolio."
+                  failureMessage="Could not load the portfolio."
+                  handleRetryClick={this.handleRetryClick}
+                  status={this.state.loadStatus}
+                />
               )}
             </Col>
           </Row>
@@ -190,10 +200,10 @@ class ProfileView extends Component {
       </>
     );
   }
+
   renderEventList =(event) => {
     return <Link className='dropdown-item' to={"/event/" + event.id} key={event.id}><p className="user-event-li">{event.name}</p></Link>
   }
-
 };
 
 export default ProfileView;
