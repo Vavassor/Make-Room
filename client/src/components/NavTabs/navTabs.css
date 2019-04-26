@@ -2,11 +2,13 @@
   position: relative;
 }
 
-.nav-tabs button {
-  margin-right: 0.5em;
-  margin-top: 0.1em;
-  position: absolute;
-  right: 0;
+.nav-link button {
+  margin-right: .5em;
+  margin-top: .1em;
+}
+
+.log-out:hover {
+  text-decoration: none !important;
 }
 
 .nav-link.active {
