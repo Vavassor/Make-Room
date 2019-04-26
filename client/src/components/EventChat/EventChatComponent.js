@@ -90,7 +90,7 @@ class EventChat extends Component {
           this.chatList = div;
         }}
         >
-            {console.log(this.state.messages)}
+            {/* {console.log(this.state.messages)} */}
             {this.state.messages.map(message => (
               <ChatMessage key={message.id} {...this.props} cMessage={message}>{message.text}</ChatMessage>
             ))}
@@ -106,9 +106,16 @@ class EventChat extends Component {
 
 export default EventChat;
 
+
+
 function defineClass(p) {
-  return
-  console.log(p)
+  let className;
+  // console.log(p)
+  // console.log(p.event.userId, p.cMessage.userId)
+  if (p.userId === p.cMessage.userId){
+    className = "myChat"
+  }else{className="otherChat"}
+  return className
 }
 
 export const ChatMessage = function (props) {

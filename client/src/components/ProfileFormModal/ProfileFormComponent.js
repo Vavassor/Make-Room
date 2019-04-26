@@ -1,11 +1,8 @@
-// import React, { Component } from "react";
 import React from "react";
-// import Jumbotron from "react-bootstrap/Jumbotron";
 import Form from "react-bootstrap/Form";
-// import FormControl from "react-bootstrap/FormControl";
 
 // bootstrap components
-import Row from "react-bootstrap/Row";
+// import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
