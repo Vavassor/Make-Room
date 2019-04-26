@@ -66,23 +66,23 @@ class ProfileView extends Component {
 
   getProfilePortfolio = (id) => {
     Api
-    .getProfilePortfolioById(id)
-    .then(data => {
-      let cols = data.data[0].porfolioaDisplayType.split("::")
-      this.setState({
-        portfolio: data.data[0].images,
-        portfolioInfo:data.data[0].portfolioDetails,
-        columnCount: parseInt(cols[0]),
-        columnGap: parseInt(cols[1]),
-        loadStatus: "success",
+      .getProfilePortfolioById(id)
+      .then(data => {
+        let cols = data.data[0].porfolioaDisplayType.split("::")
+        this.setState({
+          portfolio: data.data[0].images,
+          portfolioInfo:data.data[0].portfolioDetails,
+          columnCount: parseInt(cols[0]),
+          columnGap: parseInt(cols[1]),
+          loadStatus: "success",
+        });
       })
-    })
-    .catch((error) => {
-      this.setState({
-        loadStatus: "failure",
+      .catch((error) => {
+        this.setState({
+          loadStatus: "failure",
+        });
+        console.error(error);
       });
-      console.error(error);
-    });
   };
 
   getUserEvents = (userId) => {
