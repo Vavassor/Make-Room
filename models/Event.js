@@ -31,6 +31,10 @@ var EventSchema = new Schema({
     type: String,
     required: true,
   },
+  blurb: {
+    type: String,
+    required: true,
+  },
   endTime: {
     type: Date,
     required: true,

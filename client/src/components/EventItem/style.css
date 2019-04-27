@@ -5,3 +5,9 @@
 .event-item:last-child {
   margin-bottom: 0;
 }
+
+.event-image {
+  object-fit: cover;
+  height: 150px;
+  width: 200px;
+}

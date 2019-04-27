@@ -76,7 +76,9 @@ class EventList extends Component {
             id={event._id}
             address={event.place.address}
             name={event.name}
+            blurb={event.blurb}
             startTime={event.startTime}
+            image={event.eventImage}
             endTime={event.endTime}
             placeName={event.place.name}
           />
