@@ -3,8 +3,17 @@
   height: 100%;
   max-height: 100vh;
   transition: all 1s;
+  transition-delay: 0.75s;
+
 }
-.map-col > div:hover {
-  transform: translateX(-40%);
-  width: 180%;
+
+
+@media only screen and (min-width: 992px) {
+  .map-col > div:hover {
+    transform: translateX(-39%);
+    transition: all 0.5s;
+    transition-delay: 0;
+    width: 180%;
+  }
+
 }

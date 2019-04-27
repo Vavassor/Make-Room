@@ -105,27 +105,27 @@ class EventChat extends Component {
             </ChatMessage>
           ))}
         </div>
-        {/* <form onSubmit={this.onAddMessage}>
-          <input type="text" ref={node => (this.input = node)} />
-          <input type="submit" /> */}
-
-        <form onSubmit={this.onAddMessage}>
-          <InputGroup className="mb-3">
-            <FormControl
-              placeholder="Chat Message"
-              aria-label="Chat Message"
-              aria-describedby="basic-addon2"
-              ref={node => (this.input = node)}
-              onSubmit={this.onAddMessage}
-            />
-            <InputGroup.Append>
-              <Button type="submit" variant="outline-secondary">
-               <span className='d-none d-md-block'>Send!</span><span className='d-block d-md-none'><i className="fas fa-paper-plane"></i></span>
-              </Button>
-            </InputGroup.Append>
-          </InputGroup>
-        </form>
-        {/* </form> */}
+        <div id='chatInput'>
+          <form onSubmit={this.onAddMessage}>
+            <InputGroup className="mb-3">
+              <FormControl
+                placeholder="Chat Message"
+                aria-label="Chat Message"
+                aria-describedby="basic-addon2"
+                ref={node => (this.input = node)}
+                onSubmit={this.onAddMessage}
+              />
+              <InputGroup.Append>
+                <Button type="submit" variant="outline-secondary">
+                  <span className="d-none d-md-block">Send!</span>
+                  <span className="d-block d-md-none">
+                    <i className="fas fa-paper-plane" />
+                  </span>
+                </Button>
+              </InputGroup.Append>
+            </InputGroup>
+          </form>
+        </div>
       </div>
     );
   }
