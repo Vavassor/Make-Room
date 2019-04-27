@@ -7,7 +7,7 @@ html {
   font-family: 'Raleway', sans-serif;
 }
 
-h1, h2, h4, h4, h5, h6{
+h1, h2, h3, h4, h5, h6{
   font-family: 'Righteous', cursive;
 }
 
@@ -111,6 +111,7 @@ body::-webkit-scrollbar { /* WebKit */
 }
 
 .row {
+  position: relative;
   width: 100% !important;
 }
 
@@ -142,4 +143,9 @@ body::-webkit-scrollbar { /* WebKit */
 
 .event-button{
   transform: scale(0.75);
+}
+
+.event-sidebar {
+  position: sticky !important;
+  top: 0 !important;
 }

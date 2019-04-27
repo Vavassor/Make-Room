@@ -87,6 +87,7 @@ class Event extends Component {
     Api
       .getEventById(id)
       .then((response) => {
+        console.log(response);
         this.setState({
           loadStatus: "success",
           event: response.data,
@@ -108,11 +109,23 @@ class Event extends Component {
     return event ? (
       <div>
         <Jumbotron className="profile-jumbo fluid mx-0">
-          Event Page
+          <Row className="jusitfy-content-center text-center">
+            <Col className="jumbo-header">
+              <h1>{this.state.event.name || ""}</h1>
+              <h4>{this.state.event.place.name || ""}</h4>
+              <p>
+                <TimeRange
+                  startTime={event.startTime}
+                  endTime={event.endTime}
+                />
+              </p>
+            </Col>
+          </Row>
         </Jumbotron>
         <div className="container-fluid">
           <Row className="justify-content-center mx-0">
             <Col
+              className="event-sidebar"
               xs={{ span: 12, order: 2 }}
               md={{ span: 6, order: 2 }}
               lg={{ span: 3, order: 1 }}
@@ -130,14 +143,16 @@ class Event extends Component {
               lg={{ span: 6 }}
             >
               <Card>
-                <Card.Body>{this.renderEventContent(event, selfId)}</Card.Body>
+                <Card.Body>
+                  {this.renderEventContent(event, selfId)}
+                </Card.Body>
               </Card>
             </Col>
             <Col
+              className="event-sidebar map-col"
               xs={{ span: 12, order: 3 }}
               md={{ span: 6, order: 3 }}
               lg={{ span: 3 }}
-              className="map-col"
             >
               {this.renderMap(event)}
             </Col>
@@ -194,11 +209,11 @@ class Event extends Component {
  
 
   renderEventContent(event, selfId) {
+    console.log(event);
   
       return (
         <>
-            <a href="https://assets.visitphilly.com/wp-content/uploads/2018/02/crtsy-art-star-art-star-craft-bazaar-mothers-day-2200VP.jpg" rel="noopener noreferrer" target="_blank"><Card.Img variant="top" src="https://assets.visitphilly.com/wp-content/uploads/2018/02/crtsy-art-star-art-star-craft-bazaar-mothers-day-2200VP.jpg" /></a>
-      
+            <a href={event.eventImage} rel="noopener noreferrer" target="_blank"><Card.Img variant="top" src={event.eventImage} /></a>
             <h3 className="card-title">{event.name}
             {event && selfId && event.creator === selfId && (
               <UpdateModal

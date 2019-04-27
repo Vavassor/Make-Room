@@ -1,6 +1,9 @@
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
 import React, {Component} from "react";
 
+import "./mapCss.css"
+
+
 class MapContainer extends Component {
   constructor(props) {
     super(props);
@@ -46,7 +49,7 @@ class MapContainer extends Component {
         zoom={14}
         initialCenter={markerPosition}
         containerStyle={{
-          height: "250px",
+          maxHeight: "100%",
           position: "relative",
           width: "100%",
         }}
