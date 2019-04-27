@@ -11,3 +11,19 @@
   height: 150px;
   width: 200px;
 }
+
+.attendee-count {
+  border-radius: 50%;
+  border: .1em solid #bd0202;
+  box-sizing: content-box;
+  color: #bd0202;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bold;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  margin-left: .5em;
+  text-align: center;
+  vertical-align: top;
+  width: 1.5rem;
+}

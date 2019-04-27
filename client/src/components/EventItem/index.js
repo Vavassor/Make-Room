@@ -8,13 +8,18 @@ class EventItem extends Component {
   render() {
     return (
       <Media className="event-item">
-        <img
-          className="mr-3 event-image"
-          src={this.props.image}
-          alt=""
-        />
+        <Link to={"/event/" + this.props.id}>
+          <img
+            className="mr-3 event-image"
+            src={this.props.image}
+            alt=""
+          />
+        </Link>
         <Media.Body>
-          <Link to={"/event/" + this.props.id}><h3>{this.props.name}</h3></Link>
+          <h3>
+            <Link to={"/event/" + this.props.id}>{this.props.name}</Link>
+            <span className="attendee-count" aria-label={this.props.attendeeCount + "Attending"}>{this.props.attendeeCount}</span>
+          </h3>
           <p><TimeRange startTime={this.props.startTime} endTime={this.props.endTime} /></p>
           <p>{this.props.placeName}</p>
           <p>{this.props.blurb}</p>
