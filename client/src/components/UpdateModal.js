@@ -66,7 +66,7 @@ class UpdateModal extends React.Component {
       return(
         <>
           <Button 
-          className="mx-2" 
+          className={`mx-2 ${this.props.className}`}
           variant={this.props.variant? this.props.variant: "primary"} 
           size="sm" 
           onClick={() => this.multiFunction (this.handleShow, this.props.func2, this.props.func2Args)}

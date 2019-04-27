@@ -22,7 +22,7 @@ export function ItemButton(props){
 
   return(
     <>
-       <Button className="mx-1" variant={props.variant} onClick={props.action} size={props.size}>{props.children}</Button>
+       <Button className={`mx-1 ${props.className||''}`} variant={props.variant} onClick={props.action} size={props.size}>{props.children}</Button>
     </>
   )
 };

@@ -119,8 +119,8 @@ class EventChat extends Component {
               onSubmit={this.onAddMessage}
             />
             <InputGroup.Append>
-              <Button type="submit" variant="outline-secondary" style={{borderTopLeftRadius: 0 , borderBottomLeftRadius: 0   }}>
-                Button
+              <Button type="submit" variant="outline-secondary">
+               <span className='d-none d-md-block'>Send!</span><span className='d-block d-md-none'><i className="fas fa-paper-plane"></i></span>
               </Button>
             </InputGroup.Append>
           </InputGroup>
