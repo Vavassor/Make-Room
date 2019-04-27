@@ -55,12 +55,17 @@ input .form-control {
   transition-delay: 0.75s;
 }
 
-#chatBox:hover {
+/* #chatBox:hover {
+  position: absolute;
+  bottom: 0;
   width: 180%;
+  height: 150%;
+  background-color: rgb(186, 186, 186);
   transition: all 0.5s;
   transition-delay: 0;
+  border: red .2rem solid;
 
-}
+} */
 
 #chatBox p {
   margin: 0;
@@ -102,4 +107,27 @@ color: #dff3ff;
   display: inline-block;
 
 }
+
+@media only screen and (min-width: 992px) {
+
+  #chatBox {
+    position: absolute;
+    bottom: 0;
+  }
+
+  #chatBox:hover {
+    position: absolute;
+    bottom: 0;
+    width: 180%;
+    height: 150%;
+    background-color: rgb(186, 186, 186);
+    transition: all 0.5s;
+    transition-delay: 0;
+    border: red .2rem solid;
+  }
+
+
+
+}
+
 

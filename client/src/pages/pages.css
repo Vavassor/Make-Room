@@ -137,9 +137,16 @@ body::-webkit-scrollbar { /* WebKit */
     height: 100vw;
     transition: none;
   }
+  /* #chatBox {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
 
   #chatBox:hover {
+    position: relative;
     width: 100%;
+    height: 100%;
     transition: none;
   
   }
@@ -147,7 +154,7 @@ body::-webkit-scrollbar { /* WebKit */
   .map-col > div:hover {
     transform: none;
     width: 100%;
-  }
+  } */
 
   .masonry-box {
     display: block;

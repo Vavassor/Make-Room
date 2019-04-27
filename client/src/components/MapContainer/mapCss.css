@@ -6,9 +6,14 @@
   transition-delay: 0.75s;
 
 }
-.map-col > div:hover {
-  transform: translateX(-39%);
-  transition: all 0.5s;
-  transition-delay: 0;
-  width: 180%;
+
+
+@media only screen and (min-width: 992px) {
+  .map-col > div:hover {
+    transform: translateX(-39%);
+    transition: all 0.5s;
+    transition-delay: 0;
+    width: 180%;
+  }
+
 }
