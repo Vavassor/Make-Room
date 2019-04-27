@@ -32,6 +32,12 @@ class Main extends Component {
     }
   }
 
+  componentDidUpdate() {
+    if (this.props.isLoggedIn) {
+      this.props.history.push("/profile");
+    }
+  }
+
   handleInputChange(event) {
     const {name, value} = event.target;
     this.setState({
@@ -72,7 +78,7 @@ class Main extends Component {
   }
 
   renderCreateAccount(){
-    return <CreateAccount toggle={this.toggleCreateAccount}/>
+    return <CreateAccount toggle={this.toggleCreateAccount} handleLogIn={this.props.handleLogIn} />
   }
 
   renderLogin(){
