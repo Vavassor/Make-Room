@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 const models = require("../models");
 
+const eventImageList = require("../helpers/defaultEventImageList");
+
+function randomEventImage() {
+  let i = eventImageList.length;
+  let rand = Math.floor(Math.random() * i);
+  return eventImageList[rand];
+}
+
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/project3");
 
 models.User
@@ -9,6 +17,7 @@ models.User
 const eventSeeds = [
   {
     name: "April Meetup",
+    eventImage: randomEventImage(),
     startTime: new Date("2019-04-27T17:30:00-05:00"),
     endTime: new Date("2019-04-27T18:30:00-05:00"),
     place: {
@@ -20,10 +29,12 @@ const eventSeeds = [
       },
     },
     description: "no description",
+    blurb: "no blurb",
     creator: mongoose.Types.ObjectId("5cb36af71767efad3f77a128"),
   },
   {
     name: "OTR Spring Fling",
+    eventImage: randomEventImage(),
     startTime: new Date("2019-04-28T09:00:00-05:00"),
     endTime: new Date("2019-04-29T12:00:00-05:00"),
     place: {
@@ -35,6 +46,7 @@ const eventSeeds = [
       },
     },
     description: "no description",
+    blurb: "no blurb",
     creator: mongoose.Types.ObjectId("5cb36af71767efad3f77a128"),
   },
 ];

@@ -6,6 +6,7 @@ import React, {Component} from "react";
 
 const defaultErrors = {
   address: "Please enter a street address.",
+  blurb: "Please add a blurb.",
   description: "Please add a description.",
   endDate: "Please choose the end date.",
   endTime: "Please choose the end time.",
@@ -45,6 +46,7 @@ class EventForm extends Component {
 
     this.state = {
       address: event ? event.place.address : "",
+      blurb: event ? event.blurb : "",
       description: event ? event.description : "",
       endDate: endDate,
       endTime: endTime,
@@ -88,6 +90,7 @@ class EventForm extends Component {
       const startTime = moment(this.state.startDate + " " + this.state.startTime);
 
       const event = {
+        blurb: this.state.blurb.trim(),
         description: this.state.description.trim(),
         endTime: endTime.toISOString(),
         name: this.state.name.trim(),
@@ -136,6 +139,20 @@ class EventForm extends Component {
           />
           <Form.Control.Feedback type="invalid">
             {this.state.errors.description}
+          </Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group controlId="blurb">
+          <Form.Label>Blurb</Form.Label>
+          <Form.Control
+            type="text"
+            name="blurb"
+            value={this.state.blurb}
+            onChange={this.handleInputChange}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            {this.state.errors.blurb}
           </Form.Control.Feedback>
         </Form.Group>
 
