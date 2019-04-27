@@ -3,6 +3,10 @@ import {Link} from "react-router-dom";
 
 import { database } from '../../utilities/firebase';
 
+import Button from "react-bootstrap/Button";
+import InputGroup from "react-bootstrap/InputGroup"
+import FormControl from "react-bootstrap/FormControl"
+
 import "./chat.css"
 
 
@@ -83,38 +87,75 @@ class EventChat extends Component {
 
   render() {
     return (
-      <>
-        <div 
-        className="chat-list"
-        ref={(div) => {
-          this.chatList = div;
-        }}
+      <div id="chatBox">
+        <div
+          className="chatList"
+          ref={div => {
+            this.chatList = div;
+          }}
         >
-            {console.log(this.state.messages)}
-            {this.state.messages.map(message => (
-              <ChatMessage key={message.id} {...this.props} cMessage={message}>{message.text}</ChatMessage>
-            ))}
+          {/* {console.log(this.state.messages)} */}
+          {this.state.messages.map(message => (
+            <ChatMessage
+              key={message.id}
+              {...this.props}
+              cMessage={message}
+            >
+              {message.text}
+            </ChatMessage>
+          ))}
         </div>
-          <form onSubmit={this.onAddMessage}>
-            <input type="text" ref={node => (this.input = node)} />
-            <input type="submit" />
-          </form>
-      </>
+        {/* <form onSubmit={this.onAddMessage}>
+          <input type="text" ref={node => (this.input = node)} />
+          <input type="submit" /> */}
+
+        <form onSubmit={this.onAddMessage}>
+          <InputGroup className="mb-3">
+            <FormControl
+              placeholder="Chat Message"
+              aria-label="Chat Message"
+              aria-describedby="basic-addon2"
+              ref={node => (this.input = node)}
+              onSubmit={this.onAddMessage}
+            />
+            <InputGroup.Append>
+              <Button type="submit" variant="outline-secondary" style={{borderTopLeftRadius: 0 , borderBottomLeftRadius: 0   }}>
+                Button
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
+        </form>
+        {/* </form> */}
+      </div>
     );
   }
 }
 
 export default EventChat;
 
+
+
 function defineClass(p) {
-  return
-  console.log(p)
+  let className;
+  // console.log(p)
+  // console.log(p.event.userId, p.cMessage.userId)
+  if (p.userId === p.cMessage.userId){
+    className = "myChat"
+  }else{className="otherChat"}
+  return className
 }
+
 
 export const ChatMessage = function (props) {
 return (
   <div className={defineClass(props)}>
-    <p key={props.cMessage.id}>{props.children}</p>
+    <Link to={"/profile/" + props.cMessage.userId}>
+      <p key={props.cMessage._id}>
+        {props.userId !== props.cMessage.userId &&
+          props.cMessage.userName + ": "}{" "}
+        {props.children}
+      </p>
+    </Link>
   </div>
-)
+);
 }

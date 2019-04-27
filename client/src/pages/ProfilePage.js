@@ -263,14 +263,16 @@ class Profile extends Component {
                 {this.state.firstname
                   ? this.state.firstname + " " + this.state.lastname
                   : "Anon"}
-              </h1>
+             
               <UpdateModal
                 form={"profile"}
                 task={"Update Profile"}
+                variant="outline-primary"
                 handleInputChange={this.handleInputChange}
                 handleFormSubmit={this.handleFormSubmitProfile}
                 userInfo={this.state}
               />
+               </h1>
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-1">
@@ -334,6 +336,7 @@ class Profile extends Component {
                   <UpdateModal
                     task="Update Portfolio Info"
                     form={"portfolioInfo"}
+                    variant="outline-primary"
                     handleInputChange={this.handleInputChange}
                     handleFormSubmit={this.handleSubmitPortfolioInfo}
                     portfolioInfo={this.state.portfolioInfo}
@@ -400,7 +403,7 @@ class Profile extends Component {
                       >
                         <ItemButton
                           size="sm"
-                          variant={"primary"}
+                          variant={"outline-primary"}
                           action={() => this.setAsFirst(imageInfo._id)}
                         >
                           <i className="fas fa-arrow-up"></i>
@@ -408,7 +411,7 @@ class Profile extends Component {
                         <UpdateModal
                           form={"itemInfo"}
                           task={"Update Item"}
-                          variant="primary"
+                          variant="outline-primary"
                           icon={"Update"}
                           handleInputChange={this.handleInputChange}
                           handleFormSubmit={this.handleSubmitPortfolioItem}
