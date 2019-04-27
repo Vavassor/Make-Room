@@ -3,9 +3,8 @@ import "./style.css";
 
 function Footer() {
   return (
-    // <footer className="navbar navbar-expand-lg navbar-dark bg-primary">
-    <footer className="footer alert alert-primary">
-    
+    <footer className="footer">
+      <a className="footer-link" href="https://github.com/Vavassor/Make-Room"><i class="fab fa-github" aria-hidden="true"></i> Github</a>
     </footer>
   );
 }
