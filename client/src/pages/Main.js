@@ -26,6 +26,12 @@ class Main extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    if (this.props.isLoggedIn) {
+      this.props.history.push("/profile");
+    }
+  }
+
   componentDidUpdate() {
     if (this.props.isLoggedIn) {
       this.props.history.push("/profile");
