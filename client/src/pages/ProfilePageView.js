@@ -116,13 +116,13 @@ class ProfileView extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-1">
-            <Col sm={6}>
+            <Col sm="auto">
               <h5>{this.state.blurb}</h5>
             </Col>
           </Row>
           <Row className="justify-content-center text-center mt-4">
             {this.state.email ? (
-              <Col className="web-link" sm={2}>
+              <Col className="web-link" sm="auto">
                 <a
                   href={this.state.email}
                   target="_blank"
