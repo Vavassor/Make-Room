@@ -133,14 +133,16 @@ class Event extends Component {
               <Col xs={12} className="attending-col text-center">
                 {this.renderAttendees(event)}
               </Col>
-              <Col xs={12} className="chat-col">
+              <Col xs={12} className="chat-col px-0">
                 {this.renderChatAndAttendeeArea(event)}
               </Col>
             </Col>
             <Col
+              className='event-col'
               xs={{ span: 12, order: 1 }}
               md={{ span: 12, order: 1 }}
               lg={{ span: 6 }}
+              
             >
               <Card>
                 <Card.Body>

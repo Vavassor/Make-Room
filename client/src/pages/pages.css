@@ -118,7 +118,7 @@ body::-webkit-scrollbar { /* WebKit */
 .attendee-list {
   border-bottom: .1em solid #dfdfdf;
   border-top: .1em solid #dfdfdf;
-  max-height: 250px;
+  max-height: 50%;
   overflow-y: auto;
 }
 
@@ -126,12 +126,26 @@ body::-webkit-scrollbar { /* WebKit */
   padding-bottom: 2em;
 }
 
-.chat-col{
-  border: black solid 2px;
-}
 
 
 @media only screen and (max-width: 768px) {
+  .map-col > div {
+    width: 100%;
+    height: 100vw;
+    transition: none;
+  }
+
+  #chatBox:hover {
+    width: 100%;
+    transition: none;
+  
+  }
+
+  .map-col > div:hover {
+    transform: none;
+    width: 100%;
+  }
+
   .masonry-box {
     display: block;
   }
@@ -143,6 +157,10 @@ body::-webkit-scrollbar { /* WebKit */
 
 .event-button{
   transform: scale(0.75);
+}
+
+.event-col{
+  z-index: -1;
 }
 
 .event-sidebar {
