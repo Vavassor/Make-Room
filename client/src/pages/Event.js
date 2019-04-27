@@ -1,19 +1,26 @@
 import React, {Component} from "react";
-import Api from "../utilities/Api";
+import {Link} from "react-router-dom";
+
+
+// bootstrap components
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Col from "react-bootstrap/Col";
-import {Link} from "react-router-dom";
-import LoadingPlaceholder from "../components/LoadingPlaceholder";
 import ListGroup from "react-bootstrap/ListGroup";
-import MapContainer from "../components/MapContainer";
 import Row from "react-bootstrap/Row";
-import TimeRange from "../components/TimeRange";
-import UpdateModal from "../components/UpdateModal";
+
+// utils
+import Api from "../utilities/Api";
 import Help from "../utilities/Helpers";
 
+// custom components
+import TimeRange from "../components/TimeRange";
+import MapContainer from "../components/MapContainer";
+import LoadingPlaceholder from "../components/LoadingPlaceholder";
 import EventChat from "../components/EventChat";
+import UpdateModal from "../components/UpdateModal";
+
 
 
 
@@ -80,6 +87,7 @@ class Event extends Component {
     Api
       .getEventById(id)
       .then((response) => {
+        console.log(response);
         this.setState({
           loadStatus: "success",
           event: response.data,
@@ -95,32 +103,73 @@ class Event extends Component {
 
   render() {
 
-    return (
+    const event = this.state.event;
+    const selfId = this.state.selfId;
+
+    return event ? (
       <div>
         <Jumbotron className="profile-jumbo fluid mx-0">
-          Event Page
+          <Row className="jusitfy-content-center text-center">
+            <Col className="jumbo-header">
+              <h1>{this.state.event.name || ""}</h1>
+              <h4>{this.state.event.place.name || ""}</h4>
+              <p>
+                <TimeRange
+                  startTime={event.startTime}
+                  endTime={event.endTime}
+                />
+              </p>
+            </Col>
+          </Row>
         </Jumbotron>
         <div className="container-fluid">
-          <Row className='justify-content-center mx-0'>
-            <Col xs={{span: 12, order: 2}} md={{span: 6, order: 2}} lg={{span: 3, order: 1}}>
-              <Col  xs={12} className="attending-col text-center" >
-                {this.renderAttendees()}
+          <Row className="justify-content-center mx-0">
+            <Col
+              className="event-sidebar"
+              xs={{ span: 12, order: 2 }}
+              md={{ span: 6, order: 2 }}
+              lg={{ span: 3, order: 1 }}
+            >
+              <Col xs={12} className="attending-col text-center">
+                {this.renderAttendees(event)}
               </Col>
               <Col xs={12} className="chat-col">
-                {this.renderChatAndAttendeeArea()}
+                {this.renderChatAndAttendeeArea(event)}
               </Col>
             </Col>
-            <Col xs={{span: 12, order: 1}} md={{span: 12, order: 1}} lg={{span: 6}}>
+            <Col
+              xs={{ span: 12, order: 1 }}
+              md={{ span: 12, order: 1 }}
+              lg={{ span: 6 }}
+            >
               <Card>
-                <Card.Body>{this.renderEventContent()}</Card.Body>
+                <Card.Body>
+                  {this.renderEventContent(event, selfId)}
+                </Card.Body>
               </Card>
             </Col>
-            <Col xs={{span: 12, order: 3}} md={{span: 6, order: 3}} lg={{span: 3}}className="map-col">
-              {this.renderMap()}
-            </ Col>
-          </ Row>
+            <Col
+              className="event-sidebar map-col"
+              xs={{ span: 12, order: 3 }}
+              md={{ span: 6, order: 3 }}
+              lg={{ span: 3 }}
+            >
+              {this.renderMap(event)}
+            </Col>
+          </Row>
         </div>
       </div>
+    ) : (
+      <Row>
+        <Col>
+          <LoadingPlaceholder
+            emptyMessage="Event not found."
+            failureMessage="Could not load event information."
+            handleRetryClick={this.handleRetryClick}
+            status={this.state.loadStatus}
+          />
+        </Col>
+      </Row>
     );
   }
 
@@ -137,6 +186,7 @@ class Event extends Component {
     if (attending) {
       return (
         <Button
+          className='event-button'
           variant="danger"
           onClick={this.handleStopAttending}
         >
@@ -146,6 +196,7 @@ class Event extends Component {
     } else {
       return (
         <Button
+          className='event-button'
           variant="success"
           onClick={this.handleAttend}
         >
@@ -157,18 +208,16 @@ class Event extends Component {
 
  
 
-  renderEventContent() {
-    const event = this.state.event;
-    const selfId = this.state.selfId;
-
-    if (event) {
+  renderEventContent(event, selfId) {
+    console.log(event);
+  
       return (
         <>
-                <a href="https://assets.visitphilly.com/wp-content/uploads/2018/02/crtsy-art-star-art-star-craft-bazaar-mothers-day-2200VP.jpg" rel="noopener noreferrer" target="_blank"><Card.Img variant="top" src="https://assets.visitphilly.com/wp-content/uploads/2018/02/crtsy-art-star-art-star-craft-bazaar-mothers-day-2200VP.jpg" /></a>
-
-          {/* <img src="https://assets.visitphilly.com/wp-content/uploads/2018/02/crtsy-art-star-art-star-craft-bazaar-mothers-day-2200VP.jpg"/> */}
+            <a href={event.eventImage} rel="noopener noreferrer" target="_blank"><Card.Img variant="top" src={event.eventImage} /></a>
+            <h3 className="card-title">{event.name}
             {event && selfId && event.creator === selfId && (
               <UpdateModal
+                className='event-button'
                 form={"event"}
                 task={"Edit Event"}
                 handleFormSubmit={this.handleEdit}
@@ -176,8 +225,7 @@ class Event extends Component {
                 submitButtonText="Edit Event"
               />
             )}
-
-            <h3 className="card-title">{event.name}</h3>
+            </h3>
 
             <p>
               <TimeRange
@@ -190,26 +238,10 @@ class Event extends Component {
             <p>{Help.addLineBreaks(event.description)}</p>
         </>
       );
-    } else {
-      return (
-        <Row>
-          <Col>
-            <LoadingPlaceholder
-              emptyMessage="Event not found."
-              failureMessage="Could not load event information."
-              handleRetryClick={this.handleRetryClick}
-              status={this.state.loadStatus}
-            />
-          </Col>
-        </Row>
-      );
-    }
   }
 
-  renderMap(){
-    const event = this.state.event;
+  renderMap(event){
 
-    if(event){
       return (
           <MapContainer
             marker={{
@@ -218,14 +250,10 @@ class Event extends Component {
             }}
           />
       );
-    }
   }
 
-  renderAttendees(){
+  renderAttendees(event){
 
-    const event = this.state.event;
-
-    if(event){
       return (
         <>
           <div className="mb-3">
@@ -252,24 +280,29 @@ class Event extends Component {
           </div>
         </>
       );
-    }
-
   }
 
-  renderChatAndAttendeeArea(){
-
-    const event = this.state.event;
-
-    if(event) {
-      return (
-          <EventChat
-            event={event}
-            eventId={event._id}
-            userId={this.state.selfId}
-            userName={this.state.userName}
-          />
-      );
-    }
+  renderChatAndAttendeeArea(event){
+    return (
+      <EventChat
+        event={
+          event
+        }
+        eventId={
+          event._id
+        }
+        userId={
+          this
+            .state
+            .selfId
+        }
+        userName={
+          this
+            .state
+            .userName
+        }
+      />
+    );
   }
 }
 
