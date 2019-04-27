@@ -18,7 +18,7 @@ class EventItem extends Component {
         <Media.Body>
           <h3>
             <Link to={"/event/" + this.props.id}>{this.props.name}</Link>
-            <span className="attendee-count" aria-label={this.props.attendeeCount + "Attending"}>{this.props.attendeeCount}</span>
+            <span className="attendee-count" aria-label={this.props.attendeeCount + " attending"}>{this.props.attendeeCount}</span>
           </h3>
           <p><TimeRange startTime={this.props.startTime} endTime={this.props.endTime} /></p>
           <p>{this.props.placeName}</p>
