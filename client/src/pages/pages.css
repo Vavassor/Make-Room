@@ -58,19 +58,22 @@ body::-webkit-scrollbar { /* WebKit */
 }
 
 .jumbo-header button {
+  background-color: #5656f2;
+  border: .1em solid #ffffff !important;
+  color: #ffffff;
   position: absolute;
-  top: 0;
-  right: -3rem;
+  right: -4em;
+  bottom: .5em;
   transform: scale(0.75);
   vertical-align: 1em;
-  /* margin-left: 1em; */
 }
+
 .profile-jumbo h1 {
   display: inline-block;
 }
 
 .web-link a {
-  color: orange;
+  color:#ffffff;
 }
 
 /* about me profile card css */
