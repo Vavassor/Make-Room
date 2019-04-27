@@ -25,32 +25,37 @@ export class ItemForm extends Component {
     
     return (
       <Form>
-        <Form.Row className="my-2">
-          <Col xs={12}>
-            <Form.Group controlId="portfolio-item-image-file">
-              <Form.Label>Image File</Form.Label>
-              <Form.Control
-                type="file"
-                accept="image/*"
-                name="imageFile"
-                ref={this.imageFile}
-              />
-            </Form.Group>
-          </Col>
+        <Form.Group controlId="portfolio-item-image-file">
+          <Form.Label>Image File</Form.Label>
+          <Form.Control
+            type="file"
+            accept="image/*"
+            name="imageFile"
+            ref={this.imageFile}
+          />
+        </Form.Group>
 
-          <Col xs={12}>
-            <Form.Group controlId="portfolio-item-title">
-              <Form.Label>Item Title</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Title of this Item"
-                value={props.item.imageTitle}
-                onChange={props.handleInputChange}
-                name="imageTitle"
-              />
-            </Form.Group>
-          </Col>
-        </Form.Row>
+        <Form.Group controlId="portfolio-item-image-url">
+          <Form.Label>Image Link</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="https://example.com/image.jpg"
+            value={props.item.imageUrl}
+            onChange={props.handleInputChange}
+            name="imageUrl"
+          />
+        </Form.Group>
+
+        <Form.Group controlId="portfolio-item-title">
+          <Form.Label>Item Title</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Title of this Item"
+            value={props.item.imageTitle}
+            onChange={props.handleInputChange}
+            name="imageTitle"
+          />
+        </Form.Group>
 
         <Form.Group controlId="portfolio-item-info">
           <Form.Label>Info About Porfolio Item: </Form.Label>

@@ -1,4 +1,10 @@
 .footer {
+  background-color: #bd0202;
   margin-top: 2em;
   margin-bottom: 0 !important;
+  padding: 1em;
+}
+
+.footer a {
+  color: #ffffff;
 }

@@ -31,6 +31,7 @@ const eventSeeds = [
     description: "no description",
     blurb: "no blurb",
     creator: mongoose.Types.ObjectId("5cb36af71767efad3f77a128"),
+    attendees: [mongoose.Types.ObjectId("5cb36af71767efad3f77a128")],
   },
   {
     name: "OTR Spring Fling",
@@ -48,6 +49,7 @@ const eventSeeds = [
     description: "no description",
     blurb: "no blurb",
     creator: mongoose.Types.ObjectId("5cb36af71767efad3f77a128"),
+    attendees: [mongoose.Types.ObjectId("5cb36af71767efad3f77a128")],
   },
 ];
 
