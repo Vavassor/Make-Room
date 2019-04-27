@@ -1,19 +1,18 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-
 const eventImageList = require("../helpers/defaultEventImageList")
 
-function randomEventImage (){
-  let i = eventImageList.length
-  let rand = Math.floor(Math.random() * i)
- return eventImageList[rand];
-};
+function randomEventImage() {
+  let i = eventImageList.length;
+  let rand = Math.floor(Math.random() * i);
+  return eventImageList[rand];
+}
 
 var EventSchema = new Schema({
   eventImage:{
     type: String,
-    default: randomEventImage
+    default: randomEventImage,
   },
   creator: {
     type: Schema.Types.ObjectId,
