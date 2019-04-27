@@ -282,7 +282,7 @@ class Profile extends Component {
           </Row>
           <Row className="justify-content-center text-center mt-4">
             {this.state.email ? (
-              <Col className="web-link" sm={2}>
+              <Col className="web-link" sm="auto">
                 <a
                   href={`mailto:${this.state.email}?Subject=Hi%20There`}
                   target="_top"
@@ -295,7 +295,7 @@ class Profile extends Component {
               ""
             )}
             {this.state.website ? (
-              <Col className="web-link" sm={2}>
+              <Col className="web-link" sm="auto">
                 <a
                   href={this.state.website}
                   target="_blank"
