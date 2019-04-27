@@ -16,7 +16,7 @@ class CreateAccount extends Component {
       validated: false,
       errors: {
         username: "Please enter a username.",
-        password: "Please enter a username.",
+        password: "Please enter a password.",
       },
     };
 
@@ -65,8 +65,8 @@ class CreateAccount extends Component {
         .then(user => Api.logIn(this.state.username, this.state.password))
         .then((response) => {
           Auth.authenticate(response.data.token);
+          this.props.handleLogIn();
           this.props.toggle();
-          // this.props.history.push("/");
         })
         .catch((error) => {
           const errorObject = error.response.data;

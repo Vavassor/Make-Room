@@ -26,7 +26,7 @@ class Main extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     if (this.props.isLoggedIn) {
       this.props.history.push("/profile");
     }
@@ -72,7 +72,7 @@ class Main extends Component {
   }
 
   renderCreateAccount(){
-    return <CreateAccount toggle={this.toggleCreateAccount}/>
+    return <CreateAccount toggle={this.toggleCreateAccount} handleLogIn={this.props.handleLogIn} />
   }
 
   renderLogin(){
