@@ -69,17 +69,9 @@ class NavTabs extends Component {
               variant="warning"
               type="button"
               onClick={() => this.handleLogOut()}
-              className="d-none d-sm-block"
             >
-              Log Out
-            </Button>
-            <Button
-              variant="warning"
-              type="button"
-              onClick={() => this.handleLogOut()}
-              className="d-block d-sm-none"
-            >
-              <i className="fas fa-ban"></i>
+              <span className="d-none d-sm-block">Log Out</span>
+              <span className="d-block d-sm-none"><i className="fas fa-ban"></i></span>
             </Button>
           </Link>
         </li>

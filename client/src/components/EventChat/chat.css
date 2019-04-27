@@ -20,10 +20,16 @@
   border-radius: 1rem;
   
 }
+
+.chatList {
+  height: 70%;
+  overflow: auto;
+}
+
 #chatForm {
   /* border-bottom: solid black 1px */
 }
-#chatArea{
+#chatBox{
   position: relative;
   /* background-color: hsl(206, 36%, 20%); */
   background-color: transparent;
@@ -31,7 +37,7 @@
   height: 220px;
   border-radius: 3px;
 }
-#chatArea p {
+#chatBox p {
   margin: 0;
   cursor: pointer;
 }
@@ -54,6 +60,7 @@ color: #dff3ff;
 }
 
 .otherChat {
+  text-align: left;
   margin-left: 3px;
   margin-right: auto;
   margin-top: 1px;

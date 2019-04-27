@@ -128,10 +128,6 @@ body::-webkit-scrollbar { /* WebKit */
 .chat-col{
   border: black solid 2px;
 }
-.chat-list {
-  height: 200px;
-  overflow: auto;
-}
 
 
 @media only screen and (max-width: 768px) {
