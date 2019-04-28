@@ -130,39 +130,9 @@ body::-webkit-scrollbar { /* WebKit */
 }
 
 
-
-@media only screen and (max-width: 768px) {
-  .map-col > div {
-    width: 100%;
-    height: 100vw;
-    transition: none;
-  }
-  /* #chatBox {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  #chatBox:hover {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: none;
-  
-  }
-
-  .map-col > div:hover {
-    transform: none;
-    width: 100%;
-  } */
-
-  .masonry-box {
-    display: block;
-  }
-
-  .masonry-box > div {
-    width: 100% !important;
-  }
+.event-list .card-body {
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .event-button{
@@ -174,6 +144,35 @@ body::-webkit-scrollbar { /* WebKit */
 }
 
 .event-sidebar {
+  min-height: 60vh;
   position: sticky !important;
   top: 0 !important;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+
+}
+
+
+
+@media only screen and (max-width: 768px) {
+  .map-col > div {
+    width: 100%;
+    height: 100vw;
+    transition: none;
+  }
+
+  .plax-content {
+    width: 90vw !important;
+  }
+
+  .masonry-box {
+    display: block;
+  }
+
+  .masonry-box > div {
+    width: 100% !important;
+  }
 }

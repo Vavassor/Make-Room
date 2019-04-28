@@ -11,6 +11,8 @@ import PageNotFound from "./pages/PageNotFound";
 import NavTabs from "./components/NavTabs";
 import Footer from "./components/Footer";
 
+import Plax from "./components/ParallaxComponent";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./App.css";
@@ -85,6 +87,10 @@ class App extends Component {
         <Footer/>
       </>
     );
+  }
+
+  render1(){
+    return  <Plax />
   }
 }
 

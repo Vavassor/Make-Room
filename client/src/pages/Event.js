@@ -87,7 +87,6 @@ class Event extends Component {
     Api
       .getEventById(id)
       .then((response) => {
-        console.log(response);
         this.setState({
           loadStatus: "success",
           event: response.data,
@@ -123,26 +122,27 @@ class Event extends Component {
           </Row>
         </Jumbotron>
         <div className="container-fluid">
-          <Row className="justify-content-center mx-0">
+          <Row className="justify-content-center mb-3">
             <Col
               className="event-sidebar"
               xs={{ span: 12, order: 2 }}
               md={{ span: 6, order: 2 }}
               lg={{ span: 3, order: 1 }}
             >
-              <Col xs={12} className="attending-col text-center">
-                {this.renderAttendees(event)}
-              </Col>
-              <Col xs={12} className="chat-col px-0">
-                {this.renderChatAndAttendeeArea(event)}
-              </Col>
+              <Row className='justify-content-center mx-0 chat-attendee-row'>
+                <Col xs={12} className="attending-col text-center px-0">
+                  {this.renderAttendees(event)}
+                </Col>
+                <Col xs={12} className="chat-col px-0">
+                  {this.renderChatAndAttendeeArea(event)}
+                </Col>
+              </Row>
             </Col>
             <Col
-              className='event-col'
+              className="event-col"
               xs={{ span: 12, order: 1 }}
               md={{ span: 12, order: 1 }}
               lg={{ span: 6 }}
-              
             >
               <Card>
                 <Card.Body>
@@ -211,7 +211,6 @@ class Event extends Component {
  
 
   renderEventContent(event, selfId) {
-    console.log(event);
   
       return (
         <>

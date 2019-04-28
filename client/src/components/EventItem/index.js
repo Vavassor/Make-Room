@@ -7,6 +7,7 @@ import "./style.css"
 class EventItem extends Component {
   render() {
     return (
+      <>
       <Media className="event-item">
         <Link to={"/event/" + this.props.id}>
           <img
@@ -25,6 +26,8 @@ class EventItem extends Component {
           <p>{this.props.blurb}</p>
         </Media.Body>
       </Media>
+      <hr></hr>
+      </>
     );
   }
 }

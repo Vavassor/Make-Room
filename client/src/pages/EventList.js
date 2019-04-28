@@ -1,10 +1,20 @@
-import Api from "../utilities/Api";
-import Card from "react-bootstrap/Card";
-import EventItem from "../components/EventItem";
-import {Link} from "react-router-dom";
-import LoadingPlaceholder from "../components/LoadingPlaceholder";
-import moment from "moment";
 import React, {Component} from "react";
+import {Link} from "react-router-dom";
+
+// custom components
+import EventItem from "../components/EventItem";
+import LoadingPlaceholder from "../components/LoadingPlaceholder";
+import Plax from "../components/ParallaxComponent";
+
+// bootstrap components
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Jumbotron from "react-bootstrap/Jumbotron";
+
+// utilities
+import moment from "moment";
+import Api from "../utilities/Api";
 
 class EventList extends Component {
   constructor(props) {
@@ -51,23 +61,29 @@ class EventList extends Component {
 
   render() {
     return (
-      <main>
-        <Card>
-          <Card.Body>
-            <div className="mb-4">
-              <Link className="btn btn-primary" to="/add-event">Add Event</Link>
-            </div>
-
-            <hr />
-
-            {this.renderEvents()}
-          </Card.Body>
-        </Card>
-      </main>
+      <>
+        {this.renderJumbtron()}
+        <Plax>
+          <main>
+            <Card className="event-list">
+              <Card.Body>
+                <div className="mb-4">
+                  <Link className="btn btn-primary" to="/add-event">
+                    Add Event
+                  </Link>
+                </div>
+                <hr />
+                {this.renderEvents()}
+              </Card.Body>
+            </Card>
+          </main>
+        </Plax>
+      </>
     );
   }
 
   renderEvents() {
+    
     if (this.state.events.length) {
       return this.state.events.map(event => {
         return (
@@ -95,6 +111,19 @@ class EventList extends Component {
         />
       );
     }
+  }
+
+  renderJumbtron(){
+    return (
+      <Jumbotron className="profile-jumbo fluid mb-0">
+        <Row className="jusitfy-content-center text-center">
+          <Col className="jumbo-header">
+            <h1>Make Room!</h1>
+            <h4>List of Upcoming Events</h4>
+          </Col>
+        </Row>
+      </Jumbotron>
+    );
   }
 }
 

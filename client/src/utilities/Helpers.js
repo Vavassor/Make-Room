@@ -2,6 +2,8 @@ import React, { Fragment } from "react";
 
 import Col from "react-bootstrap/Col";
 
+import imageList from "./randomBgImages"
+
 
 
 export default {
@@ -25,4 +27,14 @@ export default {
     return name
   },
 
+  randomImage() {
+    let i = imageList.length;
+    let rand = Math.floor(Math.random() * i);
+    console.log("Image List: ", imageList);
+    return imageList[rand];
+  },
+
 }
+
+
+

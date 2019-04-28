@@ -11,6 +11,8 @@ import Row from "react-bootstrap/Row";
 // import {Link} from "react-router-dom";
 
 import CreateAccount from "../components/CreateAccountComponent"
+import Plax from "../components/ParallaxComponent";
+import Help from "../utilities/Helpers";
 
 class Main extends Component {
   constructor(props) {
@@ -20,6 +22,7 @@ class Main extends Component {
       alert: "",
       validated: false,
       creatingAccount: false,
+      image: null,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -30,6 +33,9 @@ class Main extends Component {
     if (this.props.isLoggedIn) {
       this.props.history.push("/profile");
     }
+    const newImage=Help.randomImage();
+    console.log(newImage)
+    this.setState({image: newImage})
   }
 
   componentDidUpdate() {
@@ -112,7 +118,7 @@ class Main extends Component {
 
             {this.renderAlert()}
 
-            <Row className='justify-content-around'>
+            <Row className='justify-content-around m-0'>
               <Col md="auto" className='text-center'>
                 <Button variant="primary" type="submit">
                   Log In
@@ -121,9 +127,6 @@ class Main extends Component {
 
               <Col md={"auto"} className='text-center'>
                 <Button
-                  // className="btn btn-secondary"
-                  // to="/create-account"
-                  // role="button"
                   onClick={this.toggleCreateAccount}
                   className="mt-md-0 mt-2"
                 >
@@ -141,7 +144,7 @@ class Main extends Component {
 
     return (
       <main>
-        <Jumbotron>
+        <Jumbotron className='mb-0'>
           <Row className="justify-content-center text-center">
             <Col className="jumbo-header" sm={6}>
               <h1>Make Room!</h1>
@@ -151,13 +154,9 @@ class Main extends Component {
             </Col>
           </Row>
         </Jumbotron>
-        <div className="container-fluid">
-          <Row className="justify-content-center">
-            <Col sm={12} md={6} lg={6}>
+        <Plax height="100vh" width="30%" image={this.state.image}>
               {this.state.creatingAccount? this.renderCreateAccount() : this.renderLogin()}
-            </Col>
-          </Row>
-        </div>
+          </Plax>
       </main>
     );
   }
