@@ -90,10 +90,11 @@ input .form-control {
 }
 
 .myChat p {
-  background-color: #8afe37;
+  background-color: #bd0202;
+  color: white;
   padding: 0px 5px 0px 5px;
   border: 1px transparent solid;
-  border-radius: 6px;
+  border-radius: 6px 2px 2px 6px;
   display: inline-block;
 }
 .chatName {
@@ -106,16 +107,40 @@ color: #dff3ff;
   margin-right: auto;
   margin-top: 1px;
   max-width: 80%;
-
 }
+
+.otherChat span{
+  color: #ff1111;
+}
+
+.otherChat span:hover {
+  color: rgb(255, 119, 0);
+}
+
+
+
 .otherChat p {
-  background-color: #52b4ff;
+  background-color: #3112f7;
+  color: white;
   padding:  0px 5px 0px 5px;
   border: 1px transparent solid;
-  border-radius: 6px;
+  border-radius: 2px 6px 6px 2px;
   display: inline-block;
 
 }
+
+.chatList p {
+  transition: all .25s;
+  opacity: 1;
+}
+
+.chatList p:hover {
+  opacity: 0.6;
+}
+
+
+
+
 
 @media only screen and (min-width: 992px) {
 
