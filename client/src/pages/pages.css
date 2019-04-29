@@ -3,6 +3,7 @@ html {
 
 }
 
+
 * {
   font-family: 'Raleway', sans-serif;
 }
@@ -17,8 +18,9 @@ body {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* IE 10+ */
   min-height: 100vh;
-  background-color: lightgrey;
-  background-image: linear-gradient(to bottom, transparent, darkgrey)
+  /* background-color: lightgrey; */
+  background-image: url("/images/pineapple-cut.png"), linear-gradient(to bottom, lightgray, darkgrey) ;
+
 
 }
 

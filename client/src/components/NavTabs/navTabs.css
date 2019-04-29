@@ -1,5 +1,6 @@
 .nav-tabs {
   position: relative;
+  background-color: lightgray;
 }
 
 .log-out button {
