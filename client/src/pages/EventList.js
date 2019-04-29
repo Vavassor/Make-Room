@@ -8,8 +8,7 @@ import Plax from "../components/ParallaxComponent";
 
 // bootstrap components
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 
 // utilities
@@ -83,7 +82,6 @@ class EventList extends Component {
   }
 
   renderEvents() {
-    
     if (this.state.events.length) {
       return this.state.events.map(event => {
         return (
@@ -116,12 +114,9 @@ class EventList extends Component {
   renderJumbtron(){
     return (
       <Jumbotron className="profile-jumbo fluid mb-0">
-        <Row className="jusitfy-content-center text-center">
-          <Col className="jumbo-header">
-            <h1>Make Room!</h1>
-            <h4>List of Upcoming Events</h4>
-          </Col>
-        </Row>
+        <Container className="text-center">
+          <h1>Upcoming Events</h1>
+        </Container>
       </Jumbotron>
     );
   }

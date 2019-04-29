@@ -356,7 +356,7 @@ class Profile extends Component {
                 size="sm"
                 variant="primary"
               >
-                Add New Portfolio Item <i className="far fa-plus-square" />
+                Add New Portfolio Item <i className="far fa-plus-square" aria-hidden="true" />
               </ItemButton>
               <label className="ml-3">
                 <select
@@ -406,7 +406,8 @@ class Profile extends Component {
                           variant={"outline-primary"}
                           action={() => this.setAsFirst(imageInfo._id)}
                         >
-                          <i className="fas fa-arrow-up"></i>
+                          <i className="fas fa-arrow-up" aria-hidden="true"></i>
+                          <span className="sr-only">Set as first</span>
                         </ItemButton>
                         <UpdateModal
                           form={"itemInfo"}
@@ -428,7 +429,8 @@ class Profile extends Component {
                             this.deletePortfolioItem(imageInfo._id)
                           }
                         >
-                          <i className="far fa-trash-alt" />
+                          <i className="far fa-trash-alt" aria-hidden="true" />
+                          <span className="sr-only">Delete</span>
                         </ItemButton>
                       </ProfileCard>
                     )

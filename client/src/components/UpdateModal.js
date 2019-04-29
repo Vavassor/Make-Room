@@ -63,34 +63,35 @@ class UpdateModal extends React.Component {
   }
 
   render() {
-      return(
-        <>
-          <Button 
+    return (
+      <>
+        <Button 
           className={`mx-2 ${this.props.className}`}
-          variant={this.props.variant? this.props.variant: "primary"} 
-          size="sm" 
+          variant={this.props.variant? this.props.variant: "primary"}
+          size="sm"
           onClick={() => this.multiFunction (this.handleShow, this.props.func2, this.props.func2Args)}
-          >
+          aria-label={this.props.task}
+        >
           {this.props.icon? this.props.icon :<i className="fas fa-user-edit"></i>}
-          </Button>
-          <Modal show={this.state.show} onHide={this.handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>{this.props.task}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>{this.swtichCaseContent(this.props.form)}</Modal.Body>
-            {
-              !this.props.noFooter ? (
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={this.handleClose}>
-                    Close
-                  </Button>
-                </Modal.Footer>
-              ) : ""
-            }
-          </Modal>
-        </>
-      );
-    }
+        </Button>
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.props.task}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.swtichCaseContent(this.props.form)}</Modal.Body>
+          {
+            !this.props.noFooter ? (
+              <Modal.Footer>
+                <Button variant="secondary" onClick={this.handleClose}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            ) : ""
+          }
+        </Modal>
+      </>
+    );
+  }
 }
 
 export default UpdateModal;

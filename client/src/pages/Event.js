@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 
-
 // bootstrap components
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -20,9 +19,6 @@ import MapContainer from "../components/MapContainer";
 import LoadingPlaceholder from "../components/LoadingPlaceholder";
 import EventChat from "../components/EventChat";
 import UpdateModal from "../components/UpdateModal";
-
-
-
 
 class Event extends Component {
   constructor(props) {
@@ -101,7 +97,6 @@ class Event extends Component {
   }
 
   render() {
-
     const event = this.state.event;
     const selfId = this.state.selfId;
 
@@ -125,7 +120,7 @@ class Event extends Component {
           <Row className="justify-content-center mb-3 mx-0">
             <Col
               id="attendee-chat-col"
-              className="event-sidebar mb-3"
+              className="event-sidebar mb-3 mt-3 mt-lg-0"
               xs={{ span: 12, order: 2 }}
               md={{ span: 6, order: 2 }}
               lg={{ span: 3, order: 1 }}
@@ -177,7 +172,6 @@ class Event extends Component {
   }
 
   renderAttendButton() {
-
     let attending = false;
     if (this.state.event) {
       const attendee = this.state.event.attendees.find((attendee) => {
@@ -189,9 +183,10 @@ class Event extends Component {
     if (attending) {
       return (
         <Button
-          className='event-button'
+          className="event-button"
           variant="danger"
           onClick={this.handleStopAttending}
+          aria-label="Stop attending"
         >
         <i className="fas fa-minus"></i>
         </Button>
@@ -202,6 +197,7 @@ class Event extends Component {
           className='event-button'
           variant="success"
           onClick={this.handleAttend}
+          aria-label="Attend"
         >
           <i className="fas fa-plus"></i>
         </Button>
@@ -209,79 +205,81 @@ class Event extends Component {
     }
   }
 
- 
-
   renderEventContent(event, selfId) {
-  
-      return (
-        <>
-            <a href={event.eventImage} rel="noopener noreferrer" target="_blank"><Card.Img variant="top" src={event.eventImage} /></a>
-            <h3 className="card-title">{event.name}
-            {event && selfId && event.creator === selfId && (
-              <UpdateModal
-                className='event-button'
-                form={"event"}
-                task={"Edit Event"}
-                handleFormSubmit={this.handleEdit}
-                event={this.state.event}
-                submitButtonText="Edit Event"
-              />
-            )}
-            </h3>
+    return (
+      <>
+        <a
+          href={event.eventImage}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Card.Img variant="top" src={event.eventImage} className="pb-3" />
+        </a>
+        <h3 className="card-title">
+          {event.name}
+          {event && selfId && event.creator === selfId && (
+            <UpdateModal
+              className="event-button"
+              form={"event"}
+              task={"Edit Event"}
+              handleFormSubmit={this.handleEdit}
+              event={this.state.event}
+              submitButtonText="Edit Event"
+            />
+          )}
+        </h3>
 
-            <p>
-              <TimeRange
-                startTime={event.startTime}
-                endTime={event.endTime}
-              />
-            </p>
-            <p>{event.place.name}</p>
-            <p>{event.place.address}</p>
-            <p>{Help.addLineBreaks(event.description)}</p>
-        </>
-      );
+        <p>
+          <TimeRange
+            startTime={event.startTime}
+            endTime={event.endTime}
+          />
+        </p>
+        <p>{event.place.name}</p>
+        <p>{event.place.address}</p>
+        <p>{Help.addLineBreaks(event.description)}</p>
+      </>
+    );
   }
 
   renderMap(event){
-
-      return (
-          <MapContainer
-            marker={{
-              name: event.place.name,
-              position: event.place.position
-            }}
-          />
-      );
+    return (
+      <MapContainer
+        marker={{
+          name: event.place.name,
+          position: event.place.position,
+        }}
+      />
+    );
   }
 
   renderAttendees(event){
-
-      return (
-        <>
-          <div className="mb-3">
-            <h3>Attendees{this.renderAttendButton()}</h3>
-          </div>
-          <div className="attendee-list-shadow">
-            <ListGroup className="attendee-list">
-              {event.attendees.length ? (
-                event.attendees.map(attendee => {
-                  return (
-                    <ListGroup.Item key={attendee._id}>
-                      <Link to={"/profile/" + attendee._id}>
-                        {Help.renderName(attendee)}
-                      </Link>
-                    </ListGroup.Item>
-                  );
-                })
-              ) : (
-                <ListGroup.Item style={{ color: "red" }}>
-                  No One is Attending Yet!
-                </ListGroup.Item>
-              )}
-            </ListGroup>
-          </div>
-        </>
-      );
+    return (
+      <>
+        <div className="mb-3">
+          <h3>Attendees{this.renderAttendButton()}</h3>
+        </div>
+        <div className="attendee-list-shadow">
+          <ListGroup className="attendee-list">
+            {event.attendees.length ? (
+              event.attendees.map(attendee => {
+                return (
+                  <ListGroup.Item key={attendee._id}>
+                    <Link to={"/profile/" + attendee._id}>
+                      {Help.renderName(attendee)}
+                    </Link>
+                  </ListGroup.Item>
+                );
+              })
+            ) : (
+              <ListGroup.Item style={{ color: "red" }}>
+                No One is Attending Yet!
+              </ListGroup.Item>
+            )}
+          </ListGroup>
+        </div>
+      </>
+    );
   }
 
   renderChatAndAttendeeArea(event){
