@@ -123,10 +123,15 @@ body::-webkit-scrollbar { /* WebKit */
   border-top: .1em solid #dfdfdf;
   max-height: 50%;
   overflow-y: auto;
+  border-radius: 0.7rem;
 }
 
 .attendee-list-shadow {
   padding-bottom: 2em;
+}
+
+.card {
+  border-radius: 0.5rem !important;
 }
 
 

@@ -1,6 +1,8 @@
 import React from "react";
 import { Parallax } from "react-parallax";
 
+import imageList from "../utilities/randomBgImages"
+
 const styles = {
   textAlign: "center"
 };
@@ -8,7 +10,7 @@ const styles = {
 
 
 function randomImage() {
-  let i = 16;
+  let i = imageList;
   let rand = Math.floor(Math.random() * i ) + 1;
   return `/images/background-${rand}.jpg`;
   // return imageList[rand];

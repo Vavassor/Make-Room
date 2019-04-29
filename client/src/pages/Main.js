@@ -34,7 +34,6 @@ class Main extends Component {
       this.props.history.push("/profile");
     }
     const newImage=Help.randomImage();
-    console.log(newImage)
     this.setState({image: newImage})
   }
 
@@ -63,7 +62,7 @@ class Main extends Component {
 
     if (passedValidation) {
       Api
-        .logIn(this.state.username, this.state.password)
+        .logIn(this.state.username.trim(), this.state.password.trim())
         .then((response) => {
           Auth.authenticate(response.data.token);
           this.props.handleLogIn();

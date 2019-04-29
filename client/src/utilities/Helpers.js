@@ -28,10 +28,11 @@ export default {
   },
 
   randomImage() {
-    let i = imageList.length;
-    let rand = Math.floor(Math.random() * i);
-    console.log("Image List: ", imageList);
-    return imageList[rand];
+    // let i = imageList.length;
+    let i = imageList;
+    let rand = Math.floor(Math.random() * i) + 1 ;
+    return `/images/background-${rand}.jpg`;
+    // return imageList[rand];
   },
 
 }
