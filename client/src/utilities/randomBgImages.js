@@ -16,6 +16,6 @@
 //   "/images/background-15.jpg",
 //   "/images/background-16.jpg",
 // ]
-const imageList=16
+const imageList=17
 
 module.exports=imageList
