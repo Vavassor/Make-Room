@@ -11,8 +11,8 @@ class EventItem extends Component {
     return (
       <div className='media-div'>
       <Media className="event-item">
-      <Row className='justing-content-center'>
-        <Col xs={"12"} md="auto">
+      <Row className='justing-content-center mx-0'>
+        <Col xs={"12"} md="auto" className='text-center'>
         <Link to={"/event/" + this.props.id}>
           <img
             className="mr-3 event-image"

@@ -124,6 +124,7 @@ class Event extends Component {
         <div className="container-fluid">
           <Row className="justify-content-center mb-3 mx-0">
             <Col
+              id="attendee-chat-col"
               className="event-sidebar mb-3"
               xs={{ span: 12, order: 2 }}
               md={{ span: 6, order: 2 }}

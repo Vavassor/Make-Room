@@ -181,6 +181,12 @@ body::-webkit-scrollbar { /* WebKit */
   min-height: 60vh;
 }
 
+@media only screen and (max-width: 992px) {
+  .attendee-list-shadow {
+    max-height: 70%;
+  }
+}
+
 
 @media only screen and (max-width: 768px) {
   .map-col > div {
@@ -199,5 +205,8 @@ body::-webkit-scrollbar { /* WebKit */
 
   .masonry-box > div {
     width: 100% !important;
+  }
+  #attendee-chat-col{
+    height: 100vh;
   }
 }
