@@ -87,14 +87,14 @@ class NavTabs extends Component {
           <li className="nav-item">
             <Link
               to="/"
-              onClick={() => this.setPage("/")}
-              className={
-                this.state.page === "/"
-                  ? "nav-link active"
-                  : "nav-link"
-              }
+              onClick={() => this.setPage("/profile")}
+              // className={
+              //   this.state.page === "/"
+              //     ? "nav-link active"
+              //     : "nav-link"
+              // }
             >
-              Home
+            <img src="/images/logo.png" height="50" width="80" alt="make room logo"></img>
             </Link>
           </li>
           {this.renderNavTabs()}
