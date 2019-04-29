@@ -152,7 +152,7 @@ return (
     <Link to={"/profile/" + props.cMessage.userId}>
       <p key={props.cMessage._id}>
         {props.userId !== props.cMessage.userId &&
-          props.cMessage.userName + ": "}{" "}
+          <span>{props.cMessage.userName}: </span>}
         {props.children}
       </p>
     </Link>

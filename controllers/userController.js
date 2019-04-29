@@ -5,9 +5,7 @@ const ValidationError = require("../helpers/ValidationError");
 module.exports = {
   create: function(request, response, next) {
     models.User
-      .findOne({
-        username: request.body.username,
-      })
+      .findOne({username: request.body.username}).collation({locale:'en',strength:2})
       .then((existingUser) => {
         const error = new ValidationError();
         if (existingUser) {

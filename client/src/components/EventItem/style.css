@@ -27,3 +27,19 @@
   vertical-align: top;
   width: 1.5rem;
 }
+
+.media-div::after {
+  content: "";
+  display: block;
+  margin: 5px auto 15px auto;
+  width: 100%;
+  border-bottom: lightgray 1px solid;
+}
+
+.media-div:last-of-type::after {
+  content: "";
+  display: block;
+  margin: 0;
+  width: 80%;
+  border-bottom: none;
+}

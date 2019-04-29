@@ -16,7 +16,7 @@ module.exports = {
 
   authenticateLocal: function(username, password, done) {
     models.User
-      .findOne({username: username})
+      .findOne({username: username}).collation({locale:'en',strength:2})
       .then(user => {
         if (!user) {
           return done(null, false);

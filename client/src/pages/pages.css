@@ -3,6 +3,7 @@ html {
 
 }
 
+
 * {
   font-family: 'Raleway', sans-serif;
 }
@@ -17,8 +18,9 @@ body {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* IE 10+ */
   min-height: 100vh;
-  background-color: lightgrey;
-  background-image: linear-gradient(to bottom, transparent, darkgrey)
+  /* background-color: lightgrey; */
+  background-image: url("/images/pineapple-cut.png"), linear-gradient(to bottom, lightgray, darkgrey) ;
+
 
 }
 
@@ -118,51 +120,55 @@ body::-webkit-scrollbar { /* WebKit */
   width: 100% !important;
 }
 
+.attending-col {
+  height: 50%
+}
+
 .attendee-list {
-  border-bottom: .1em solid #dfdfdf;
-  border-top: .1em solid #dfdfdf;
-  max-height: 50%;
-  overflow-y: auto;
+  background-color: transparent !important;
+  /* overflow-y: auto; */
+}
+
+.attendee-list .list-group-item{
+  background-color: transparent !important;
+  border: none;
+  padding-bottom: 2px;
+}
+
+.attendee-list .list-group-item::after{
+  content: "";
+  margin: 5px auto 0 auto;
+  display: block;
+  border-bottom: lightgray solid 2px;
+  width: 80%
+}
+
+.attendee-list .list-group-item:last-of-type::after{
+  content: "";
+  margin: 0;
+  display: block;
+  border-bottom: none;
 }
 
 .attendee-list-shadow {
-  padding-bottom: 2em;
+  background-color: white;
+  max-height: 75%;
+  overflow-y: auto;
+  border: 2px white solid;
+  border-radius: 0.5rem;
+
+  /* padding-bottom: 2em; */
+  /* border: transparent 2px solid; */
+}
+
+.card {
+  border-radius: 0.5rem !important;
 }
 
 
-
-@media only screen and (max-width: 768px) {
-  .map-col > div {
-    width: 100%;
-    height: 100vw;
-    transition: none;
-  }
-  /* #chatBox {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  #chatBox:hover {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: none;
-  
-  }
-
-  .map-col > div:hover {
-    transform: none;
-    width: 100%;
-  } */
-
-  .masonry-box {
-    display: block;
-  }
-
-  .masonry-box > div {
-    width: 100% !important;
-  }
+.event-list .card-body {
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .event-button{
@@ -174,6 +180,35 @@ body::-webkit-scrollbar { /* WebKit */
 }
 
 .event-sidebar {
-  position: sticky !important;
-  top: 0 !important;
+  min-height: 60vh;
+}
+
+@media only screen and (max-width: 992px) {
+  .attendee-list-shadow {
+    max-height: 70%;
+  }
+}
+
+
+@media only screen and (max-width: 768px) {
+  .map-col > div {
+    width: 100%;
+    height: 100vw;
+    transition: none;
+  }
+
+  .plax-content {
+    width: 90vw !important;
+  }
+
+  .masonry-box {
+    display: block;
+  }
+
+  .masonry-box > div {
+    width: 100% !important;
+  }
+  #attendee-chat-col{
+    height: 100vh;
+  }
 }
