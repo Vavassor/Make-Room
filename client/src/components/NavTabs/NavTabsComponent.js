@@ -88,7 +88,7 @@ class NavTabs extends Component {
                 to="/"
                 onClick={() => this.setPage("/profile")}
               >
-                <img src="/images/logo.png" height="50" width="80" alt="Home"></img>
+                <img className="nav-logo" src="/images/logo.png" alt="Home" />
               </Link>
             </li>
             {this.renderNavTabs()}

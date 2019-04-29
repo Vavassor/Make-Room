@@ -12,6 +12,10 @@
   text-decoration: none !important;
 }
 
+.nav-item img {
+  background-color: black;
+}
+
 .nav-link.active {
   color: white !important;
   background-color:  rgb(189, 2, 2) !important;
@@ -23,6 +27,6 @@
   padding-bottom: 0.6em;
 }
 
-.nav-item img {
-  background-color: black;
+.nav-logo {
+  height: 2.7em;
 }
