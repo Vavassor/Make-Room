@@ -147,13 +147,13 @@ class CreateAccount extends Component {
                   Please enter the same password again.
                 </Form.Control.Feedback>
               </Form.Group>
-              <div className="row justify-content-around">
-                <div className="col text-center">
+              <div className="row justify-content-around mx-0">
+                <div className="col-auto text-center mb-1">
                   <Button variant="primary" type="submit">
                     Create Account
                   </Button>
                 </div>
-                <div className="col text-center">
+                <div className="col-auto text-center mb-1">
                   <Button
                     variant="success"
                     type="button"

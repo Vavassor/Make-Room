@@ -122,15 +122,15 @@ class Event extends Component {
           </Row>
         </Jumbotron>
         <div className="container-fluid">
-          <Row className="justify-content-center mb-3">
+          <Row className="justify-content-center mb-3 mx-0">
             <Col
-              className="event-sidebar"
+              className="event-sidebar mb-3"
               xs={{ span: 12, order: 2 }}
               md={{ span: 6, order: 2 }}
               lg={{ span: 3, order: 1 }}
             >
               <Row className='justify-content-center mx-0 chat-attendee-row'>
-                <Col xs={12} className="attending-col text-center px-0">
+                <Col xs={12} className="attending-col text-center px-0 mb-2 mb-md-0">
                   {this.renderAttendees(event)}
                 </Col>
                 <Col xs={12} className="chat-col px-0">

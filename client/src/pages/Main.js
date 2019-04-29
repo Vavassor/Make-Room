@@ -119,7 +119,7 @@ class Main extends Component {
 
             <Row className='justify-content-around m-0'>
               <Col md="auto" className='text-center'>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" className='mt-2'>
                   Log In
                 </Button>
               </Col>
@@ -127,7 +127,7 @@ class Main extends Component {
               <Col md={"auto"} className='text-center'>
                 <Button
                   onClick={this.toggleCreateAccount}
-                  className="mt-md-0 mt-2"
+                  className="mt-2"
                 >
                   Create Account
                 </Button>

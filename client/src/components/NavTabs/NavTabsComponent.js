@@ -82,6 +82,7 @@ class NavTabs extends Component {
   render = () => {
     return (
       <>
+        {!this.props.showLoggedIn ? "" : 
         <ul className="nav nav-tabs">
           <li className="nav-item">
             <Link
@@ -96,8 +97,9 @@ class NavTabs extends Component {
               Home
             </Link>
           </li>
-          {!this.props.showLoggedIn ? "" : this.renderNavTabs()}
+          {this.renderNavTabs()}
         </ul>
+        }
       </>
     );
   }

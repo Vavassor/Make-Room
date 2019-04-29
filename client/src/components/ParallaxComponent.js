@@ -42,7 +42,7 @@ export default function Plax(props) {
   <div style={styles}>
     {/* <Parallax bgImage={randomImage()} strength={500}> */}
     <Parallax bgImage={props.image || randomImage()} strength={500}>
-      <div style={{ height: `${props.height}` }}>
+      <div style={{ height: `${props.height}` }}className="plax-bg">
         <div className='plax-content' style={insideStyles}>{props.children}</div>
       </div>
     </Parallax>
