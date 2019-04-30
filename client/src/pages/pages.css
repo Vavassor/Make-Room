@@ -176,11 +176,19 @@ body::-webkit-scrollbar { /* WebKit */
 }
 
 .event-col{
-  z-index: -1;
+  z-index: 0;
+  position: relative;
 }
 
 .event-sidebar {
   min-height: 60vh;
+}
+
+
+@media only screen and (max-width: 1200px){
+  .react-parallax-bgimage {
+    object-fit: cover !important;
+  }
 }
 
 @media only screen and (max-width: 992px) {

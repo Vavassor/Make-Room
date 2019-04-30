@@ -54,6 +54,7 @@ input .form-control {
 
 #chatBox{
   position: absolute;
+  z-index: 10;
   bottom: 0;
   /* background-color: hsl(206, 36%, 20%); */
   background-color: white;

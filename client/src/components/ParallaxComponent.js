@@ -22,9 +22,9 @@ export default function Plax(props) {
     height: "130vh",
   };
 
-  const bgImageStyle = {
-    objectFit: "cover",
-  };
+  // const bgImageStyle = {
+  //   objectFit: "cover",
+  // };
 
   const insideStyles = {
     background: "white",
@@ -45,9 +45,10 @@ export default function Plax(props) {
     <div style={styles}>
       <Parallax
         bgImage={props.image || randomImage()}
-        bgImageStyle={bgImageStyle}
+        // bgImageStyle={bgImageStyle}
         strength={500}
       >
+        {/* <div style={{ height: `${props.height}` }}className="plax-bg"> */}
         <div style={{ height: `${props.height}` }}className="plax-bg">
           <div className='plax-content' style={insideStyles}>{props.children}</div>
         </div>
