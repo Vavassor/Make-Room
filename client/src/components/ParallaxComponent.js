@@ -18,11 +18,13 @@ function randomImage() {
 
 
 export default function Plax(props) {
-
   Plax.defaultProps = {
-    height: "130vh"
+    height: "130vh",
   };
 
+  const bgImageStyle = {
+    objectFit: "cover",
+  };
 
   const insideStyles = {
     background: "white",
@@ -35,18 +37,22 @@ export default function Plax(props) {
     borderRadius: "0.5rem"
   };
 
-  if (props.width){insideStyles.width = props.width}
-
+  if (props.width) {
+    insideStyles.width = props.width
+  }
 
   return(
-  <div style={styles}>
-    {/* <Parallax bgImage={randomImage()} strength={500}> */}
-    <Parallax bgImage={props.image || randomImage()} strength={500}>
-      <div style={{ height: `${props.height}` }}className="plax-bg">
-        <div className='plax-content' style={insideStyles}>{props.children}</div>
-      </div>
-    </Parallax>
-  </div>
+    <div style={styles}>
+      <Parallax
+        bgImage={props.image || randomImage()}
+        bgImageStyle={bgImageStyle}
+        strength={500}
+      >
+        <div style={{ height: `${props.height}` }}className="plax-bg">
+          <div className='plax-content' style={insideStyles}>{props.children}</div>
+        </div>
+      </Parallax>
+    </div>
   )
 };
 

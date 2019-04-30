@@ -11,6 +11,9 @@ const userSeeds = [
     username: "vavassor",
     firstname: "Andrew",
     lastname: "Dawson",
+    blurb: "Howdy!",
+    email: "dawso.andrew@gmail.com",
+    website: "https://vavassor.github.io",
     password: bcrypt.hashSync("password", bcrypt.genSaltSync(10)),
   },
   {

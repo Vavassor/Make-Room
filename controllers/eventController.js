@@ -78,6 +78,8 @@ module.exports = {
       }
       query = query.sort({[key]: direction});
     }
+
+    console.log(query);
   
     query
       .then(events => response.json(events))

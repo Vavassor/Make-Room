@@ -35,24 +35,22 @@ class EventChat extends Component {
       .limitToLast(100);
 
     messagesRef
-    .on('child_added', snapshot => {
-      // console.log(snapshot.val())
-      const message = { 
-        id: snapshot.key,
-        text: snapshot.val().message, 
-        userId: snapshot.val().userId,
-        userName: snapshot.val().userName,
-      };
+      .on('child_added', snapshot => {
+        const message = { 
+          id: snapshot.key,
+          text: snapshot.val().message, 
+          userId: snapshot.val().userId,
+          userName: snapshot.val().userName,
+        };
 
-      this._isMounted && this.setState(prevState => ({
-        messages: [...prevState.messages, message ],
-        userName: this.props.userName,
-        userId: this.props.userId,
-        eventId: this.props.eventId,
-        })
-        // , () => console.log(this.state)
-      );
-    });
+        this._isMounted && this.setState(prevState => ({
+            messages: [...prevState.messages, message ],
+            userName: this.props.userName,
+            userId: this.props.userId,
+            eventId: this.props.eventId,
+          })
+        );
+      });
   }
 
   componentWillUnmount() {
@@ -94,7 +92,6 @@ class EventChat extends Component {
             this.chatList = div;
           }}
         >
-          {/* {console.log(this.state.messages)} */}
           {this.state.messages.map(message => (
             <ChatMessage
               key={message.id}
@@ -119,7 +116,8 @@ class EventChat extends Component {
                 <Button type="submit" variant="outline-secondary">
                   <span className="d-none d-md-block">Send!</span>
                   <span className="d-block d-md-none">
-                    <i className="fas fa-paper-plane" />
+                    <span className="sr-only">Send</span>
+                    <i className="fas fa-paper-plane" aria-hidden="true" />
                   </span>
                 </Button>
               </InputGroup.Append>
@@ -133,29 +131,26 @@ class EventChat extends Component {
 
 export default EventChat;
 
-
-
 function defineClass(p) {
   let className;
-  // console.log(p)
-  // console.log(p.event.userId, p.cMessage.userId)
-  if (p.userId === p.cMessage.userId){
-    className = "myChat"
-  }else{className="otherChat"}
-  return className
+  if (p.userId === p.cMessage.userId) {
+    className = "myChat";
+  } else {
+    className="otherChat";
+  }
+  return className;
 }
 
-
-export const ChatMessage = function (props) {
-return (
-  <div className={defineClass(props)}>
-    <Link to={"/profile/" + props.cMessage.userId}>
-      <p key={props.cMessage._id}>
-        {props.userId !== props.cMessage.userId &&
-          <span>{props.cMessage.userName}: </span>}
-        {props.children}
-      </p>
-    </Link>
-  </div>
-);
+export const ChatMessage = function(props) {
+  return (
+    <div className={defineClass(props)}>
+      <Link to={"/profile/" + props.cMessage.userId}>
+        <p key={props.cMessage._id}>
+          {props.userId !== props.cMessage.userId &&
+            <span>{props.cMessage.userName}: </span>}
+          {props.children}
+        </p>
+      </Link>
+    </div>
+  );
 }

@@ -154,8 +154,8 @@ class Main extends Component {
           </Row>
         </Jumbotron>
         <Plax height="90vh" width="30%" image={this.state.image}>
-              {this.state.creatingAccount? this.renderCreateAccount() : this.renderLogin()}
-          </Plax>
+          {this.state.creatingAccount? this.renderCreateAccount() : this.renderLogin()}
+        </Plax>
       </main>
     );
   }

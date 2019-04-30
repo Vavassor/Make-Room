@@ -28,7 +28,7 @@ class TimeRange extends Component {
     }
 
     return (
-      <span>{start} - {end}</span>
+      <>{start} to {end}</>
     );
   }
 }

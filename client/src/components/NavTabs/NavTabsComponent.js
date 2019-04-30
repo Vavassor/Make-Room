@@ -6,12 +6,8 @@ import Button from "react-bootstrap/Button";
 import Auth from "../../utilities/Auth";
 
 import "./navTabs.css";
-// import { auth } from "firebase";
-
-
 
 class NavTabs extends Component {
-
   constructor(props) {
     super(props);
 
@@ -64,15 +60,17 @@ class NavTabs extends Component {
           </Link>
         </li>
         <li className="nav-item ml-auto">
-          <Link to="/" className="log-out">
-            <Button
-              variant="warning"
-              type="button"
+          <Link
+              to="/"
+              className="btn btn-warning log-out"
+              role="button"
               onClick={() => this.handleLogOut()}
-            >
-              <span className="d-none d-sm-block">Log Out</span>
-              <span className="d-block d-sm-none"><i className="fas fa-ban"></i></span>
-            </Button>
+          >
+            <span className="d-none d-sm-block">Log Out</span>
+            <span className="d-block d-sm-none">
+              <i className="fas fa-ban" aria-hidden="true"></i>
+              <span className="sr-only">Log Out</span>
+            </span>
           </Link>
         </li>
       </>
@@ -81,26 +79,21 @@ class NavTabs extends Component {
 
   render = () => {
     return (
-      <>
+      <nav>
         {!this.props.showLoggedIn ? "" : 
-        <ul className="nav nav-tabs">
-          <li className="nav-item">
-            <Link
-              to="/"
-              onClick={() => this.setPage("/profile")}
-              // className={
-              //   this.state.page === "/"
-              //     ? "nav-link active"
-              //     : "nav-link"
-              // }
-            >
-            <img src="/images/logo.png" height="50" width="80" alt="make room logo"></img>
-            </Link>
-          </li>
-          {this.renderNavTabs()}
-        </ul>
+          <ul className="nav nav-tabs">
+            <li className="nav-item">
+              <Link
+                to="/"
+                onClick={() => this.setPage("/profile")}
+              >
+                <img className="nav-logo" src="/images/logo.png" alt="Home" />
+              </Link>
+            </li>
+            {this.renderNavTabs()}
+          </ul>
         }
-      </>
+      </nav>
     );
   }
 }
