@@ -142,6 +142,7 @@ class Event extends Component {
             >
               <Card>
                 <Card.Body>
+
                   {this.renderEventContent(event, selfId)}
                 </Card.Body>
               </Card>
@@ -285,22 +286,10 @@ class Event extends Component {
   renderChatAndAttendeeArea(event){
     return (
       <EventChat
-        event={
-          event
-        }
-        eventId={
-          event._id
-        }
-        userId={
-          this
-            .state
-            .selfId
-        }
-        userName={
-          this
-            .state
-            .userName
-        }
+        event={event}
+        eventId={event._id}
+        userId={this.state.selfId}
+        userName={this.state.userName}
       />
     );
   }
