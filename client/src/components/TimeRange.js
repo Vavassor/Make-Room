@@ -8,7 +8,7 @@ class TimeRange extends Component {
 
     const start = (
       <time dateTime={this.props.startTime}>
-        {startTime.format("MMM D, Y @ h:mma")}
+        {startTime.format("ddd, MMM D, Y @ h:mma")}
       </time>
     );
 
@@ -22,7 +22,7 @@ class TimeRange extends Component {
     } else {
       end = (
         <time dateTime={this.props.startTime}>
-          {endTime.format("MMM D, Y @ h:mma")}
+          {endTime.format("ddd, MMM D, Y @ h:mma")}
         </time>
       );
     }
