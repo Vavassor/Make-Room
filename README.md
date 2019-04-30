@@ -14,10 +14,10 @@
 - Momentjs
 
 The Current Richmond Makers Forum is a facebook chat page.
-It's a contstant feed of information that streams by minute by minute. Memebers complain that 
+It's a contstant feed of information that streams by minute by minute. Members complain that 
 once events scroll off the bottom of the feed it is difficult to find again.
 
-The memebers of the Richmond Makers want a place where all events are collected in one spot.  
+The members of the Richmond Makers want a place where all events are collected in one spot.  
 A place where people can sign up and commit to attending an event.
 A place where they can also checkout each others portfolios before going.
 
@@ -27,7 +27,7 @@ connecting event attendees to a profile/portfolio that can be reviewed by other 
 
 Future Features: 
 
-1. Larger Overal categorized chat room
+1. Larger Overall categorized chat room
 1. Private Messages
 1. More event customization
 1. More profile customization
