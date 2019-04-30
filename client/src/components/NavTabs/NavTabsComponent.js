@@ -60,18 +60,17 @@ class NavTabs extends Component {
           </Link>
         </li>
         <li className="nav-item ml-auto">
-          <Link to="/" className="log-out">
-            <Button
-              variant="warning"
-              type="button"
+          <Link
+              to="/"
+              className="btn btn-warning log-out"
+              role="button"
               onClick={() => this.handleLogOut()}
-            >
-              <span className="d-none d-sm-block">Log Out</span>
-              <span className="d-block d-sm-none">
-                <i className="fas fa-ban" aria-hidden="true"></i>
-                <span className="sr-only">Log Out</span>
-              </span>
-            </Button>
+          >
+            <span className="d-none d-sm-block">Log Out</span>
+            <span className="d-block d-sm-none">
+              <i className="fas fa-ban" aria-hidden="true"></i>
+              <span className="sr-only">Log Out</span>
+            </span>
           </Link>
         </li>
       </>
@@ -80,7 +79,7 @@ class NavTabs extends Component {
 
   render = () => {
     return (
-      <>
+      <nav>
         {!this.props.showLoggedIn ? "" : 
           <ul className="nav nav-tabs">
             <li className="nav-item">
@@ -94,7 +93,7 @@ class NavTabs extends Component {
             {this.renderNavTabs()}
           </ul>
         }
-      </>
+      </nav>
     );
   }
 }

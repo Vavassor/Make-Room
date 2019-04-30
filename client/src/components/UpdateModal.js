@@ -74,8 +74,12 @@ class UpdateModal extends React.Component {
         >
           {this.props.icon? this.props.icon :<i className="fas fa-user-edit"></i>}
         </Button>
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
+        <Modal
+          show={this.state.show}
+          onHide={this.handleClose}
+          aria-labelledby="update-modal-header"
+        >
+          <Modal.Header id="update-modal-header" closeButton>
             <Modal.Title>{this.props.task}</Modal.Title>
           </Modal.Header>
           <Modal.Body>{this.swtichCaseContent(this.props.form)}</Modal.Body>

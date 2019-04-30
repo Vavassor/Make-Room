@@ -10,18 +10,14 @@ class EventItem extends Component {
   render() {
     return (
       <div className='media-div'>
-      <Media className="event-item">
-      <Row className='justing-content-center mx-0'>
-        <Col xs={"12"} md="auto" className='text-center'>
+      <Media className="event-item align-items-center flex-column flex-sm-row flex-md-column flex-lg-row">
         <Link to={"/event/" + this.props.id}>
           <img
-            className="mr-3 event-image"
+            className="mr-3 event-image pb-3 pb-sm-0 pb-md-3 pb-lg-0"
             src={this.props.image}
-            alt=""
+            alt={this.props.name}
           />
         </Link>
-          </Col>
-          <Col xs={12} md={5}>
         <Media.Body>
           <h3>
             <Link to={"/event/" + this.props.id}>{this.props.name}</Link>
@@ -33,8 +29,6 @@ class EventItem extends Component {
           <p>{this.props.placeName}</p>
           <p>{this.props.blurb}</p>
         </Media.Body>
-          </Col>
-          </Row>
       </Media>
       </div>
     );
