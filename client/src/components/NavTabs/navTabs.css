@@ -22,11 +22,11 @@
   border-color: rgb(189,2,2) !important;
   border-radius: 0;
   border-style: solid;
-  border-width: 2px;
+  border-width: 0 2px;
   border-radius: 0 !important;
   padding-bottom: 0.6em;
 }
 
 .nav-logo {
-  height: 2.7em;
+  height: 2.75em;
 }
