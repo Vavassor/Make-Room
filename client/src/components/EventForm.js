@@ -2,6 +2,7 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import moment from "moment";
+import ProgressBar from "react-bootstrap/ProgressBar";
 import React, {Component} from "react";
 
 const defaultErrors = {
@@ -51,6 +52,7 @@ class EventForm extends Component {
       endDate: endDate,
       endTime: endTime,
       errors: defaultErrors,
+      eventImage: event ? event.eventImage : "",
       locationName: event ? event.place.name : "",
       name: event ? event.name : "",
       sameDates: sameDates,
@@ -58,6 +60,8 @@ class EventForm extends Component {
       startTime: startTime,
       validated: false,
     };
+
+    this.imageFile = React.createRef();
   }
 
   handleCheckChange(event) {
@@ -93,11 +97,11 @@ class EventForm extends Component {
         blurb: this.state.blurb.trim(),
         description: this.state.description.trim(),
         endTime: endTime.toISOString(),
+        eventImage: this.state.eventImage.trim(),
+        file: this.imageFile.current.files[0],
         name: this.state.name.trim(),
-        place: {
-          address: this.state.address.trim(),
-          name: this.state.locationName.trim(),
-        },
+        placeAddress: this.state.address.trim(),
+        placeName: this.state.locationName.trim(),
         startTime: startTime.toISOString(),
       };
 
@@ -154,6 +158,27 @@ class EventForm extends Component {
           <Form.Control.Feedback type="invalid">
             {this.state.errors.blurb}
           </Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group controlId="event-image-file">
+          <Form.Label>Image File</Form.Label>
+          <Form.Control
+            type="file"
+            accept="image/*"
+            name="imageFile"
+            ref={this.imageFile}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="event-image-url">
+          <Form.Label>Image Link</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="https://example.com/image.jpg"
+            value={this.state.eventImage}
+            onChange={this.handleInputChange}
+            name="eventImage"
+          />
         </Form.Group>
 
         <Form.Group controlId="location-name">
@@ -262,6 +287,8 @@ class EventForm extends Component {
             </Form.Group>
           </Col>
         </Form.Row>
+
+        <ProgressBar className="mb-3" now={Math.round(100 * this.props.uploadProgress)} />
 
         <Button type="submit">{this.props.submitButtonText}</Button>
       </Form>

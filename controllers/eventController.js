@@ -1,10 +1,17 @@
-const models = require("../models");
+const aws = require("aws-sdk");
+const generateFileName = require("../helpers/FilenameGenerator");
 const googleMaps = require("@google/maps");
+const models = require("../models");
+
+require("dotenv").config();
 
 const googleMapsClient = googleMaps.createClient({
   key: "AIzaSyCKqyLfb3rmO6CPk4Fl3mBhXCdkbl-zHK4",
   Promise: Promise,
 });
+
+const S3_BUCKET = process.env.S3_BUCKET;
+aws.config.region = "us-east-1";
 
 module.exports = {
   attendEvent: function(request, response, next) {
@@ -78,8 +85,6 @@ module.exports = {
       }
       query = query.sort({[key]: direction});
     }
-
-    console.log(query);
   
     query
       .then(events => response.json(events))
@@ -111,39 +116,73 @@ module.exports = {
   },
 
   updateEvent: function(request, response, next) {
-    const event = request.body;
+    const update = (request) => {
+      const event = request.body;
+
+      event.place = {
+        address: event.placeAddress,
+        name: event.placeName,
+      };
+      delete event.placeAddress;
+      delete event.placeName;
+      delete event.file;
     
-    googleMapsClient
-      .geocode({address: event.place.address})
-      .asPromise()
-      .then((response) => {
-        if (response.json.status !== "OK") {
-          throw new Error("Google maps did not find the address.");
+      googleMapsClient
+        .geocode({address: event.place.address})
+        .asPromise()
+        .then((response) => {
+          if (response.json.status !== "OK") {
+            throw new Error("Google maps did not find the address.");
+          }
+  
+          const firstResult = response.json.results[0];
+          event.place.address = firstResult.formatted_address;
+  
+          const location = firstResult.geometry.location;
+          event.place.position = {
+            latitude: location.lat,
+            longitude: location.lng,
+          };
+  
+          return models.Event.findOneAndUpdate(
+            {
+              _id: request.params.id,
+              creator: request.user._id,
+            },
+            event
+          );
+        })
+        .then((event) => {
+          if (!event) {
+            throw new Error("The event was not found or the authenticated user wasn't its creator.");
+          }
+          response.json(event);
+        })
+        .catch(next);
+    };
+
+    if (request.file) {
+      const fileName = generateFileName(request.file.originalname);
+
+      const s3 = new aws.S3();
+      const s3Params = {
+        Bucket: S3_BUCKET,
+        Key: fileName,
+        ContentType: request.file.mimetype,
+        ACL: "public-read",
+        Body: request.file.buffer,
+      };
+  
+      s3.putObject(s3Params, (error, data) => {
+        if (error) {
+          throw error;
         }
-
-        const firstResult = response.json.results[0];
-        event.address = firstResult.formatted_address;
-
-        const location = firstResult.geometry.location;
-        event.place.position = {
-          latitude: location.lat,
-          longitude: location.lng,
-        };
-
-        return models.Event.findOneAndUpdate(
-          {
-            _id: request.params.id,
-            creator: request.user._id,
-          },
-          event
-        );
-      })
-      .then((event) => {
-        if (!event) {
-          throw new Error("The event was not found or the authenticated user wasn't its creator.");
-        }
-        response.json(event);
-      })
-      .catch(next);
+        const url = `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`;
+        request.body.eventImage = url;
+        update(request);
+      });
+    } else {
+      update(request);
+    }
   },
 };

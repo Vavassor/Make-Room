@@ -30,11 +30,13 @@ class Event extends Component {
       selfId: null,
       userName: null,
       loadStatus: "loading",
+      uploadProgress: 0,
     };
 
     this.handleAttend = this.handleAttend.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleStopAttending = this.handleStopAttending.bind(this);
+    this.updateUploadProgress = this.updateUploadProgress.bind(this);
   }
   
   componentDidMount() {
@@ -62,9 +64,10 @@ class Event extends Component {
     event._id = this.state.event._id;
 
     Api
-      .updateEvent(event)
+      .updateEvent(event, this.updateUploadProgress)
       .then((response) => {
         this.loadEvent();
+        this.setState({uploadProgress: 0});
         closeForm();
       })
       .catch(error => console.error(error));
@@ -223,6 +226,7 @@ class Event extends Component {
                 task={"Edit Event"}
                 handleFormSubmit={this.handleEdit}
                 event={this.state.event}
+                uploadProgress={this.state.uploadProgress}
                 submitButtonText="Edit Event"
               />
             )}
@@ -291,6 +295,12 @@ class Event extends Component {
         userName={this.state.userName}
       />
     );
+  }
+
+  updateUploadProgress(event) {
+    this.setState({
+      uploadProgress: Math.round((100 * event.loaded) / event.total),
+    });
   }
 }
 

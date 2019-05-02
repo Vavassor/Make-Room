@@ -1,7 +1,7 @@
 const aws = require("aws-sdk");
 const db = require("../../models");
+const generateFileName = require("../../helpers/FilenameGenerator");
 const multer = require("multer");
-const path = require("path");
 const router = require("express").Router();
 const upload = multer();
 
@@ -9,19 +9,6 @@ require("dotenv").config();
 
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = "us-east-1";
-
-function generateFileName(originalName) {
-  const alphabet =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-
-  let id = "";
-  for (let i = 0; i < 21; i++) {
-    const index = Math.floor(64 * Math.random());
-    id += alphabet[index];
-  }
-
-  return id + path.extname(originalName);
-}
 
 function getPortfolioById(req, res){
   db.Portfolio

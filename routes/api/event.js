@@ -1,6 +1,8 @@
 const eventController = require("../../controllers/eventController");
 const router = require("express").Router({mergeParams: true});
+const multer = require("multer");
 const passport = require("passport");
+const upload = multer();
   
 router.route("/")
   .get(eventController.getAllEvents)
@@ -11,8 +13,9 @@ router.route("/")
 
 router.route("/:id")
   .get(eventController.getEventById)
-  .post(
+  .patch(
     passport.authenticate("jwt", {session: false}),
+    upload.single("file"),
     eventController.updateEvent
   )
   .delete(eventController.deleteEvent);
