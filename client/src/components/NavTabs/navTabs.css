@@ -1,9 +1,10 @@
 .nav-tabs {
   position: relative;
+  align-items: center;
   background-color: lightgray;
 }
 
-.log-out button {
+.log-out {
   margin-right: .5em;
   margin-top: .1em;
 }
@@ -12,8 +13,18 @@
   text-decoration: none !important;
 }
 
+.nav-item {
+  height: 2.8em;
+}
+
 .nav-item img {
-  background-color: black;
+  background-color: #000000;
+  width: auto;
+  height: 100%;
+}
+
+.nav-link {
+  height: 100%;
 }
 
 .nav-link.active {
@@ -24,9 +35,4 @@
   border-style: solid;
   border-width: 2px;
   border-radius: 0 !important;
-  padding-bottom: 0.6em;
-}
-
-.nav-logo {
-  height: 2.7em;
 }

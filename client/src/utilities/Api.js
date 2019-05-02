@@ -1,6 +1,30 @@
 import axios from "axios";
 import Auth from "./Auth";
 
+function objectToFormData(object, formData, namespace) {
+  const data = formData || new FormData();
+
+  for (const property in object) {
+    const value = object[property];
+
+    if (!object.hasOwnProperty(property) || !value) {
+      continue;
+    }
+
+    const formKey = namespace ? namespace + "[" + property + "]" : property;
+    
+    if (value instanceof Date) {
+      formData.append(formKey, value.toISOString());
+    } else if (typeof value === "object" && !(value instanceof File)) {
+      objectToFormData(value, data, formKey);
+    } else {
+      data.append(property, value);
+    }
+  }
+
+  return data;
+}
+
 export default {
   attendEvent: function(event) {
     const token = Auth.getToken();
@@ -91,15 +115,17 @@ export default {
     );
   },
 
-  updateEvent: function(event) {
+  updateEvent: function(event, updateProgress) {
     const token = Auth.getToken();
-    return axios.post(
+
+    return axios.patch(
       `/api/event/${event._id}`,
-      event,
+      objectToFormData(event),
       {
         headers: {
           "Authorization": `Bearer ${token}`,
         },
+        onUploadProgress: updateProgress,
       }
     );
   },

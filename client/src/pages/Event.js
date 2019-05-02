@@ -30,11 +30,13 @@ class Event extends Component {
       selfId: null,
       userName: null,
       loadStatus: "loading",
+      uploadProgress: 0,
     };
 
     this.handleAttend = this.handleAttend.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleStopAttending = this.handleStopAttending.bind(this);
+    this.updateUploadProgress = this.updateUploadProgress.bind(this);
   }
   
   componentDidMount() {
@@ -62,9 +64,10 @@ class Event extends Component {
     event._id = this.state.event._id;
 
     Api
-      .updateEvent(event)
+      .updateEvent(event, this.updateUploadProgress)
       .then((response) => {
         this.loadEvent();
+        this.setState({uploadProgress: 0});
         closeForm();
       })
       .catch(error => console.error(error));
@@ -141,10 +144,7 @@ class Event extends Component {
               lg={{ span: 6 }}
             >
               <Card>
-                <Card.Body>
-
-                  {this.renderEventContent(event, selfId)}
-                </Card.Body>
+                {this.renderEventContent(event, selfId)}
               </Card>
             </Col>
             <Col
@@ -214,31 +214,34 @@ class Event extends Component {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <Card.Img variant="top" src={event.eventImage} className="pb-3" />
+          <Card.Img variant="top" src={event.eventImage} />
         </a>
-        <h3 className="card-title">
-          {event.name}
-          {event && selfId && event.creator === selfId && (
-            <UpdateModal
-              className="event-button"
-              form={"event"}
-              task={"Edit Event"}
-              handleFormSubmit={this.handleEdit}
-              event={this.state.event}
-              submitButtonText="Edit Event"
-            />
-          )}
-        </h3>
+        <Card.Body>
+          <h3 className="card-title">
+            {event.name}
+            {event && selfId && event.creator === selfId && (
+              <UpdateModal
+                className="event-button"
+                form={"event"}
+                task={"Edit Event"}
+                handleFormSubmit={this.handleEdit}
+                event={this.state.event}
+                uploadProgress={this.state.uploadProgress}
+                submitButtonText="Edit Event"
+              />
+            )}
+          </h3>
 
-        <p>
-          <TimeRange
-            startTime={event.startTime}
-            endTime={event.endTime}
-          />
-        </p>
-        <p>{event.place.name}</p>
-        <p>{event.place.address}</p>
-        <p>{Help.addLineBreaks(event.description)}</p>
+          <p>
+            <TimeRange
+              startTime={event.startTime}
+              endTime={event.endTime}
+            />
+          </p>
+          <p>{event.place.name}</p>
+          <p>{event.place.address}</p>
+          <p>{Help.addLineBreaks(event.description)}</p>
+        </Card.Body>
       </>
     );
   }
@@ -292,6 +295,12 @@ class Event extends Component {
         userName={this.state.userName}
       />
     );
+  }
+
+  updateUploadProgress(event) {
+    this.setState({
+      uploadProgress: Math.round((100 * event.loaded) / event.total),
+    });
   }
 }
 

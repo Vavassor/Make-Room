@@ -165,6 +165,9 @@ body::-webkit-scrollbar { /* WebKit */
   border-radius: 0.5rem !important;
 }
 
+.card-img-top {
+  padding: 1.25rem 1.25rem 0 1.25rem;
+}
 
 .event-list .card-body {
   max-height: 90vh;
