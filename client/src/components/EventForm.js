@@ -97,7 +97,7 @@ class EventForm extends Component {
         blurb: this.state.blurb.trim(),
         description: this.state.description.trim(),
         endTime: endTime.toISOString(),
-        eventImage: this.state.eventImage.trim(),
+        eventImage: this.state.eventImage.length? this.state.eventImage.trim(): undefined,
         file: this.imageFile.current.files[0],
         name: this.state.name.trim(),
         placeAddress: this.state.address.trim(),
