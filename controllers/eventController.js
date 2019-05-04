@@ -33,6 +33,14 @@ module.exports = {
     event.creator = request.user._id;
     event.attendees = [event.creator];
 
+    event.place = {
+      address: event.placeAddress,
+      name: event.placeName,
+    };
+    delete event.placeAddress;
+    delete event.placeName;
+    delete event.file;
+
     googleMapsClient
       .geocode({address: event.place.address})
       .asPromise()
